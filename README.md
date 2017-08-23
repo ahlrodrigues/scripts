@@ -92,4 +92,4 @@ termos da Licença Pública Geral GNU:
 >
 >Fundação do Software Livre (FSF) Inc. 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-<div align="center"><img src="https://github.com/ahlrodrigues/slackonfig/blob/master/Imgs/poweredbyslack.gif"></div> 
+<div align="center"><img src="https://github.com/ahlrodrigues/slackonfig/blob/master/imgs/poweredbyslack.gif"></div> 
