@@ -1,4 +1,4 @@
-<div align="center"><img src="https://github.com/ahlrodrigues/slackonfig/blob/master/Imgs/Slackware1.png"></div> 
+<div align="center"><img src="https://github.com/ahlrodrigues/slackonfig/blob/master/imgs/Slackware1.png"></div> 
 
 
 

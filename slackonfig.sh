@@ -17,7 +17,7 @@
 #                                                                                            #
 # V0.1                                                                                       #
 #                                                                                            #
-# Last update: 01/08/2017                                                                    #
+# Last update: 22/08/2017                                                                    #
 #                                                                                            #
 ##############################################################################################
 
@@ -125,8 +125,8 @@ if [[ $(whoami) == "root" ]]; then
     echo
     echo
     wget -q  -nv -e robots=0 -r -nd -cP /tmp \
-    https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/Docs/minilicense.txt \
-    https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/Miscellaneous/pkgs.txt
+    https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs/minilicense.txt \
+    https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs/pkgs.txt
     sleep 3
     clear
 
