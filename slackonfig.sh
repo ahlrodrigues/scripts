@@ -85,35 +85,14 @@ slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $N
 multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 
 # ---------Utilização de Cores  --------- #
-useColor() {
-    BLACK='\e[1;30m'
-    RED='\e[1;31m'
-    GREEN='\e[1;32m'
-    NC='\033$NC' # reset/no color
-    BLUE='\e[1;34m'
-    PINK='\e[1;35m'
-    CYAN='\e[1;36m'
-    WHITE='\e[1;37m'
-}
-
-notUseColor() {
-    unset BLACK RED GREEN NC BLUE PINK CYAN WHITE
-}
-
-colorPrint=$1
-if [ "$colorPrint" == "noColor" ]; then
-    echo -e "\nColors disabled"
-    shift
-else # Some colors for script output - Make it easier to follow
-    useColor
-    colorPrint=''
-fi
-
-testColorInput=$1
-if [ "$testColorInput" == "testColor" ]; then
-    echo -e "\n    Test colors: $RED RED $WHITE WHITE $PINK PINK $BLACK BLACK $BLUE BLUE $GREEN GREEN $CYAN CYAN $NC NC\n"
-    shift
-fi
+BLACK='\e[1;30m'
+RED='\e[1;31m'
+GREEN='\e[1;32m'
+NC='\033$NC' # reset/no color
+BLUE='\e[1;34m'
+PINK='\e[1;35m'
+CYAN='\e[1;36m'
+WHITE='\e[1;37m'
 
 # --------- Limpa tudo --------- #
 clear
@@ -258,7 +237,7 @@ echo
 	 echo
 	 exit;;
 	
-# --------- Início --------- #
+# --------- Texto 1 --------- #
     Y|y)echo
 	echo
 	echo -e "\e[ \t\e[1;33;40m Criando todos os arquivos de configuração nas devidas pastas e executando processos de configuração $NC"
@@ -266,23 +245,40 @@ echo
 	echo	
 	sleep 3
       
-# --------- Início das Funções --------- #	
+
+##########################################
+#                                        #      
+# --------- Início das Funções --------- #      
+#                                        #      
+#   Não editar a partir deste ponto      #      
+#                                        #      
+##########################################      
+      
+# Ativa tecla NumLock antes do login
 if [ $numLock == yes ]; then
     echo -e "\e[ \t$CYAN Ativando o NumLock $NC"
     sed -i "s/#NumLock=Off/NumLock=On/" /etc/kde/kdm/kdmrc
     sleep 3
 fi
 
+# Criar script que move os arquivos de retorno da CEF
+# para uma pasta de backup no diretório /opt/caixa/Recebidos.
 if [ $cleanret == yes ]; then
-    echo -e "\e[ \t$CYAN cleanret.sh => Mover os arquivos de retorno da caixa $NC"
-    echo "#!"$SHELL > /etc/cron.daily/cleanret.sh
-    cat /tmp/minilicense.txt >> /etc/cron.daily/cleanret.sh
-    echo "#Move arquivos de retorno da CAIXA" >> /etc/cron.daily/cleanret.sh
-    echo "mkdir /opt/caixa/Recebidos" >> /etc/cron.daily/cleanret.sh
-    echo "pasta_origem=/home/ahlr/Downloads" >> /etc/cron.daily/cleanret.sh
-    echo "pasta_destino=/opt/caixa/Recebidos" >> /etc/cron.daily/cleanret.sh
-    echo "cd \$pasta_origem && mv *.ret \$pasta_destino" >> /etc/cron.daily/cleanret.sh
-    chmod +x /etc/cron.daily/cleanret.sh
+    echo -e "\n \e[ \t$CYAN # --------- cleanret.sh => Mover os arquivos de retorno da caixa --------- # $NC\n"
+    echo "#!"$SHELL > /home/ahlr/cleanret.sh
+    cat /tmp/minilicense.txt >> /home/ahlr/cleanret.sh
+    echo "# Move arquivos de retorno da CAIXA da pasta ~/Downloads para a pasta /opt/caixa/Recebidos" >> /home/ahlr/cleanret.sh
+    echo "#" >> /home/ahlr/cleanret.sh
+    echo "# Cria a pasta ../Recebidos" >> /home/ahlr/cleanret.sh
+    echo "mkdir /opt/caixa/Recebidos" >> /home/ahlr/cleanret.sh
+    echo "#" >> /home/ahlr/cleanret.sh
+    echo "# Cria as variáveis" >> /home/ahlr/cleanret.sh
+    echo "pasta_origem=/home/ahlr/Downloads" >> /home/ahlr/cleanret.sh
+    echo "pasta_destino=/opt/caixa/Recebidos" >> /home/ahlr/cleanret.sh
+    echo "#" >> /home/ahlr/cleanret.sh
+    echo "# Move arquivos *.ret para a pasta de Recebidos" >> /home/ahlr/cleanret.sh
+    echo "cd \$pasta_origem && mv *.ret \$pasta_destino" >> /home/ahlr/cleanret.sh
+    chmod +x /home/ahlr/cleanret.sh
     sleep 3
 fi
     

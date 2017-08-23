@@ -3,7 +3,7 @@
 wine 
 vlc
 npapi-vlc
-libreoffice-5*
+libreoffice-6*
 libreoffice-dict-pt-BR
 libreoffice-kde-integration 
 libreoffice-l10n-pt_BR
