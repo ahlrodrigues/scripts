@@ -38,4 +38,4 @@ termos da Licença Pública Geral GNU
 Copyright 2017 - Veja o arquivo LICENSE para mais detalhes.
 ```
 
-<div align="center"><img src="https://github.com/ahlrodrigues/slackonfig/blob/master/Imgs/poweredbyslack.gif"></div> 
+<div align="center"><img src="https://github.com/ahlrodrigues/slackonfig/blob/master/imgs/poweredbyslack.gif"></div> 
