@@ -117,6 +117,7 @@ WHITE='\e[1;37m'
 crondaily=/etc/cron.daily
 cronhourly=/etc/cron.hourly
 minilicense=/tmp/minilicense.txt
+rcd=/etc/rc.d
 
 # --------- Limpa tudo --------- #
 clear
@@ -381,17 +382,17 @@ fi
 if [ $ntp == yes ]; then	
     echo -e "$ntptxt"
     sed -i "s/#server 3.pool.ntp.org/server pool.ntp.br/g" /etc/ntp.conf
-    chmod +x /etc/rc.d/rc.ntpd
-	if [ -x /etc/rc.d/rc.ntpd ]; then
-	  /etc/rc.d/rc.ntpd start
+    chmod +x $rcd/rc.ntpd
+	if [ -x $rcd/rc.ntpd ]; then
+	  $rcd/rc.ntpd start
 	fi
     sleep 3
 fi
 
 if [ $cups == yes ]; then
     echo -e "$cupstxt"
-    chmod +x /etc/rc.d/rc.cups
-    /etc/rc.d/rc.cups restart
+    chmod +x $rcd/rc.cups
+    $rcd/rc.cups restart
     sleep 3
 fi
 	
@@ -399,33 +400,33 @@ if [ $samba == yes ]; then
     echo -e "$sambatxt"
     sed -i "s/MYGROUP/workgroup/g" /etc/samba/smb.conf-sample
     mv /etc/samba/smb.conf-sample /etc/samba/smb.conf
-    chmod +x /etc/rc.d/rc.samba
-	if [ -x /etc/rc.d/rc.plexmediaserver ]; then
-	    /etc/rc.d/rc.plexmediaserver start
+    chmod +x $rcd/rc.samba
+	if [ -x $rcd/rc.plexmediaserver ]; then
+	    $rcd/rc.plexmediaserver start
 	fi
     sleep 3
 fi
 
 if [ $shutdown == yes ]; then
     echo -e "$shutdowntxt"
-    echo "#!"$SHELL >> /etc/rc.d/rc.local_shutdown
-    echo "cd /tmp && rm -rf -- *[!"ahlr"]* 2>/dev/null" >> /etc/rc.d/rc.local_shutdown
-    echo "cd /var/tmp && rm -rf * 2>/dev/null" >> /etc/rc.d/rc.local_shutdown
-    echo "/usr/bin/find /tmp -mindepth 1 -maxdepth 1 -exec /bin/rm -rf {} +;" >> /etc/rc.d/rc.local_shutdown
-    echo "find /tmp/lost+found -exec /bin/touch {} \;" >> /etc/rc.d/rc.local_shutdown
-    echo "find /tmp -type s -exec  /bin/touch {} \;" >> /etc/rc.d/rc.local_shutdown
-    echo "find /tmp -type d -empty -mtime +37 -exec /bin/rmdir {} \;" >> /etc/rc.d/rc.local_shutdown
-    echo "find /tmp -type f -mtime +37 -exec rm -rf {} \; " >> /etc/rc.d/rc.local_shutdown
-    chmod +x /etc/rc.d/rc.local_shutdown
+    echo "#!"$SHELL >> $rcd/rc.local_shutdown
+    echo "cd /tmp && rm -rf -- *[!"ahlr"]* 2>/dev/null" >> $rcd/rc.local_shutdown
+    echo "cd /var/tmp && rm -rf * 2>/dev/null" >> $rcd/rc.local_shutdown
+    echo "/usr/bin/find /tmp -mindepth 1 -maxdepth 1 -exec /bin/rm -rf {} +;" >> $rcd/rc.local_shutdown
+    echo "find /tmp/lost+found -exec /bin/touch {} \;" >> $rcd/rc.local_shutdown
+    echo "find /tmp -type s -exec  /bin/touch {} \;" >> $rcd/rc.local_shutdown
+    echo "find /tmp -type d -empty -mtime +37 -exec /bin/rmdir {} \;" >> $rcd/rc.local_shutdown
+    echo "find /tmp -type f -mtime +37 -exec rm -rf {} \; " >> $rcd/rc.local_shutdown
+    chmod +x $rcd/rc.local_shutdown
     sleep 3
 fi
 
 if [ $teamviewerd == yes ]; then	
     echo -e "$teamviewerdtxt"
-    echo "# --------- Inicializando o deamon rc.teamviewerd --------- #" >> /etc/rc.d/rc.local
-    echo "if [ -x /etc/rc.d/rc.teamviewerd ]; then" >> /etc/rc.d/rc.local
-    echo "/etc/rc.d/rc.teamviewerd start" >> /etc/rc.d/rc.local
-    echo "fi" >> /etc/rc.d/rc.local
+    echo "# --------- Inicializando o deamon rc.teamviewerd --------- #" >> $rcd/rc.local
+    echo "if [ -x $rcd/rc.teamviewerd ]; then" >> $rcd/rc.local
+    echo "$rcd/rc.teamviewerd start" >> $rcd/rc.local
+    echo "fi" >> $rcd/rc.local
     echo
     sleep 3
 fi
@@ -433,10 +434,10 @@ fi
 if [ $plex == yes ]; then
     echo -e "$plextxt"
     echo
-    echo "# --------- Inicializando o deamon rc.teamviewerd --------- #" >> /etc/rc.d/rc.local
-    echo "if [ -x /etc/rc.d/rc.plexmediaserver ]; then" >> /etc/rc.d/rc.local
-    echo "/etc/rc.d/rc.plexmediaserver start" >> /etc/rc.d/rc.local
-    echo "fi" >> /etc/rc.d/rc.local
+    echo "# --------- Inicializando o deamon rc.teamviewerd --------- #" >> $rcd/rc.local
+    echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
+    echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
+    echo "fi" >> $rcd/rc.local
     sleep 3
 fi
 
@@ -478,9 +479,9 @@ fi
 
 if [ $networkmanager == yes ]; then
     echo -e "$networkmanagertxt"
-    chmod +x /etc/rc.d/rc.networkmanager
-   	if [ -x /etc/rc.d/rc.teamviewerd ]; then
-	    /etc/rc.d/rc.teamviewerd start
+    chmod +x $rcd/rc.networkmanager
+   	if [ -x $rcd/rc.teamviewerd ]; then
+	    $rcd/rc.teamviewerd start
 	fi
     sleep 3
 fi
