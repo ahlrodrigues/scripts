@@ -115,6 +115,7 @@ WHITE='\e[1;37m'
 
 # --------- Caminhos mais usados  --------- #
 crondaily=/etc/cron.daily
+cronhourly=/etc/cron.hourly
 minilicense=/tmp/minilicense.txt
 
 # --------- Limpa tudo --------- #
@@ -326,26 +327,34 @@ if [ $mvrejsgr == yes ]; then
     chmod +x $crondaily/mvrejsgr.sh
     sleep 3
 fi
-	
+
+# Criar script que move o recibo de entrehga do SICI
+#  para a pasta de backup ../SCM/SICI.
 if [ $cleansici == yes ]; then
     echo -e "$cleansicitxt"
     echo "#!"$SHELL > $crondaily//cleansici.sh
     cat $minilicense >> $crondaily/cleansici.sh
     echo "#Mover os arquivos declaração do SICI para a pasta /home/ahlr/Dropbox/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
+    echo "#" >> $crondaily/cleansici.sh
+    echo "# Cria variáveis" >> $crondaily/cleansici.sh
     echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/cleansici.sh
     echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
+    echo "#" >> $crondaily/cleansici.sh
+    echo "# Move o recibo de entrehga do SICI para a pasta de backup ../SCM/SICI" >> $crondaily/cleansici.sh
     echo "mv \$pasta_origem/sici*.xml \$pasta_destino 2> /dev/null" >> $crondaily/cleansici.sh
     chmod +x $crondaily/cleansici.sh
     sleep 3
 fi
 
+# Criar script backup incremental da pasta ../Projetos para o dropbox
 if [ $backupprojetos == yes ]; then
     echo -e "$backupprojetostxt"
-    echo "#!"$SHELL >> /etc/cron.hourly/backupprojetos.sh
-    cat $minilicense >> $crondaily/cleansici.sh
-    echo "rsync -azhv /mnt/sda3/Projetos/ /home/ahlr/Dropbox/TONICO/Projetos/" >> /etc/cron.hourly/backupprojetos.sh
-    chmod +x /etc/cron.hourly/backupprojetos.sh
-    sleep 3
+    echo "#!"$SHELL > $cronhourly/backupprojetos.sh
+    cat $minilicense >> $cronhourly/backupprojetos.sh
+    echo "#Faz backup incremental da pasta ../Projetos para o dropbox" >> $cronhourly/backupprojetos.sh
+    echo "#" >> $cronhourly/backupprojetos.sh
+    echo "rsync -azhv /mnt/sda3/Projetos/ /home/ahlr/Dropbox/TONICO/Projetos/" >> $cronhourly/backupprojetos.sh
+    chmod +x $cronhourly/backupprojetos.sh
 fi
 
  if [ $cleansai == yes ]; then
