@@ -1,26 +1,45 @@
 #!/bin/bash
+##
+###
+##################################################################################
+# Autor: Antonio Henrique (Fela)                                                 #
+# e-mail: ahlr_2000@yahoo.com                                                    #
+# repositório: github.com/ahlrodrigues/slackonfig                                #
+#                                                                                #
+# Bugs, Agradecimentos, Críticas "construtivas"!                                 #
+# Mande me um e-mail, que ficarei muito grato!                                   #
+#                                                                                #
+# Este scripts é disponibilizado na esperança que possa ser útil,                #
+# mas SEM NENHUMA GARANTIA DE FUNCIONAMENTO, SEM NENHUMA GARANTIA DE ADEQUAÇÃO A #
+# QUALQUER SISTEMA, SEM NENHUMA GARANTIA DE APLICAÇÃO EM PARTICULAR e NENHUM     #
+# SUPORTE TÉCNICO.                                                               #
+#                                                                                #
+# Estes scripts/programas são softwares livres, você pode redistribuí-los e/ou   #
+# modifica-los dentro dos termos da Licença Pública Geral GNU.                   #
+#                                                                                #
+# GNU General Public License:                                                    #
+# [GPL](https://pt.wikipedia.org/wiki/GNU_General_Public_License)                #
+# Fundação do Software Livre (FSF) Inc. 51 Franklin St, Fifth Floor,             #
+# Boston, MA 02110-1301 USA                                                      #
+##################################################################################
+###
+##
 #
-# Autor= Antonio Henrique (Fela)
-# e-mail: ahlr_2000@yahoo.com
 #
-# Bugs, Agradecimentos, Críticas "construtivas"
-# Mande me um e-mail. Ficarei Grato!
+##
+###
+##################################################################################
+#                                                                                #
+# Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux    #
+#                                                                                #
+# V0.1                                                                           #
+#                                                                                #
+# Last update: 22/08/2017                                                        #
+#                                                                                #
+##################################################################################
+###
+##
 #
-# Os scripts deste diretório estão disponíveis na esperança que possam ser úteis, 
-# mas SEM NENHUMA GARANTIA DE FUNCIONAMENTO, SEM NENHUMA GARANTIA DE ADEQUAÇÃO A 
-# QUALQUER MERCADO, SEM NENHUMA GARANTIA DE APLICAÇÃO EM PARTICULAR e NENHUM
-# SUPORTE TÉCNICO.
-
-##############################################################################################
-#                                                                                            #
-# Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux                #
-#                                                                                            #
-# V0.1                                                                                       #
-#                                                                                            #
-# Last update: 22/08/2017                                                                    #
-#                                                                                            #
-##############################################################################################
-
 # PARA QUE O SCRIPT FUNCIONE TROCUE A VARIÁVEL SLACKONFIG=OFF PARA SLACKONFIG=ON.
 slackonfig=on 
 
@@ -84,7 +103,7 @@ pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 
-# ---------Utilização de Cores  --------- #
+# --------- Utilização de Cores  --------- #
 BLACK='\e[1;30m'
 RED='\e[1;31m'
 GREEN='\e[1;32m'
@@ -93,6 +112,10 @@ BLUE='\e[1;34m'
 PINK='\e[1;35m'
 CYAN='\e[1;36m'
 WHITE='\e[1;37m'
+
+# --------- Caminhos mais usados  --------- #
+crondaily=/etc/cron.daily
+minilicense=/tmp/minilicense.txt
 
 # --------- Limpa tudo --------- #
 clear
@@ -264,55 +287,62 @@ fi
 # Criar script que move os arquivos de retorno da CEF
 # para uma pasta de backup no diretório /opt/caixa/Recebidos.
 if [ $cleanret == yes ]; then
-    echo -e "\n \e[ \t$CYAN # --------- cleanret.sh => Mover os arquivos de retorno da caixa --------- # $NC\n"
-    echo "#!"$SHELL > /home/ahlr/cleanret.sh
-    cat /tmp/minilicense.txt >> /home/ahlr/cleanret.sh
-    echo "# Move arquivos de retorno da CAIXA da pasta ~/Downloads para a pasta /opt/caixa/Recebidos" >> /home/ahlr/cleanret.sh
-    echo "#" >> /home/ahlr/cleanret.sh
-    echo "# Cria a pasta ../Recebidos" >> /home/ahlr/cleanret.sh
-    echo "mkdir /opt/caixa/Recebidos" >> /home/ahlr/cleanret.sh
-    echo "#" >> /home/ahlr/cleanret.sh
-    echo "# Cria as variáveis" >> /home/ahlr/cleanret.sh
-    echo "pasta_origem=/home/ahlr/Downloads" >> /home/ahlr/cleanret.sh
-    echo "pasta_destino=/opt/caixa/Recebidos" >> /home/ahlr/cleanret.sh
-    echo "#" >> /home/ahlr/cleanret.sh
-    echo "# Move arquivos *.ret para a pasta de Recebidos" >> /home/ahlr/cleanret.sh
-    echo "cd \$pasta_origem && mv *.ret \$pasta_destino" >> /home/ahlr/cleanret.sh
-    chmod +x /home/ahlr/cleanret.sh
+    echo "#!"$SHELL > $crondaily/cleanret.sh
+    cat $minilicense >> $crondaily/cleanret.sh
+    echo "# Move arquivos de retorno da CAIXA da pasta ~/Downloads para a pasta /opt/caixa/Recebidos" >> $crondaily/cleanret.sh
+    echo "#" >> $crondaily/cleanret.sh
+    echo "# Cria a pasta ../Recebidos" >> $crondaily/cleanret.sh
+    echo "mkdir /opt/caixa/Recebidos" >> $crondaily/cleanret.sh
+    echo "#" >> $crondaily/cleanret.sh
+    echo "# Cria as variáveis" >> $crondaily/cleanret.sh
+    echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/cleanret.sh
+    echo "pasta_destino=/opt/caixa/Recebidos" >> $crondaily/cleanret.sh
+    echo "#" >> $crondaily/cleanret.sh
+    echo "# Move arquivos *.ret para a pasta de Recebidos" >> $crondaily/cleanret.sh
+    echo "cd \$pasta_origem && mv *.ret \$pasta_destino" >> $crondaily/cleanret.sh
+    chmod +x $crondaily/cleanret.sh
     sleep 3
 fi
-    
+
+# Criar script que move os arquivos de Rejeitado e Francesinha do BNB
+# para uma pasta de backup no diretório /opt/caixa/Recebidos.
 if [ $mvrejsgr == yes ]; then
     echo -e "$mvrejsgrtxt"
-    echo "#!"$SHELL > /etc/cron.daily/mvrejsgr.sh
-    cat /tmp/minilicense.txt >> /etc/cron.daily/mvrejsgr.sh
-    echo "#Mover os arquivos de rejeitados e francesinha do BNB" >> /etc/cron.daily/mvrejsgr.sh
-    echo "pasta_origem=/home/ahlr/Downloads" >> /etc/cron.daily/mvrejsgr.sh
-    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/Arquivos" >> /etc/cron.daily/mvrejsgr.sh
-    echo "mv \$pasta_origem/rel*.pdf  \$pasta_origem/Rejeitados-\`"date +\"%F\""\`.pdf 2> /dev/null" >> /etc/cron.daily/mvrejsgr.sh
-    echo "mv \$pasta_origem/sgr*.pdf  \$pasta_origem/Francesinha-\`"date +\"%F\""\`.pdf 2> /dev/null" >> /etc/cron.daily/mvrejsgr.sh
-    echo "mv \$pasta_origem/Francesinha*.pdf \$pasta_destino 2> /dev/null" >> /etc/cron.daily/mvrejsgr.sh
-    echo "mv \$pasta_origem/Rejeitados*.pdf \$pasta_destino 2> /dev/null" >> /etc/cron.daily/mvrejsgr.sh
-    chmod +x /etc/cron.daily/mvrejsgr.sh
+    echo "#!"$SHELL > $crondaily/mvrejsgr.sh
+    cat $minilicense >> $crondaily/mvrejsgr.sh
+    echo "#Mover os arquivos de rejeitados e francesinha do BNB para a pasta ../BNB/Arquivos" >> $crondaily/mvrejsgr.sh
+    echo "#" >> $crondaily/mvrejsgr.sh
+    echo "# Cria variáveis" >> $crondaily/mvrejsgr.sh
+    echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/mvrejsgr.sh
+    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/Arquivos" >> $crondaily/mvrejsgr.sh
+    echo "#" >> $crondaily/mvrejsgr.sh
+    echo "# Renomeia os arquivos" >> $crondaily/mvrejsgr.sh
+    echo "mv \$pasta_origem/rel*.pdf  \$pasta_origem/Rejeitados-\`"date +\"%F\""\`.pdf 2> /dev/null" >> $crondaily/mvrejsgr.sh
+    echo "mv \$pasta_origem/sgr*.pdf  \$pasta_origem/Francesinha-\`"date +\"%F\""\`.pdf 2> /dev/null" >> $crondaily/mvrejsgr.sh
+    echo "#" >> $crondaily/mvrejsgr.sh
+    echo "# Move os arquivos da pasta ../Downloads para a pasta ../BNB/Arquivos" >> $crondaily/mvrejsgr.sh
+    echo "mv \$pasta_origem/Francesinha*.pdf \$pasta_destino 2> /dev/null" >> $crondaily/mvrejsgr.sh
+    echo "mv \$pasta_origem/Rejeitados*.pdf \$pasta_destino 2> /dev/null" >> $crondaily/mvrejsgr.sh
+    chmod +x $crondaily/mvrejsgr.sh
     sleep 3
 fi
 	
 if [ $cleansici == yes ]; then
     echo -e "$cleansicitxt"
-    echo "#!"$SHELL > /etc/cron.daily//cleansici.sh
-    cat /tmp/minilicense.txt >> /etc/cron.daily/cleansici.sh
-    echo "#Mover os arquivos declaração do SICI para a pasta /home/ahlr/Dropbox/NET4YOU/NET4YOU/SCM/SICI" >> /etc/cron.daily/cleansici.sh
-    echo "pasta_origem=/home/ahlr/Downloads" >> /etc/cron.daily/cleansici.sh
-    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/SCM/SICI" >> /etc/cron.daily/cleansici.sh
-    echo "mv \$pasta_origem/sici*.xml \$pasta_destino 2> /dev/null" >> /etc/cron.daily/cleansici.sh
-    chmod +x /etc/cron.daily/cleansici.sh
+    echo "#!"$SHELL > $crondaily//cleansici.sh
+    cat $minilicense >> $crondaily/cleansici.sh
+    echo "#Mover os arquivos declaração do SICI para a pasta /home/ahlr/Dropbox/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
+    echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/cleansici.sh
+    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
+    echo "mv \$pasta_origem/sici*.xml \$pasta_destino 2> /dev/null" >> $crondaily/cleansici.sh
+    chmod +x $crondaily/cleansici.sh
     sleep 3
 fi
 
 if [ $backupprojetos == yes ]; then
     echo -e "$backupprojetostxt"
     echo "#!"$SHELL >> /etc/cron.hourly/backupprojetos.sh
-    cat /tmp/minilicense.txt >> /etc/cron.daily/cleansici.sh
+    cat $minilicense >> $crondaily/cleansici.sh
     echo "rsync -azhv /mnt/sda3/Projetos/ /home/ahlr/Dropbox/TONICO/Projetos/" >> /etc/cron.hourly/backupprojetos.sh
     chmod +x /etc/cron.hourly/backupprojetos.sh
     sleep 3
@@ -320,22 +350,22 @@ fi
 
  if [ $cleansai == yes ]; then
     echo -e "$cleansaitxt"
-    echo "#!"$SHELL >> /etc/cron.daily/cleansai.sh
-    echo "#Movendo arquivos de retorno do BNB" >> /etc/cron.daily/cleansai.sh
-    echo "mkdir /home/ahlr/.wine/drive_c/skyline/recebidos" >> /etc/cron.daily/cleansai.sh
-    echo "pasta_origem=/home/ahlr/.wine/drive_c/skyline/inbox" >> /etc/cron.daily/cleansai.sh
-    echo "pasta_destino=/home/ahlr/.wine/drive_c/skyline/recebidos" >> /etc/cron.daily/cleansai.sh
-    echo "cd \$pasta_origem && mv *.SAI \$pasta_destino" >> /etc/cron.daily/cleansai.sh
-    chmod +x /etc/cron.daily/cleansai.sh
+    echo "#!"$SHELL >> $crondaily/cleansai.sh
+    echo "#Movendo arquivos de retorno do BNB" >> $crondaily/cleansai.sh
+    echo "mkdir /home/ahlr/.wine/drive_c/skyline/recebidos" >> $crondaily/cleansai.sh
+    echo "pasta_origem=/home/ahlr/.wine/drive_c/skyline/inbox" >> $crondaily/cleansai.sh
+    echo "pasta_destino=/home/ahlr/.wine/drive_c/skyline/recebidos" >> $crondaily/cleansai.sh
+    echo "cd \$pasta_origem && mv *.SAI \$pasta_destino" >> $crondaily/cleansai.sh
+    chmod +x $crondaily/cleansai.sh
     sleep 3
 fi
 
 if [ $cleancache == yes ]; then	
     echo -e "$cleancachetxt"
-    echo "#!"$SHELL >> /etc/cron.daily/cleancache.sh
-    cat /tmp/minilicense.txt >> /etc/cron.daily/cleansici.sh
-    echo "echo 3 > /proc/sys/vm/drop_caches" >> /etc/cron.daily/cleancache.sh
-    chmod +x /etc/cron.daily/cleancache.sh
+    echo "#!"$SHELL >> $crondaily/cleancache.sh
+    cat $minilicense >> $crondaily/cleansici.sh
+    echo "echo 3 > /proc/sys/vm/drop_caches" >> $crondaily/cleancache.sh
+    chmod +x $crondaily/cleancache.sh
     sleep 3
 fi
 
@@ -467,8 +497,8 @@ fi
 
 if [ $thunderbackup == yes ]; then
     echo -e "$thunderbackuptxt"
-    echo "#!"$SHELL >> /etc/cron.daily/thunderbirdbackup.sh
-    echo "rsync -azhv /home/ahlr/.thunderbird/ /mnt/sda3/Thunderbird/" >> /etc/cron.daily/thunderbirdbackup.sh
+    echo "#!"$SHELL >> $crondaily/thunderbirdbackup.sh
+    echo "rsync -azhv /home/ahlr/.thunderbird/ /mnt/sda3/Thunderbird/" >> $crondaily/thunderbirdbackup.sh
    
 if [ $thunderbird == yes ]; then
     mkdir /home/ahlr/.thunderbird
@@ -521,7 +551,7 @@ echo
 echo
 	  
 # --------- Apagando arquivos auxiliares no diretório /tmp --------- #
-	  rm /tmp/minilicense.txt
+	  rm $minilicense
 	  rm /tmp/pkgs.txt
     
     ;;
