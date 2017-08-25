@@ -86,9 +86,10 @@ cleancachetxt="\e[ \t$GREEN cleancache.sh => Limpa o cache $NC"
 ntptxt="\e[ \t$GREEN Sincronizando com o pool.ntp.br $NC"
 cupstxt="\e[ \t$GREEN Inicializando do CUPS $NC"
 sambatxt="\e[ \t$GREEN Configuracoes do Samba $NC"
+samba2txt="\e[ \t$GREEN Incluindo inicialização do deamon do Samba no rc.local $NC"
 shutdowntxt="\e[ \t$GREEN Configuracoes de rc.local_shutdown $NC"
 teamviewerdtxt="\e[ \t$GREEN Incluindo inicialização do deamon do teamviewer no rc.local $NC"
-plextxt="\e[ \t$GREEN Incluindo inicialização do deamon no Plex rc.local $NC"
+plextxt="\e[ \t$GREEN Incluindo inicialização do deamon do Plex no rc.local $NC"
 mirrorstxt="\e[ \t$GREEN mirror-slackware => Administracao dos mirros locais $NC"
 inittabtxt="\e[ \t$GREEN Habilitando o init 4 $NC"
 networkmanagertxt="\e[ \t$GREEN rc.4 => Inicialzando networkmanager $NC"
@@ -118,6 +119,7 @@ crondaily=/etc/cron.daily
 cronhourly=/etc/cron.hourly
 minilicense=/tmp/minilicense.txt
 rcd=/etc/rc.d
+ulbin=/usr/local/bin
 
 # --------- Limpa tudo --------- #
 clear
@@ -417,10 +419,6 @@ if [ $samba == yes ]; then
     echo -e "$sambatxt"
     sed -i "s/MYGROUP/workgroup/g" /etc/samba/smb.conf-sample
     mv /etc/samba/smb.conf-sample /etc/samba/smb.conf
-    chmod +x $rcd/rc.samba
-	if [ -x $rcd/rc.samba ]; then
-	    $rcd/rc.samba start
-	fi
     sleep 3
 fi
 
@@ -441,48 +439,77 @@ if [ $shutdown == yes ]; then
     sleep 3
 fi
 
+# Iniciando do deamon Teamviewer
 if [ $teamviewerd == yes ]; then	
     echo -e "$teamviewerdtxt"
-    echo "# --------- Inicializando o deamon rc.teamviewerd --------- #" >> $rcd/rc.local
+    echo "#Inicializando o deamon rc.teamviewerd" >> $rcd/rc.local
     echo "if [ -x $rcd/rc.teamviewerd ]; then" >> $rcd/rc.local
     echo "$rcd/rc.teamviewerd start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
-    echo
     sleep 3
 fi
 
-if [ $plex == yes ]; then
-    echo -e "$plextxt"
-    echo
-    echo "# --------- Inicializando o deamon rc.teamviewerd --------- #" >> $rcd/rc.local
-    echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
-    echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
+# Iniciando do deamon Plex
+# if [ $plex == yes ]; then
+#     echo -e "$plextxt"
+#     echo "#Inicializando o deamon rc.teamviewerd" >> $rcd/rc.local
+#     echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
+#     echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
+#     echo "fi" >> $rcd/rc.local
+#     echo "#" >> $rcd/rc.local
+#     chmod +x $rcd/rc.plexmediaserver >> $rcd/rc.local
+#     sleep 3
+# fi
+
+# Iniciando do deamon Samba
+if [ $samba == yes ]; then
+    echo -e "$sambatxt"
+    echo "#Inicializando o deamon rc.samba" >> $rcd/rc.local
+    echo "if [ -x $rcd/rc.samba ]; then" >> $rcd/rc.local
+    echo "$rcd/rc.samba start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
+    echo "#" >> $rcd/rc.local
+    chmod +x $rcd/rc.samba >> $rcd/rc.local
     sleep 3
 fi
 
+# Iniciando do deamon networkmanager  
+if [ $networkmanager == yes ]; then
+    echo -e "$networkmanagertxt"
+    echo "#Inicializando o deamon rc.networkmanager" >> $rcd/rc.local
+    echo "if [ -x $rcd/rc.networkmanager ]; then" >> $rcd/rc.local
+    echo "$rcd/rc.networkmanager start" >> $rcd/rc.local
+    echo fi >> $rcd/rc.local
+    echo "#" >> $rcd/rc.local
+    chmod +x $rcd/rc.networkmanager >> $rcd/rc.local
+    sleep 3
+fi
+
+# Baixa o script do AlienBob e configura para mirrors locais x86 e x86_64 
 if [ $mirrors == yes ]; then
     echo -e "$mirrorstxt"
-    wget -q  -nv -e robots=0 -r -nd -cP /usr/local/bin http://www.slackware.com/~alien/tools/mirror-slackware-current.sh
-    sed -i "s|BUILDER:-\"Eric Hameleers <alien@slackware.com>\"|BUILDER:-\"Fela  <ahlr_2000@yahoo.com>\"|g" /usr/local/bin/mirror-slackware-current.sh
-    sed -i "s|/home/ftp/pub/Linux/Slackware|/mnt/sda3/Slackware|g" /usr/local/bin/mirror-slackware-current.sh
-    sed -i "s|VERBOSE:-\"-q\"|VERBOSE:-\"-v --progress\"|g" /usr/local/bin/mirror-slackware-current.sh
-    sed -i "s|ISO:-\"CDROM\"}|ISO:-\"DVD\"}|g" /usr/local/bin/mirror-slackware-current.sh
-    sed -i "s|EXCLUDES:-\"--exclude pasture\"|EXCLUDES:-\"--exclude pasture --exclude source\"|g" /usr/local/bin/mirror-slackware-current.sh
-    sed -i "s|DVD_EXCLUDES:-\"-x ./testing  -x ./source -x ./extra/source\"|DVD_EXCLUDES:-\"-x ./source -x ./extra/source\"|g" /usr/local/bin/mirror-slackware-current.sh
-    cp /usr/local/bin/mirror-slackware-current.sh /usr/local/bin/mirror-slackware32-current.sh
-    sed -i "s|ARCH:-\"x86\"|ARCH:-\"x86_64\"|g" /usr/local/bin/mirror-slackware-current.sh
-    mv /usr/local/bin/mirror-slackware-current.sh /usr/local/bin/mirror-slackware64-current.sh
-    chmod +x /usr/local/bin/mirror-slackware*
+    wget -q  -nv -e robots=0 -r -nd -cP $crondaily http://www.slackware.com/~alien/tools/mirror-slackware-current.sh
+    sed -i "s|BUILDER:-\"Eric Hameleers <alien@slackware.com>\"|BUILDER:-\"Fela  <ahlr_2000@yahoo.com>\"|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|/home/ftp/pub/Linux/Slackware|/mnt/sda3/Slackware|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|VERBOSE:-\"-q\"|VERBOSE:-\"-v --progress\"|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|ISO:-\"CDROM\"}|ISO:-\"DVD\"}|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|EXCLUDES:-\"--exclude pasture\"|EXCLUDES:-\"--exclude pasture --exclude source\"|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|DVD_EXCLUDES:-\"-x ./testing  -x ./source -x ./extra/source\"|DVD_EXCLUDES:-\"-x ./source -x ./extra/source\"|g" $crondaily/mirror-slackware-current.sh
+    cp $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware32-current.sh
+    sed -i "s|ARCH:-\"x86\"|ARCH:-\"x86_64\"|g" $crondaily/mirror-slackware-current.sh
+    mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware64-current.sh
+    chmod +x $crondaily/mirror-slackware*
     sleep 3
 fi
 
+# Configura a inicialização do sistema em init 4
 if [ $inittab == yes ]; then
     echo -e "$inittabtxt"
     sed -i "s/id:3/id:4/g" /etc/inittab
     sleep 3
 fi
-		 
+
+# Configura o idioma pt_BR no sistema 
 if [ $lang == yes ]; then
     echo -e "$langtxt"
     sed -i "s/^#*/#/" /etc/profile.d/lang.sh # --------- comenta todas as linhas --------- #	
@@ -497,31 +524,29 @@ if [ $lang == yes ]; then
     sleep 3
 fi
 
-if [ $networkmanager == yes ]; then
-    echo -e "$networkmanagertxt"
-    chmod +x $rcd/rc.networkmanager
-   	if [ -x $rcd/rc.teamviewerd ]; then
-	    $rcd/rc.teamviewerd start
-	fi
-    sleep 3
-fi
-
+# Cria script que calcula valor do boleto entre duas datas
 if [ $data == yes ]; then
     echo -e "$datatxt"
-    echo "#!"$SHELL > data.sh
-    echo "# Converte o formato 'dd/mm/AAAA' para 'AAAAmmdd' que e o aceito pela" >> data.sh
-    echo "# opcao '-d' do comando date" >> data.sh
-    echo "data_inicial=\`echo \"\$1\" | sed 's:\(..\)/\(..\)/\(....\):\3\2\1:'\`" >> data.sh
-    echo "data_final=\`echo \"\$2\" | sed 's:\(..\)/\(..\)/\(....\):\3\2\1:'\`" >> data.sh
-    echo "valor_mensalidade=\"\$3\"" >> data.sh
-    echo "# Converte a data para o formato timestamp que e mais preciso" >> data.sh
-    echo "data_inicial=\`date -d \"\$data_inicial\" \"+%s\"\`" >> data.sh
-    echo "data_final=\`date -d \"\$data_final\" \"+%s\"\`" >> data.sh
-    echo "dias_corridos=\$(((\$data_final - \$data_inicial) / 86400))" >> data.sh
-    echo "# Calculo do valor proporcional" >> data.sh
-    echo "echo \"scale = 4; \$valor_mensalidade / 30 * \$dias_corridos\" | bc" >> data.sh
-    echo "exit 1" >> data.sh
-    chmod +x teste2.sh
+    echo "#!"$SHELL > $ulbin/data.sh
+    cat $minilicense >> $ulbin/data.sh
+    echo "#Converte o formato 'dd/mm/AAAA' para 'AAAAmmdd' que e o aceito pela" >> $ulbin/data.sh
+    echo "#opcao '-d' do comando date" >> $ulbin/data.sh
+    echo "data_inicial=\`echo \"\$1\" | sed 's:\(..\)/\(..\)/\(....\):\3\2\1:'\`" >> $ulbin/data.sh
+    echo "data_final=\`echo \"\$2\" | sed 's:\(..\)/\(..\)/\(....\):\3\2\1:'\`" >> $ulbin/data.sh
+    echo "#" >> $ulbin/data.sh
+    echo "#Cria a variável do valor da mensalidade" >> $ulbin/data.sh
+    echo "valor_mensalidade=\"\$3\"" >> $ulbin/data.sh
+    echo "#" >> $ulbin/data.sh
+    echo "#Converte a data para o formato timestamp que e mais preciso" >> $ulbin/data.sh
+    echo "data_inicial=\`date -d \"\$data_inicial\" \"+%s\"\`" >> $ulbin/data.sh
+    echo "data_final=\`date -d \"\$data_final\" \"+%s\"\`" >> $ulbin/data.sh
+    echo "dias_corridos=\$(((\$data_final - \$data_inicial) / 86400))" >> $ulbin/data.sh
+    echo "#" >> $ulbin/data.sh
+    echo "# Calculo do valor proporcional" >> $ulbin/data.sh
+    echo "echo \"scale = 4; \$valor_mensalidade / 30 * \$dias_corridos\" | bc" >> $ulbin/data.sh
+    echo "#" >> $ulbin/data.sh
+    echo "exit 1" >> $ulbin/data.sh
+    chmod +x $ulbin/data.sh
     sleep 3
 fi  
 
@@ -541,18 +566,15 @@ if [ $thunderbird == yes ]; then
     echo "IsRelative=0" >> /home/ahlr/.thunderbird/profiles.ini
     echo "Path=/mnt/sda3/Thunderbird/fsz8qgw4.default" >> /home/ahlr/.thunderbird/profiles.ini
     echo "Default=1" >> /home/ahlr/.thunderbird/profiles.ini
-
-
-
     sleep 3
 fi
 
 if [ $boinc == yes ]; then
     echo -e "$boinctxt"
-    echo "#!"$SHELL >> /usr/local/bin/boinc.sh
-    echo "cd /mnt/sda3/BOINC/" >> /usr/local/bin/boinc.sh
-    echo "./boinc" >> /usr/local/bin/boinc.sh
-    chmod +x /usr/local/bin/boinc.sh
+    echo "#!"$SHELL >> $ulbin/boinc.sh
+    echo "cd /mnt/sda3/BOINC/" >> $ulbin/boinc.sh
+    echo "./boinc" >> $ulbin/boinc.sh
+    chmod +x $ulbin/boinc.sh
     sleep 3
 fi  
 
@@ -583,7 +605,9 @@ echo
 # --------- Apagando arquivos auxiliares no diretório /tmp --------- #
 	  rm $minilicense
 	  rm /tmp/pkgs.txt
-    
+	  
+	  
+# --------- Início do fim --------- #   
     ;;
     
     * ) exit;; ## Add whatever other tests you need

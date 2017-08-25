@@ -16,6 +16,7 @@ crondaily=/home/ahlr
 cronhourly=/home/ahlr
 minilicense=/tmp/minilicense.txt
 rcd=/home/ahlr
+ulbin=/home/ahlr
 
 
 
@@ -30,9 +31,10 @@ cleancachetxt="\e[ \t$GREEN cleancache.sh => Limpa o cache $NC"
 ntptxt="\e[ \t$GREEN Sincronizando com o pool.ntp.br $NC"
 cupstxt="\e[ \t$GREEN Inicializando do CUPS $NC"
 sambatxt="\e[ \t$GREEN Configuracoes do Samba $NC"
+samba2txt="\e[ \t$GREEN Incluindo inicialização do deamon do Samba no rc.local $NC"
 shutdowntxt="\e[ \t$GREEN Configuracoes de rc.local_shutdown $NC"
 teamviewerdtxt="\e[ \t$GREEN Incluindo inicialização do deamon do teamviewer no rc.local $NC"
-plextxt="\e[ \t$GREEN Incluindo inicialização do deamon no Plex rc.local $NC"
+plextxt="\e[ \t$GREEN Incluindo inicialização do deamon do Plex no rc.local $NC"
 mirrorstxt="\e[ \t$GREEN mirror-slackware => Administracao dos mirros locais $NC"
 inittabtxt="\e[ \t$GREEN Habilitando o init 4 $NC"
 networkmanagertxt="\e[ \t$GREEN rc.4 => Inicialzando networkmanager $NC"
@@ -150,15 +152,70 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 # 	fi
 #
 #
-    echo -e "$shutdowntxt"
-    echo "#!"$SHELL > $rcd/rc.local_shutdown
-    cat $minilicense >> $rcd/rc.local_shutdown
-    echo "Limpeza geram nos diretórios temporários" >> $rcd/rc.local_shutdown
-    echo "cd /tmp && rm -rf -- *[!"ahlr"]* 2>/dev/null" >> $rcd/rc.local_shutdown
-    echo "cd /var/tmp && rm -rf * 2>/dev/null" >> $rcd/rc.local_shutdown
-    echo "/usr/bin/find /tmp -mindepth 1 -maxdepth 1 -exec /bin/rm -rf {} +;" >> $rcd/rc.local_shutdown
-    echo "find /tmp/lost+found -exec /bin/touch {} \;" >> $rcd/rc.local_shutdown
-    echo "find /tmp -type s -exec  /bin/touch {} \;" >> $rcd/rc.local_shutdown
-    echo "find /tmp -type d -empty -mtime +37 -exec /bin/rmdir {} \;" >> $rcd/rc.local_shutdown
-    echo "find /tmp -type f -mtime +37 -exec rm -rf {} \; " >> $rcd/rc.local_shutdown
-    chmod +x $rcd/rc.local_shutdown
+#     echo -e "$shutdowntxt"
+#     echo "#!"$SHELL > $rcd/rc.local_shutdown
+#     cat $minilicense >> $rcd/rc.local_shutdown
+#     echo "Limpeza geram nos diretórios temporários" >> $rcd/rc.local_shutdown
+#     echo "cd /tmp && rm -rf -- *[!"ahlr"]* 2>/dev/null" >> $rcd/rc.local_shutdown
+#     echo "cd /var/tmp && rm -rf * 2>/dev/null" >> $rcd/rc.local_shutdown
+#     echo "/usr/bin/find /tmp -mindepth 1 -maxdepth 1 -exec /bin/rm -rf {} +;" >> $rcd/rc.local_shutdown
+#     echo "find /tmp/lost+found -exec /bin/touch {} \;" >> $rcd/rc.local_shutdown
+#     echo "find /tmp -type s -exec  /bin/touch {} \;" >> $rcd/rc.local_shutdown
+#     echo "find /tmp -type d -empty -mtime +37 -exec /bin/rmdir {} \;" >> $rcd/rc.local_shutdown
+#     echo "find /tmp -type f -mtime +37 -exec rm -rf {} \; " >> $rcd/rc.local_shutdown
+#     chmod +x $rcd/rc.local_shutdown
+# 
+# 
+#     echo -e "$teamviewerdtxt"
+#     echo "#Inicializando o deamon rc.teamviewerd" >> $rcd/rc.local
+#     echo "if [ -x $rcd/rc.teamviewerd ]; then" >> $rcd/rc.local
+#     echo "$rcd/rc.teamviewerd start" >> $rcd/rc.local
+#     echo "fi" >> $rcd/rc.local
+#     
+#     
+#     echo -e "$plextxt"
+#     echo "#Inicializando o deamon rc.plexmediaserver" >> $rcd/rc.local
+#     echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
+#     echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
+#     echo "fi" >> $rcd/rc.local
+#     
+#     
+#     echo -e "$samba2txt"
+#     echo "#Inicializando o deamon rc.samba" >> $rcd/rc.local
+#     echo "if [ -x $rcd/rc.samba ]; then" >> $rcd/rc.local
+#     echo "$rcd/rc.samba start" >> $rcd/rc.local
+#     echo "fi" >> $rcd/rc.local
+# 
+#     echo -e "$mirrorstxt"
+#     wget -q  -nv -e robots=0 -r -nd -cP $crondaily http://www.slackware.com/~alien/tools/mirror-slackware-current.sh
+#     sed -i "s|BUILDER:-\"Eric Hameleers <alien@slackware.com>\"|BUILDER:-\"Fela  <ahlr_2000@yahoo.com>\"|g" $crondaily/mirror-slackware-current.sh
+#     sed -i "s|/home/ftp/pub/Linux/Slackware|/mnt/sda3/Slackware|g" $crondaily/mirror-slackware-current.sh
+#     sed -i "s|VERBOSE:-\"-q\"|VERBOSE:-\"-v --progress\"|g" $crondaily/mirror-slackware-current.sh
+#     sed -i "s|ISO:-\"CDROM\"}|ISO:-\"DVD\"}|g" $crondaily/mirror-slackware-current.sh
+#     sed -i "s|EXCLUDES:-\"--exclude pasture\"|EXCLUDES:-\"--exclude pasture --exclude source\"|g" $crondaily/mirror-slackware-current.sh
+#     sed -i "s|DVD_EXCLUDES:-\"-x ./testing  -x ./source -x ./extra/source\"|DVD_EXCLUDES:-\"-x ./source -x ./extra/source\"|g" $crondaily/mirror-slackware-current.sh
+#     cp $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware32-current.sh
+#     sed -i "s|ARCH:-\"x86\"|ARCH:-\"x86_64\"|g" $crondaily/mirror-slackware-current.sh
+#     mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware64-current.sh
+
+#     echo -e "$datatxt"
+#     echo "#!"$SHELL > $ulbin/data.sh
+#     cat $minilicense >> $ulbin/data.sh
+#     echo "#Converte o formato 'dd/mm/AAAA' para 'AAAAmmdd' que e o aceito pela" >> $ulbin/data.sh
+#     echo "#opcao '-d' do comando date" >> $ulbin/data.sh
+#     echo "data_inicial=\`echo \"\$1\" | sed 's:\(..\)/\(..\)/\(....\):\3\2\1:'\`" >> $ulbin/data.sh
+#     echo "data_final=\`echo \"\$2\" | sed 's:\(..\)/\(..\)/\(....\):\3\2\1:'\`" >> $ulbin/data.sh
+#     echo "#" >> $ulbin/data.sh
+#     echo "#Cria a variável do valor da mensalidade" >> $ulbin/data.sh
+#     echo "valor_mensalidade=\"\$3\"" >> $ulbin/data.sh
+#     echo "#" >> $ulbin/data.sh
+#     echo "#Converte a data para o formato timestamp que e mais preciso" >> $ulbin/data.sh
+#     echo "data_inicial=\`date -d \"\$data_inicial\" \"+%s\"\`" >> $ulbin/data.sh
+#     echo "data_final=\`date -d \"\$data_final\" \"+%s\"\`" >> $ulbin/data.sh
+#     echo "dias_corridos=\$(((\$data_final - \$data_inicial) / 86400))" >> $ulbin/data.sh
+#     echo "#" >> $ulbin/data.sh
+#     echo "# Calculo do valor proporcional" >> $ulbin/data.sh
+#     echo "echo \"scale = 4; \$valor_mensalidade / 30 * \$dias_corridos\" | bc" >> $ulbin/data.sh
+#     echo "#" >> $ulbin/data.sh
+#     echo "exit 1" >> $ulbin/data.sh
+#     chmod +x $ulbin/data.sh
