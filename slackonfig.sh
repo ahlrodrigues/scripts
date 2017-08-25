@@ -107,7 +107,7 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 BLACK='\e[1;30m'
 RED='\e[1;31m'
 GREEN='\e[1;32m'
-NC='\033$NC' # reset/no color
+NC='\033[0m' # reset/no color
 BLUE='\e[1;34m'
 PINK='\e[1;35m'
 CYAN='\e[1;36m'
@@ -281,7 +281,8 @@ echo
       
 # Ativa tecla NumLock antes do login
 if [ $numLock == yes ]; then
-    echo -e "\e[ \t$CYAN Ativando o NumLock $NC"
+    echo -e "$numLocktxt"
+    echo "Ativa o NumLock"
     sed -i "s/#NumLock=Off/NumLock=On/" /etc/kde/kdm/kdmrc
     sleep 3
 fi
@@ -289,20 +290,20 @@ fi
 # Criar script que move os arquivos de retorno da CEF
 # para uma pasta de backup no diretório /opt/caixa/Recebidos.
 if [ $cleanret == yes ]; then
+    echo -e "$cleanrettxt"
     echo "#!"$SHELL > $crondaily/cleanret.sh
     cat $minilicense >> $crondaily/cleanret.sh
     echo "# Move arquivos de retorno da CAIXA da pasta ~/Downloads para a pasta /opt/caixa/Recebidos" >> $crondaily/cleanret.sh
-    echo "#" >> $crondaily/cleanret.sh
-    echo "# Cria a pasta ../Recebidos" >> $crondaily/cleanret.sh
-    echo "mkdir /opt/caixa/Recebidos" >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
     echo "# Cria as variáveis" >> $crondaily/cleanret.sh
     echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/cleanret.sh
     echo "pasta_destino=/opt/caixa/Recebidos" >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
+    echo "# Cria a pasta ../Recebidos" >> $crondaily/cleanret.sh
+    echo "mkdir /opt/caixa/Recebidos" >> $crondaily/cleanret.sh
+    echo "#" >> $crondaily/cleanret.sh
     echo "# Move arquivos *.ret para a pasta de Recebidos" >> $crondaily/cleanret.sh
-    echo "cd \$pasta_origem && mv *.ret \$pasta_destino" >> $crondaily/cleanret.sh
-    chmod +x $crondaily/cleanret.sh
+    echo "mv \$pasta_origem/*.ret \$pasta_destino" >> $crondaily/cleanret.sh
     sleep 3
 fi
 
@@ -312,7 +313,6 @@ if [ $mvrejsgr == yes ]; then
     echo -e "$mvrejsgrtxt"
     echo "#!"$SHELL > $crondaily/mvrejsgr.sh
     cat $minilicense >> $crondaily/mvrejsgr.sh
-    echo "#Mover os arquivos de rejeitados e francesinha do BNB para a pasta ../BNB/Arquivos" >> $crondaily/mvrejsgr.sh
     echo "#" >> $crondaily/mvrejsgr.sh
     echo "# Cria variáveis" >> $crondaily/mvrejsgr.sh
     echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/mvrejsgr.sh
@@ -347,7 +347,7 @@ if [ $cleansici == yes ]; then
     sleep 3
 fi
 
-# Criar script backup incremental da pasta ../Projetos para o dropbox
+# Criar script de backup incremental da pasta ../Projetos para o dropbox
 if [ $backupprojetos == yes ]; then
     echo -e "$backupprojetostxt"
     echo "#!"$SHELL > $cronhourly/backupprojetos.sh
@@ -356,31 +356,46 @@ if [ $backupprojetos == yes ]; then
     echo "#" >> $cronhourly/backupprojetos.sh
     echo "rsync -azhv /mnt/sda3/Projetos/ /home/ahlr/Dropbox/TONICO/Projetos/" >> $cronhourly/backupprojetos.sh
     chmod +x $cronhourly/backupprojetos.sh
+    sleep 3
 fi
 
+# Criar script que move o arquivo de retornodo BNB para a pasta ../skyline/recebidos
  if [ $cleansai == yes ]; then
     echo -e "$cleansaitxt"
-    echo "#!"$SHELL >> $crondaily/cleansai.sh
-    echo "#Movendo arquivos de retorno do BNB" >> $crondaily/cleansai.sh
-    echo "mkdir /home/ahlr/.wine/drive_c/skyline/recebidos" >> $crondaily/cleansai.sh
+    echo "#!"$SHELL > $crondaily/cleansai.sh
+    cat $minilicense >> $crondaily/cleansai.sh
+    echo "#Move arquivos de retorno do BNB" >> $crondaily/cleansai.sh
+    echo "#" >> $crondaily/cleansai.sh
+    echo "#Cria as variáveis" >> $crondaily/cleansai.sh
     echo "pasta_origem=/home/ahlr/.wine/drive_c/skyline/inbox" >> $crondaily/cleansai.sh
     echo "pasta_destino=/home/ahlr/.wine/drive_c/skyline/recebidos" >> $crondaily/cleansai.sh
-    echo "cd \$pasta_origem && mv *.SAI \$pasta_destino" >> $crondaily/cleansai.sh
+    echo "#" >> $crondaily/cleansai.sh
+    echo "#Cria a pasta ../skyline/recebidos para backup" >> $crondaily/cleansai.sh
+    echo "#dos arquivos de retorno do BNB" >> $crondaily/cleansai.sh
+    echo "mkdir /home/ahlr/.wine/drive_c/skyline/recebidos" >> $crondaily/cleansai.sh
+    echo "#" >> $crondaily/cleansai.sh
+    echo "#Copia os arquivos de retorno para a pasta de backup" >> $crondaily/cleansai.sh
+    echo "mv \$pasta_origem/*.SAI \$pasta_destino" >> $crondaily/cleansai.sh
     chmod +x $crondaily/cleansai.sh
     sleep 3
 fi
 
+# Criar script que limpa o cache todos os dias no horário do crontab
 if [ $cleancache == yes ]; then	
     echo -e "$cleancachetxt"
-    echo "#!"$SHELL >> $crondaily/cleancache.sh
-    cat $minilicense >> $crondaily/cleansici.sh
+    echo "#!"$SHELL > $crondaily/cleancache.sh
+    cat $minilicense >> $crondaily/cleancache.sh
+    echo "#Apaga o cache" >> $crondaily/cleancache.sh
+    echo "#" >> $crondaily/cleancache.sh
+    echo "#Move tudo para o lixo" >> $crondaily/cleancache.sh
     echo "echo 3 > /proc/sys/vm/drop_caches" >> $crondaily/cleancache.sh
-    chmod +x $crondaily/cleancache.sh
     sleep 3
 fi
 
+# Configura o servidor NTP Brasileiro
 if [ $ntp == yes ]; then	
     echo -e "$ntptxt"
+    sed -i "s/^#*/#/" /etc/ntp.conf # --------- comenta todas as linhas --------- #	
     sed -i "s/#server 3.pool.ntp.org/server pool.ntp.br/g" /etc/ntp.conf
     chmod +x $rcd/rc.ntpd
 	if [ -x $rcd/rc.ntpd ]; then
@@ -389,27 +404,32 @@ if [ $ntp == yes ]; then
     sleep 3
 fi
 
+# Inicia o servidor de impressão CUPS
 if [ $cups == yes ]; then
     echo -e "$cupstxt"
     chmod +x $rcd/rc.cups
     $rcd/rc.cups restart
     sleep 3
 fi
-	
+
+# Configura o servidor de compartilhamento de aquivos Samba
 if [ $samba == yes ]; then
     echo -e "$sambatxt"
     sed -i "s/MYGROUP/workgroup/g" /etc/samba/smb.conf-sample
     mv /etc/samba/smb.conf-sample /etc/samba/smb.conf
     chmod +x $rcd/rc.samba
-	if [ -x $rcd/rc.plexmediaserver ]; then
-	    $rcd/rc.plexmediaserver start
+	if [ -x $rcd/rc.samba ]; then
+	    $rcd/rc.samba start
 	fi
     sleep 3
 fi
 
+# Limpa os diretórios /tmp a cada shutdown
 if [ $shutdown == yes ]; then
     echo -e "$shutdowntxt"
-    echo "#!"$SHELL >> $rcd/rc.local_shutdown
+    echo "#!"$SHELL > $rcd/rc.local_shutdown
+    cat $minilicense >> $rcd/rc.local_shutdown
+    echo "Limpeza geram nos diretórios temporários" >> $rcd/rc.local_shutdown
     echo "cd /tmp && rm -rf -- *[!"ahlr"]* 2>/dev/null" >> $rcd/rc.local_shutdown
     echo "cd /var/tmp && rm -rf * 2>/dev/null" >> $rcd/rc.local_shutdown
     echo "/usr/bin/find /tmp -mindepth 1 -maxdepth 1 -exec /bin/rm -rf {} +;" >> $rcd/rc.local_shutdown

@@ -26,12 +26,12 @@
 ##
 # Move arquivos de retorno da CAIXA da pasta ~/Downloads para a pasta /opt/caixa/Recebidos
 #
-# Cria a pasta ../Recebidos
-mkdir /opt/caixa/Recebidos
-#
 # Cria as variáveis
 pasta_origem=/home/ahlr/Downloads
 pasta_destino=/opt/caixa/Recebidos
 #
+# Cria a pasta ../Recebidos
+mkdir /opt/caixa/Recebidos
+#
 # Move arquivos *.ret para a pasta de Recebidos
-cd $pasta_origem && mv *.ret $pasta_destino
+mv $pasta_origem/*.ret $pasta_destino

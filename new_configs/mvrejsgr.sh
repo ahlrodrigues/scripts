@@ -24,7 +24,6 @@
 ##################################################################################
 ###
 ##
-#Mover os arquivos de rejeitados e francesinha do BNB para a pasta ../BNB/Arquivos
 #
 # Cria variáveis
 pasta_origem=/home/ahlr/Downloads

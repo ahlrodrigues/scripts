@@ -24,6 +24,15 @@
 ##################################################################################
 ###
 ##
-#Faz backup incremental da pasta ../Projetos para o dropbox
+#Move arquivos de retorno do BNB
 #
-rsync -azhv /mnt/sda3/Projetos/ /home/ahlr/Dropbox/TONICO/Projetos/
+#Cria as variáveis
+pasta_origem=/home/ahlr/.wine/drive_c/skyline/inbox
+pasta_destino=/home/ahlr/.wine/drive_c/skyline/recebidos
+#
+#Cria a pasta ../skyline/recebidos para backup
+#dos arquivos de retorno do BNB
+mkdir /home/ahlr/.wine/drive_c/skyline/recebidos
+#
+#Copia os arquivos de retorno para a pasta de backup
+mv $pasta_origem/*.SAI $pasta_destino

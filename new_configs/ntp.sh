@@ -1,4 +1,5 @@
 #!/bin/bash
+#
 ##
 ###
 ##################################################################################
@@ -24,6 +25,18 @@
 ##################################################################################
 ###
 ##
-#Faz backup incremental da pasta ../Projetos para o dropbox
+##Configura um servidor NTP brasileiro
 #
-rsync -azhv /mnt/sda3/Projetos/ /home/ahlr/Dropbox/TONICO/Projetos/
+rcd=/etc/rc.d
+#
+# Comenta todas as linhas do arquivo 
+sed -i "s/^#*/#/" /etc/ntp.conf # --------- comenta todas as linhas --------- #	
+#
+# Troca o servidor atual pelo servidor br
+sed -i "s/#server 3.pool.ntp.org/server pool.ntp.br/g" /etc/ntp.conf
+#
+# Inicia o deamon $rcd/rc.ntpd
+chmod +x $rcd/rc.ntpd
+    if [ -x $rcd/rc.ntpd ]; then
+       $rcd/rc.ntpd start
+    fi
