@@ -72,6 +72,8 @@ data=no
 pkgs=no
 slackpkg=no
 multilib=no
+konsole=no
+winbox=no
 
 # --------- Mensagens --------- #
 
@@ -103,6 +105,8 @@ datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
 pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
+konsoletxt="\e[ \t$GREEN Configura o profile do Konsole $NC"
+winboxtxt="\e[ \t$GREEN winbox.sh => cria a entrada do Winbos no mennu do KDE $NC"
 
 # --------- Utilização de Cores  --------- #
 BLACK='\e[1;30m'
@@ -247,10 +251,18 @@ echo
 	if [ $lang == yes ]; then
 	  echo -e "$langtxt"
 	fi
+	
+	if [ $konsole == yes ]; then
+	  echo -e "$konsoletxt"
+	fi
+	
 	if [ $thunderbackup == yes ]; then
 	  echo -e "$thunderbackuptxt"
 	fi
-
+	
+	if [ $winbox == yes ]; then
+	  echo -e "$winboxtxt"
+	fi
 		
 # --------- Listando funções --------- #
 	echo
@@ -509,6 +521,13 @@ if [ $inittab == yes ]; then
     sleep 3
 fi
 
+# Configura o profile do Konsole
+if [ $konsole == yes ]; then
+    echo -e "$konsoletxt"
+    sed -i "s/bin\/bash\/bin/bash -l/g" home/ahlr/.kde/share/apps/konsole/Shell.profile
+    sleep 3
+fi
+
 # Configura o idioma pt_BR no sistema 
 if [ $lang == yes ]; then
     echo -e "$langtxt"
@@ -549,6 +568,22 @@ if [ $data == yes ]; then
     chmod +x $ulbin/data.sh
     sleep 3
 fi  
+
+#Criação do arquivo winbox.desktop
+if [ $winbox == yes ]; then
+    echo "[Desktop Entry]" > /usr/share/applications/winbox.desktop
+    echo "Exec=wine /home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/winbox.exe" >> /usr/share/applications/winbox.desktop
+    echo "GenericName=Winbox" >> /usr/share/applications/winbox.desktop
+    echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Imagens/winbox.png" >> /usr/share/applications/winbox.desktop
+    echo "Name=Permite acesso ao Servidor" >> /usr/share/applications/winbox.desktop
+    echo "Categories=Network;" >> /usr/share/applications/winbox.desktop
+    echo "NoDisplay=false" >> /usr/share/applications/winbox.desktop
+    echo "StartupNotify=true" >> /usr/share/applications/winbox.desktop
+    echo "Terminal=0" >> /usr/share/applications/winbox.desktop
+    echo "X-KDE-SubstituteUID=false" >> /usr/share/applications/winbox.desktop
+    update-desktop-database -q
+    sleep 3
+fi
 
 if [ $thunderbackup == yes ]; then
     echo -e "$thunderbackuptxt"

@@ -197,7 +197,8 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 #     cp $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware32-current.sh
 #     sed -i "s|ARCH:-\"x86\"|ARCH:-\"x86_64\"|g" $crondaily/mirror-slackware-current.sh
 #     mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware64-current.sh
-
+#
+#
 #     echo -e "$datatxt"
 #     echo "#!"$SHELL > $ulbin/data.sh
 #     cat $minilicense >> $ulbin/data.sh
@@ -219,3 +220,19 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 #     echo "#" >> $ulbin/data.sh
 #     echo "exit 1" >> $ulbin/data.sh
 #     chmod +x $ulbin/data.sh
+#
+#
+#      echo "[Desktop Entry]" > /usr/share/applications/winbox.desktop
+#      echo "Exec=wine /home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/winbox.exe" >> /usr/share/applications/winbox.desktop
+#      echo "GenericName=Winbox" >> /usr/share/applications/winbox.desktop
+#      echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Imagens/winbox.png" >> /usr/share/applications/winbox.desktop
+#      echo "Name=Permite acesso ao Servidor" >> /usr/share/applications/winbox.desktop
+#      echo "Categories=Network;" >> /usr/share/applications/winbox.desktop
+#      echo "NoDisplay=false" >> /usr/share/applications/winbox.desktop
+#      echo "StartupNotify=true" >> /usr/share/applications/winbox.desktop
+#      echo "Terminal=0" >> /usr/share/applications/winbox.desktop
+#      echo "X-KDE-SubstituteUID=false" >> /usr/share/applications/winbox.desktop
+#      update-desktop-database -q
+
+
+
