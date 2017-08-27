@@ -234,5 +234,17 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 #      echo "X-KDE-SubstituteUID=false" >> /usr/share/applications/winbox.desktop
 #      update-desktop-database -q
 
-
+echo "Instalando TeamViewer"
+wget -q -e robots=0 -r -nd -cP /tmp https://download.teamviewer.com/download/teamviewer_i386.deb
+wget -q -e robots=0 -r -nd -cP /tmp http://slackbuilds.org/slackbuilds/14.2/network/teamviewer.tar.gz
+cd /tmp
+tar zvxf teamviewer.tar.gz
+mv teamviewer*.deb teamviewer/
+cd teamviewer
+./teamviewer.SlackBuild
+installpkg /tmp/teamviewer-*.tgz
+rm -fR /tmp/teamviewer*
+chmod +x /etc/rc.d/rc.teamviewerd
+/etc/rc.d/rc.teamviewerd start
+#sleep 3
 

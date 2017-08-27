@@ -56,6 +56,7 @@ ntp=no
 cleancache=no
 cups=no
 samba=no
+sanba2=no
 shutdown=no
 teamviewerd=no
 plex=no
@@ -71,6 +72,7 @@ thunderbackup=no
 data=no
 pkgs=no
 slackpkg=no
+teamviewer=no
 multilib=no
 konsole=no
 winbox=no
@@ -85,9 +87,8 @@ cleansicitxt="\e[ \t$GREEN cleansici.sh => Move os arquivos declaração do SICI
 backupprojetostxt="\e[ \t$GREEN backupprojetos.sh => Mover os arquivos de backup das configuracoes $NC"
 cleansaitxt="\e[ \t$GREEN cleansai.sh => Move os arquivos de retorno do bnb $NC"
 cleancachetxt="\e[ \t$GREEN cleancache.sh => Limpa o cache $NC"
-ntptxt="\e[ \t$GREEN Sincronizando com o pool.ntp.br $NC"
 cupstxt="\e[ \t$GREEN Inicializando do CUPS $NC"
-sambatxt="\e[ \t$GREEN Configuracoes do Samba $NC"
+sambatxt="\e[ \t$GREEN Configuraçoes do Samba $NC"
 samba2txt="\e[ \t$GREEN Incluindo inicialização do deamon do Samba no rc.local $NC"
 shutdowntxt="\e[ \t$GREEN Configuracoes de rc.local_shutdown $NC"
 teamviewerdtxt="\e[ \t$GREEN Incluindo inicialização do deamon do teamviewer no rc.local $NC"
@@ -106,7 +107,8 @@ pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 konsoletxt="\e[ \t$GREEN Configura o profile do Konsole $NC"
-winboxtxt="\e[ \t$GREEN winbox.sh => cria a entrada do Winbos no mennu do KDE $NC"
+winboxtxt="\e[ \t$GREEN winbox.sh => Cria a entrada do Winbos no mennu do KDE $NC"
+ntptxt="\e[ \t$GREEN ntp.sh => Habilita o NTP pool server brasileiro $NC"
 
 # --------- Utilização de Cores  --------- #
 BLACK='\e[1;30m'
@@ -171,7 +173,7 @@ echo
 	if [ $bnb == yes ]; then
 	  echo -e "$bnbtxt"
 	fi
-	
+
 	if [ $numLock == yes ]; then
 	  echo -e "$numLocktxt"
 	fi
@@ -195,6 +197,10 @@ echo
 	if [ $cleansai == yes ]; then
 	  echo -e "$cleansaitxt"
 	fi
+		
+	if [ $ntp == yes ]; then
+	  echo -e "$ntptxt"
+	fi
 	
 	if [ $cleancache == yes ]; then
 	  echo -e "$cleancachetxt"
@@ -206,6 +212,10 @@ echo
 	
 	if [ $samba == yes ]; then
 	  echo -e "$sambatxt"
+	fi
+		
+	if [ $samba2 == yes ]; then
+	  echo -e "$samba2txt"
 	fi
 	
 	if [ $shutdown == yes ]; then
@@ -434,6 +444,18 @@ if [ $samba == yes ]; then
     sleep 3
 fi
 
+# Iniciando do deamon Samba
+if [ $samba2 == yes ]; then
+    echo -e "$samba2txt"
+    echo "#Inicializando o deamon rc.samba" >> $rcd/rc.local
+    echo "if [ -x $rcd/rc.samba ]; then" >> $rcd/rc.local
+    echo "$rcd/rc.samba start" >> $rcd/rc.local
+    echo "fi" >> $rcd/rc.local
+    echo "#" >> $rcd/rc.local
+    chmod +x $rcd/rc.samba >> $rcd/rc.local
+    sleep 3
+fi
+
 # Limpa os diretórios /tmp a cada shutdown
 if [ $shutdown == yes ]; then
     echo -e "$shutdowntxt"
@@ -461,39 +483,15 @@ if [ $teamviewerd == yes ]; then
     sleep 3
 fi
 
-# Iniciando do deamon Plex
-# if [ $plex == yes ]; then
-#     echo -e "$plextxt"
-#     echo "#Inicializando o deamon rc.teamviewerd" >> $rcd/rc.local
-#     echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
-#     echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
-#     echo "fi" >> $rcd/rc.local
-#     echo "#" >> $rcd/rc.local
-#     chmod +x $rcd/rc.plexmediaserver >> $rcd/rc.local
-#     sleep 3
-# fi
-
-# Iniciando do deamon Samba
-if [ $samba == yes ]; then
-    echo -e "$sambatxt"
-    echo "#Inicializando o deamon rc.samba" >> $rcd/rc.local
-    echo "if [ -x $rcd/rc.samba ]; then" >> $rcd/rc.local
-    echo "$rcd/rc.samba start" >> $rcd/rc.local
+#Iniciando do deamon Plex
+if [ $plex == yes ]; then
+    echo -e "$plextxt"
+    echo "#Inicializando o deamon rc.teamviewerd" >> $rcd/rc.local
+    echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
+    echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
     echo "#" >> $rcd/rc.local
-    chmod +x $rcd/rc.samba >> $rcd/rc.local
-    sleep 3
-fi
-
-# Iniciando do deamon networkmanager  
-if [ $networkmanager == yes ]; then
-    echo -e "$networkmanagertxt"
-    echo "#Inicializando o deamon rc.networkmanager" >> $rcd/rc.local
-    echo "if [ -x $rcd/rc.networkmanager ]; then" >> $rcd/rc.local
-    echo "$rcd/rc.networkmanager start" >> $rcd/rc.local
-    echo fi >> $rcd/rc.local
-    echo "#" >> $rcd/rc.local
-    chmod +x $rcd/rc.networkmanager >> $rcd/rc.local
+    chmod +x $rcd/rc.plexmediaserver >> $rcd/rc.local
     sleep 3
 fi
 
@@ -518,6 +516,18 @@ fi
 if [ $inittab == yes ]; then
     echo -e "$inittabtxt"
     sed -i "s/id:3/id:4/g" /etc/inittab
+    sleep 3
+fi
+
+# Iniciando do deamon networkmanager  
+if [ $networkmanager == yes ]; then
+    echo -e "$networkmanagertxt"
+    echo "#Inicializando o deamon rc.networkmanager" >> $rcd/rc.local
+    echo "if [ -x $rcd/rc.networkmanager ]; then" >> $rcd/rc.local
+    echo "$rcd/rc.networkmanager start" >> $rcd/rc.local
+    echo "fi" >> $rcd/rc.local
+    echo "#" >> $rcd/rc.local
+    chmod +x $rcd/rc.networkmanager >> $rcd/rc.local
     sleep 3
 fi
 
@@ -629,7 +639,27 @@ fi
     rm /tmp/slackpkg+*
     sleep 3
 fi
-	
+
+if [ $teamviewer == yes ]; then
+    echo -e "$teamviewertxt"
+    wget -q -e robots=0 -r -nd -cP /tmp https://download.teamviewer.com/download/teamviewer_i386.deb
+    wget -q -e robots=0 -r -nd -cP /tmp http://slackbuilds.org/slackbuilds/14.2/network/teamviewer.tar.gz
+    cd /tmp
+    tar zvxf teamviewer.tar.gz
+    mv teamviewer*.deb teamviewer/
+    cd teamviewer
+    ./teamviewer.SlackBuild
+    installpkg /tmp/teamviewer-*.tgz
+    rm -fR /tmp/teamviewer*
+    chmod +x /etc/rc.d/rc.teamviewerd
+    /etc/rc.d/rc.teamviewerd start
+    sleep 3
+fi
+
+
+
+
+
 # --------- Fim das funções --------- #	
 echo
 echo
