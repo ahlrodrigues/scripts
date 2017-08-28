@@ -1,10 +1,10 @@
-
+<div align="center">
 ![SLACKONFIG][logo]
 
 
--> [logo]: https://bytebucket.org/ahlrodrigues/slackonfig/raw/adca69d05d4b9db0ee9cfa65f54cad4e87dabad7/imgs/Slackware1.png <-
+[logo]: https://bytebucket.org/ahlrodrigues/slackonfig/raw/adca69d05d4b9db0ee9cfa65f54cad4e87dabad7/imgs/Slackware1.png
 
-
+</div> 
 
 
 **SLACKONFIG** - o Scripts para configuração do Slackware GNU/Linux
