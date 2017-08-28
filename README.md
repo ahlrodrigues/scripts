@@ -1,4 +1,4 @@
-<div align="center"><img src="https://github.com/ahlrodrigues/slackonfig/blob/master/imgs/Slackware1.png"></div> 
+<div align="center"><img src="https://bytebucket.org/ahlrodrigues/slackonfig/raw/adca69d05d4b9db0ee9cfa65f54cad4e87dabad7/imgs/Slackware1.png"></div> 
 
 
 
@@ -92,4 +92,4 @@ termos da Licença Pública Geral GNU:
 >Fundação do Software Livre (FSF) Inc. 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-<div align="center"><img src="https://github.com/ahlrodrigues/slackonfig/blob/master/imgs/poweredbyslack.gif"></div> 
+<div align="center"><img src="https://bytebucket.org/ahlrodrigues/slackonfig/raw/adca69d05d4b9db0ee9cfa65f54cad4e87dabad7/imgs/poweredbyslack.gif"></div> 
