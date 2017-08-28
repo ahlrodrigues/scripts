@@ -1,8 +1,9 @@
 
 ![SLACKONFIG][logo]
+
 [logo]: https://bytebucket.org/ahlrodrigues/slackonfig/raw/adca69d05d4b9db0ee9cfa65f54cad4e87dabad7/imgs/Slackware1.png
 
-.....
+
 
 
 **SLACKONFIG** - o Scripts para configuração do Slackware GNU/Linux
@@ -94,5 +95,6 @@ termos da Licença Pública Geral GNU:
 >Fundação do Software Livre (FSF) Inc. 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-![SLACKONFIG][pe]
+![Sk][pe]
+
 [pe]: https://bytebucket.org/ahlrodrigues/slackonfig/raw/adca69d05d4b9db0ee9cfa65f54cad4e87dabad7/imgs/poweredbyslack.gif
