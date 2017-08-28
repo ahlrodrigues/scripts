@@ -76,6 +76,7 @@ teamviewer=no
 multilib=no
 konsole=no
 winbox=no
+skyline=no
 
 # --------- Mensagens --------- #
 
@@ -107,7 +108,8 @@ pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 konsoletxt="\e[ \t$GREEN Configura o profile do Konsole $NC"
-winboxtxt="\e[ \t$GREEN winbox.sh => Cria a entrada do Winbos no mennu do KDE $NC"
+winboxtxt="\e[ \t$GREEN winbox.sh => Cria a entrada do Winbox no mennu do KDE $NC"
+skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE $NC"
 ntptxt="\e[ \t$GREEN ntp.sh => Habilita o NTP pool server brasileiro $NC"
 
 # --------- Utilização de Cores  --------- #
@@ -273,7 +275,11 @@ echo
 	if [ $winbox == yes ]; then
 	  echo -e "$winboxtxt"
 	fi
-		
+	
+	if [ skyline == yes ]; then
+	  echo -e "$skylinetxt"
+	fi
+
 # --------- Listando funções --------- #
 	echo
 	echo
@@ -581,6 +587,7 @@ fi
 
 #Criação do arquivo winbox.desktop
 if [ $winbox == yes ]; then
+    echo -e "$winboxtxt"
     echo "[Desktop Entry]" > /usr/share/applications/winbox.desktop
     echo "Exec=wine /home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/winbox.exe" >> /usr/share/applications/winbox.desktop
     echo "GenericName=Winbox" >> /usr/share/applications/winbox.desktop
@@ -595,6 +602,22 @@ if [ $winbox == yes ]; then
     sleep 3
 fi
 
+if [ $skyline == yes ]; then
+    echo -e "$skylinetxt"
+    echo "[Desktop Entry]" > /usr/share/applications/bnb.desktop
+    echo "Exec=/usr/local/bin/bnb.sh" >> /usr/share/applications/bnb.desktop
+    echo "GenericName=BNB" >> /usr/share/applications/bnb.desktop
+    echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/skyline.jpg" >> /usr/share/applications/bnb.desktop
+    echo "Name=Comunicação da cobrança BNB" >> /usr/share/applications/bnb.desktop
+    echo "Categories=Network;" >> /usr/share/applications/bnb.desktop
+    echo "NoDisplay=false" >> /usr/share/applications/bnb.desktop
+    echo "StartupNotify=true" >> /usr/share/applications/bnb.desktop
+    echo "Terminal=1" >> /usr/share/applications/bnb.desktop
+    echo "X-KDE-SubstituteUID=false" >> /usr/share/applications/bnb.desktop
+    update-desktop-database -q
+    sleep 3
+fi     
+     
 if [ $thunderbackup == yes ]; then
     echo -e "$thunderbackuptxt"
     echo "#!"$SHELL >> $crondaily/thunderbirdbackup.sh

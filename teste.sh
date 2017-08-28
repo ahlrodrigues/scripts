@@ -233,18 +233,30 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 #      echo "Terminal=0" >> /usr/share/applications/winbox.desktop
 #      echo "X-KDE-SubstituteUID=false" >> /usr/share/applications/winbox.desktop
 #      update-desktop-database -q
+#
+#
+#      wget -q -e robots=0 -r -nd -cP /tmp https://download.teamviewer.com/download/teamviewer_i386.deb
+#      wget -q -e robots=0 -r -nd -cP /tmp http://slackbuilds.org/slackbuilds/14.2/network/teamviewer.tar.gz
+#      cd /tmp
+#      tar zvxf teamviewer.tar.gz
+#      mv teamviewer*.deb teamviewer/
+#      cd teamviewer
+#      ./teamviewer.SlackBuild
+#      installpkg /tmp/teamviewer-*.tgz
+#      rm -fR /tmp/teamviewer*
+#      chmod +x /etc/rc.d/rc.teamviewerd
+#      /etc/rc.d/rc.teamviewerd start
+#
+#
 
-echo "Instalando TeamViewer"
-wget -q -e robots=0 -r -nd -cP /tmp https://download.teamviewer.com/download/teamviewer_i386.deb
-wget -q -e robots=0 -r -nd -cP /tmp http://slackbuilds.org/slackbuilds/14.2/network/teamviewer.tar.gz
-cd /tmp
-tar zvxf teamviewer.tar.gz
-mv teamviewer*.deb teamviewer/
-cd teamviewer
-./teamviewer.SlackBuild
-installpkg /tmp/teamviewer-*.tgz
-rm -fR /tmp/teamviewer*
-chmod +x /etc/rc.d/rc.teamviewerd
-/etc/rc.d/rc.teamviewerd start
-#sleep 3
-
+     echo "[Desktop Entry]" > /usr/share/applications/bnb.desktop
+     echo "Exec=/usr/local/bin/bnb.sh" >> /usr/share/applications/bnb.desktop
+     echo "GenericName=BNB" >> /usr/share/applications/bnb.desktop
+     echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/skyline.jpg" >> /usr/share/applications/bnb.desktop
+     echo "Name=Comunicação da cobrança BNB" >> /usr/share/applications/bnb.desktop
+     echo "Categories=Network;" >> /usr/share/applications/bnb.desktop
+     echo "NoDisplay=false" >> /usr/share/applications/bnb.desktop
+     echo "StartupNotify=true" >> /usr/share/applications/bnb.desktop
+     echo "Terminal=1" >> /usr/share/applications/bnb.desktop
+     echo "X-KDE-SubstituteUID=false" >> /usr/share/applications/bnb.desktop
+     update-desktop-database -q
