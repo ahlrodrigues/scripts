@@ -1,3 +1,6 @@
+Reference-style: 
+![alt text][logo]
+
 [logo]: https://bytebucket.org/ahlrodrigues/slackonfig/raw/adca69d05d4b9db0ee9cfa65f54cad4e87dabad7/imgs/Slackware1.png
 
 
