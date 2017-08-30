@@ -17,7 +17,7 @@ cronhourly=/home/ahlr
 minilicense=/tmp/minilicense.txt
 rcd=/home/ahlr
 ulbin=/home/ahlr
-
+usa=/home/ahlr
 
 
 bnbtxt="\e[ \t$GREEN bnb.sh => Busca arquivos de retorno da BNB $NC"
@@ -43,7 +43,7 @@ reccxtxt="\e[ \t$GREEN Cria pasta para os arquivos da CEF e dá permissão de ex
 brothertxt="\e[ \t$GREEN instalacao do driver da impressora $NC"
 langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
 thunderbirdtxt="\e[ \t$GREEN thunderbirdbackup.sh => Restauracao do Thunderbird $NC"
-thunderbackup="\e[ \t$GREEN thunderbackup.sh => Backup do Thunderbird $NC"
+thunderbackuptxt="\e[ \t$GREEN thunderbackup.sh => Backup do Thunderbird $NC"
 datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
 pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
@@ -222,41 +222,48 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 #     chmod +x $ulbin/data.sh
 #
 #
-#      echo "[Desktop Entry]" > /usr/share/applications/winbox.desktop
-#      echo "Exec=wine /home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/winbox.exe" >> /usr/share/applications/winbox.desktop
-#      echo "GenericName=Winbox" >> /usr/share/applications/winbox.desktop
-#      echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Imagens/winbox.png" >> /usr/share/applications/winbox.desktop
-#      echo "Name=Permite acesso ao Servidor" >> /usr/share/applications/winbox.desktop
-#      echo "Categories=Network;" >> /usr/share/applications/winbox.desktop
-#      echo "NoDisplay=false" >> /usr/share/applications/winbox.desktop
-#      echo "StartupNotify=true" >> /usr/share/applications/winbox.desktop
-#      echo "Terminal=0" >> /usr/share/applications/winbox.desktop
-#      echo "X-KDE-SubstituteUID=false" >> /usr/share/applications/winbox.desktop
-#      update-desktop-database -q
-#
-#
-#      wget -q -e robots=0 -r -nd -cP /tmp https://download.teamviewer.com/download/teamviewer_i386.deb
-#      wget -q -e robots=0 -r -nd -cP /tmp http://slackbuilds.org/slackbuilds/14.2/network/teamviewer.tar.gz
-#      cd /tmp
-#      tar zvxf teamviewer.tar.gz
-#      mv teamviewer*.deb teamviewer/
-#      cd teamviewer
-#      ./teamviewer.SlackBuild
-#      installpkg /tmp/teamviewer-*.tgz
-#      rm -fR /tmp/teamviewer*
-#      chmod +x /etc/rc.d/rc.teamviewerd
-#      /etc/rc.d/rc.teamviewerd start
-#
-#
+#     echo "[Desktop Entry]" > $usa/winbox.desktop
+#     echo "Exec=wine /home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/winbox.exe" >> $usa/winbox.desktop
+#     echo "GenericName=Winbox" >> $usa/winbox.desktop
+#     echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Imagens/winbox.png" >> $usa/winbox.desktop
+#     echo "Name=Permite acesso ao Servidor" >> $usa/winbox.desktop
+#     echo "Categories=Network;" >> $usa/winbox.desktop
+#     echo "NoDisplay=false" >> $usa/winbox.desktop
+#     echo "StartupNotify=true" >> $usa/winbox.desktop
+#     echo "Terminal=0" >> $usa/winbox.desktop
+#     echo "X-KDE-SubstituteUID=false" >> $usa/winbox.desktop
+# 
+# 
+#     echo "[Desktop Entry]" > $usa/bnb.desktop
+#     echo "Exec=/usr/local/bin/bnb.sh" >> $usa/bnb.desktop
+#     echo "GenericName=BNB" >> $usa/bnb.desktop
+#     echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/skyline.png" >> $usa/bnb.desktop
+#     echo "Name=Comunicação da cobrança BNB" >> $usa/bnb.desktop
+#     echo "Categories=Network;" >> $usa/bnb.desktop
+#     echo "NoDisplay=false" >> $usa/bnb.desktop
+#     echo "StartupNotify=true" >> $usa/bnb.desktop
+#     echo "Terminal=1" >> $usa/bnb.desktop
+#     echo "X-KDE-SubstituteUID=false" >> $usa/bnb.desktop
+# 
+# 
+#     wget -q -e robots=0 -r -nd -cP /tmp \
+#     https://download.teamviewer.com/download/teamviewer_i386.deb \
+#     http://slackbuilds.org/slackbuilds/14.2/network/teamviewer.tar.gz
+#     cd /tmp
+#     tar zvxf teamviewer.tar.gz
+#     mv teamviewer*.deb teamviewer/
+#     cd teamviewer
+#     ./teamviewer.SlackBuild
+#     installpkg /tmp/teamviewer-*.tgz
+#     rm -fR /tmp/teamviewer*
+#     chmod +x /etc/rc.d/rc.teamviewerd
+#     /etc/rc.d/rc.teamviewerd start
 
-     echo "[Desktop Entry]" > /usr/share/applications/bnb.desktop
-     echo "Exec=/usr/local/bin/bnb.sh" >> /usr/share/applications/bnb.desktop
-     echo "GenericName=BNB" >> /usr/share/applications/bnb.desktop
-     echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/skyline.jpg" >> /usr/share/applications/bnb.desktop
-     echo "Name=Comunicação da cobrança BNB" >> /usr/share/applications/bnb.desktop
-     echo "Categories=Network;" >> /usr/share/applications/bnb.desktop
-     echo "NoDisplay=false" >> /usr/share/applications/bnb.desktop
-     echo "StartupNotify=true" >> /usr/share/applications/bnb.desktop
-     echo "Terminal=1" >> /usr/share/applications/bnb.desktop
-     echo "X-KDE-SubstituteUID=false" >> /usr/share/applications/bnb.desktop
-     update-desktop-database -q
+
+    echo -e "$thunderbackuptxt"
+    echo "#!"$SHELL > $crondaily/thunderbirdbackup.sh
+    cat $minilicense >> $crondaily/thunderbirdbackup.sh
+    echo "#Faz cópia incremental do diretório de configurações" >> $crondaily/thunderbirdbackup.sh
+    echo "#do tunderbird para a pasta /mnt/sda3/Thunderbird" >> $crondaily/thunderbirdbackup.sh
+    echo "rsync -azhv /home/ahlr/.thunderbird/ /mnt/sda3/Thunderbird/" >> $crondaily/thunderbirdbackup.sh
+
