@@ -628,6 +628,7 @@ if [ $thunderbackup == yes ]; then
     echo "#Faz cópia incremental do diretório de configurações" >> $crondaily/thunderbirdbackup.sh
     echo "#do tunderbird para a pasta /mnt/sda3/Thunderbird" >> $crondaily/thunderbirdbackup.sh
     echo "rsync -azhv /home/ahlr/.thunderbird/ /mnt/sda3/Thunderbird/" >> $crondaily/thunderbirdbackup.sh
+    chmod +x $crondaily/thunderbirdbackup.sh
 fi
    
 if [ $thunderbird == yes ]; then
