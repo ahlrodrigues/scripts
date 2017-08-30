@@ -69,6 +69,8 @@ brother=no
 lang=no
 thunderbird=no
 thunderbackup=no
+bbazetonico=no
+bbazenet4you=0
 data=no
 pkgs=no
 slackpkg=no
@@ -102,7 +104,9 @@ reccxtxt="\e[ \t$GREEN Cria pasta para os arquivos da CEF e dá permissão de ex
 brothertxt="\e[ \t$GREEN instalacao do driver da impressora $NC"
 langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
 thunderbirdtxt="\e[ \t$GREEN thunderbirdbackup.sh => Restauracao do Thunderbird $NC"
-thunderbackup="\e[ \t$GREEN thunderbackup.sh => Backup do Thunderbird $NC"
+thunderbackuptxt="\e[ \t$GREEN thunderbackup.sh => Backup do Thunderbird $NC"
+$bbazetonicotxt="\e[ \t$GREEN bbazetonico.sh => Faz backup no Backblaze $NC"
+$bbazenet4you="\e[ \t$GREEN bbazenet4you.sh => Faz backup no Backblaze $NC"
 datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
 pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
@@ -256,7 +260,15 @@ echo
 	if [ $thunderbird == yes ]; then
 	  echo -e "$thunderbirdtxt"
 	fi
-		
+	
+	if [ $bbazetonico == yes ]; then
+	  echo -e "$bbazetonicotxt"
+	fi
+	
+	if [ $bbazenet4you == yes ]; then
+	  echo -e "$bbazenet4youtxt"
+	fi
+	
 	if [ $data == yes ]; then
 	  echo -e "$datatxt"
 	fi
@@ -286,15 +298,15 @@ echo
 	echo
 	echo -e "\e[ \t$CYAN Deseja executar as funções acima? Posso continuar? [Y|N] $NC"
 
-	read RESPOSTA
-  case $RESPOSTA in
-    N|n) echo "Saindo!" 
+	 read RESPOSTA
+	 case $RESPOSTA in
+	 N|n) echo "Saindo!" 
 	 echo
 	 echo
 	 exit;;
 	
 # --------- Texto 1 --------- #
-    Y|y)echo
+	Y|y)echo
 	echo
 	echo -e "\e[ \t\e[1;33;40m Criando todos os arquivos de configuração nas devidas pastas e executando processos de configuração $NC"
 	echo
@@ -630,7 +642,163 @@ if [ $thunderbackup == yes ]; then
     echo "rsync -azhv /home/ahlr/.thunderbird/ /mnt/sda3/Thunderbird/" >> $crondaily/thunderbirdbackup.sh
     chmod +x $crondaily/thunderbirdbackup.sh
 fi
-   
+
+#Criação do arquivo thunderbirdbackup.sh
+if [ $bbazetonico == yes ]; then
+    echo -e "$bbazetonicotxt"
+    echo "#!"$SHELL > $crondaily/backblaze_TONICO.sh
+    cat $minilicense >> $crondaily/backblaze_TONICO.sh
+    echo "clear" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "if [[ \$(whoami) == "ahlr" ]]; then" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo -e "'"\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"'"" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   exit 0" >> $crondaily/backblaze_TONICO.sh
+    echo "   else" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   #Ajustando permissões" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo -e "'"\e[ \t\e[1;31;40m Ajustando as permissões dos dados... aguarde...\e[0m"'"" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   find /home/ahlr/Dropbox/TONICO/ -type f -exec chmod 644 {} \;" >> $crondaily/backblaze_TONICO.sh
+    echo "   find /home/ahlr/Dropbox/TONICO/ -type d -exec chmod 755 {} \;" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   #B2 configuration variables" >> $crondaily/backblaze_TONICO.sh
+    echo "   B2_ACCOUNT="cd0c87d370b7"" >> $crondaily/backblaze_TONICO.sh
+    echo "   B2_KEY="0010db1dde3b5edd54f9890392d42d089c782a4457"" >> $crondaily/backblaze_TONICO.sh
+    echo "   B2_BUCKET="TONICO"" >> $crondaily/backblaze_TONICO.sh
+    echo "   B2_DIR=""" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Local directory to backup" >> $crondaily/backblaze_TONICO.sh
+    echo "   LOCAL_DIR="/home/ahlr/Dropbox/TONICO/"" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_TONICO.sh
+    echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
+    echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
+    echo "   export PASSPHRASE="\&ntu\$1@\$M0"" >> $crondaily/backblaze_TONICO.sh
+    echo "   export SIGN_PASSPHRASE="\&ntu\$1@\$M0" " >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Remove files older than 90 days" >> $crondaily/backblaze_TONICO.sh
+    echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   remove-older-than 90D --force \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/backblaze_TONICO.sh
+    echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --full-if-older-than 30D \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   \${LOCAL_DIR} b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Cleanup failures" >> $crondaily/backblaze_TONICO.sh
+    echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   cleanup --force \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   b2://\${B2_ACCOUNT}:${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Show collection-status" >> $crondaily/backblaze_TONICO.sh
+    echo "   duplicity collection-status \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Unset variables" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset B2_ACCOUNT" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset B2_KEY" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset B2_BUCKET" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset B2_DIR" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset LOCAL_DIR" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset ENC_KEY" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset SGN_KEY" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset PASSPHRASE" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_TONICO.sh 
+    echo "fi" >> $crondaily/backblaze_TONICO.sh
+fi
+
+#Criação do arquivo backblaze_NET4YOU.sh
+if [ $bbazenet4you == yes ]; then
+    echo -e "$bbazenet4youtxt"
+    echo "#!"$SHELL > $crondaily/backblaze_NET4YOU.sh
+    cat $minilicense >> $crondaily/backblaze_NET4YOU.sh
+    echo "clear" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "if [[ \$(whoami) == "ahlr" ]]; then" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo -e "'"\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"'"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   exit 0" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   else" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   #Ajustando permissões" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo -e "'"\e[ \t\e[1;31;40m Ajustando as permissões dos dados... aguarde...\e[0m"'"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   find /home/ahlr/Dropbox/NET4YOU/ -type f -exec chmod 644 {} \;" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   find /home/ahlr/Dropbox/NET4YOU/ -type d -exec chmod 755 {} \;" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   #B2 configuration variables" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   B2_ACCOUNT="d258ec9a83fb"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   B2_KEY="001c5d99a010da54e85dee2bea586639a95da7b7f1"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   B2_BUCKET="NET4YOU"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   B2_DIR=""" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   # Local directory to backup" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   LOCAL_DIR="/home/ahlr/Dropbox/NET4YOU/"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   export PASSPHRASE="\&ntu\$1@\$M0"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   export SIGN_PASSPHRASE="\&ntu\$1@\$M0" " >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   # Remove files older than 90 days" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   duplicity \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   remove-older-than 90D --force \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   duplicity \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   --full-if-older-than 30D \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   \${LOCAL_DIR} b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   # Cleanup failures" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   duplicity \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   cleanup --force \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   b2://\${B2_ACCOUNT}:${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   # Show collection-status" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   duplicity collection-status \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_NET4YOU.sh
+    echo "" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   # Unset variables" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   unset B2_ACCOUNT" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   unset B2_KEY" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   unset B2_BUCKET" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   unset B2_DIR" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   unset LOCAL_DIR" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   unset ENC_KEY" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   unset SGN_KEY" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   unset PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh 
+    echo "fi" >> $crondaily/backblaze_NET4YOU.sh
+fi
+
 if [ $thunderbird == yes ]; then
     mkdir /home/ahlr/.thunderbird
     chown -R ahlr /home/ahlr/.thunderbird/
