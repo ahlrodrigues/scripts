@@ -35,6 +35,20 @@ EM PARTICULAR e NENHUM SUPORTE TÉCNICO.
 Neste diretório, constam alguns scripts para configurações básicas, que 
 normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/Linux:
 
+- cleanret.sh => Move os arquivos de retorno da caixa;
+- mvrejsgr.sh => Move os arquivos de rejeitados e francesinha do BNB;
+- cleansici.sh => Move os recibo de declaração do SICI para o Dropbox;
+- backupprojetos.sh => Mover os arquivos de backup das configurações;
+- cleansai.sh => Move os arquivos de retorno do bnb;
+- cleancache.sh => Limpa o cache;
+- ntp.sh => Habilita o NTP pool server brasileiro;
+- Configura o grupo de trabalho do Samba;
+- Incluindo inicialização do daemon do Samba no rc.local;
+- Inicializa o deamon do servidor de impressão CUPS;
+- rc.local_shutdown => para limpeza dos /tmp's no shutdown;
+- mirror-slackware => Administracao dos mirros locais;
+
+
 - Instalação do Skyline administrador dos arquivos de remessa (.REM) e de  retorno (.SAI) do BNB;
 - numlockon.sh => Ativando o NumLock na inicialização;
 - bnb.sh => Cria script de inicialização do Skyline; 

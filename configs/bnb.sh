@@ -49,7 +49,7 @@ if [[ $(whoami) == "root" ]]; then
 	    echo
 	    mv /home/ahlr/Downloads/$arquivos1 /home/ahlr/.wine/drive_c/skyline/outbox
 	    wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null
-	    
+	    sleep 5
 	    echo -e "\e[ \t$CYAN $msm3 $NC"
 	    
 	    echo

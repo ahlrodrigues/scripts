@@ -21,23 +21,26 @@ usa=/home/ahlr
 blacklist=">> /etc/slackpkg/blacklist"
 
 
-bnbtxt="\e[ \t$GREEN bnb.sh => Busca arquivos de retorno da BNB $NC"
-numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
+# --------- Mensagens --------- #
+
+
 cleanrettxt="\e[ \t$GREEN cleanret.sh => Move os arquivos de retorno da caixa $NC"
 mvrejsgrtxt="\e[ \t$GREEN mvrejsgr.sh => Move os arquivos de rejeitados e francesinha do BNB $NC"
 cleansicitxt="\e[ \t$GREEN cleansici.sh => Move os arquivos declaração do SICI para o Dropbox $NC"
 backupprojetostxt="\e[ \t$GREEN backupprojetos.sh => Mover os arquivos de backup das configuracoes $NC"
 cleansaitxt="\e[ \t$GREEN cleansai.sh => Move os arquivos de retorno do bnb $NC"
 cleancachetxt="\e[ \t$GREEN cleancache.sh => Limpa o cache $NC"
-ntptxt="\e[ \t$GREEN Sincronizando com o pool.ntp.br $NC"
+ntptxt="\e[ \t$GREEN ntp.sh => Habilita o NTP pool server brasileiro $NC"
+sambatxt="\e[ \t$GREEN Configuraçoes do Samba $NC"
+samba2txt="\e[ \t$GREEN Incluindo inicialização do daeamon do Samba no rc.local $NC"
 cupstxt="\e[ \t$GREEN Inicializando do CUPS $NC"
-sambatxt="\e[ \t$GREEN Configuracoes do Samba $NC"
-samba2txt="\e[ \t$GREEN Incluindo inicialização do deamon do Samba no rc.local $NC"
 shutdowntxt="\e[ \t$GREEN Configuracoes de rc.local_shutdown $NC"
 teamviewerdtxt="\e[ \t$GREEN Incluindo inicialização do deamon do teamviewer no rc.local $NC"
 plextxt="\e[ \t$GREEN Incluindo inicialização do deamon do Plex no rc.local $NC"
 mirrorstxt="\e[ \t$GREEN mirror-slackware => Administracao dos mirros locais $NC"
 inittabtxt="\e[ \t$GREEN Habilitando o init 4 $NC"
+
+
 networkmanagertxt="\e[ \t$GREEN rc.4 => Inicialzando networkmanager $NC"
 boinctxt="\e[ \t$GREEN boinc.sh => Arquivo de inicialização do BOIC $NC"
 reccxtxt="\e[ \t$GREEN Cria pasta para os arquivos da CEF e dá permissão de execucao $NC"
@@ -45,11 +48,18 @@ brothertxt="\e[ \t$GREEN instalacao do driver da impressora $NC"
 langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
 thunderbirdtxt="\e[ \t$GREEN thunderbirdbackup.sh => Restauracao do Thunderbird $NC"
 thunderbackuptxt="\e[ \t$GREEN thunderbackup.sh => Backup do Thunderbird $NC"
+bbazetonicotxt="\e[ \t$GREEN bbazetonico.sh => Faz backup no Backblaze $NC"
+bbazenet4you="\e[ \t$GREEN bbazenet4you.sh => Faz backup no Backblaze $NC"
 datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
 pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
+konsoletxt="\e[ \t$GREEN Configura o profile do Konsole $NC"
+winboxtxt="\e[ \t$GREEN winbox.sh => Cria a entrada do Winbox no mennu do KDE $NC"
+skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE $NC"
 
+bnbtxt="\e[ \t$GREEN bnb.sh => Busca arquivos de retorno da BNB $NC"
+numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
 
 
 #echo "#" >>
@@ -151,12 +161,19 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 # 	if [ -x $rcd/rc.samba ]; then
 # 	    $rcd/rc.samba start
 # 	fi
+#     
+#     
+#     echo -e "$samba2txt"
+#     echo "#Inicializando o deamon rc.samba" >> $rcd/rc.local
+#     echo "if [ -x $rcd/rc.samba ]; then" >> $rcd/rc.local
+#     echo "$rcd/rc.samba start" >> $rcd/rc.local
+#     echo "fi" >> $rcd/rc.local
 #
 #
 #     echo -e "$shutdowntxt"
 #     echo "#!"$SHELL > $rcd/rc.local_shutdown
 #     cat $minilicense >> $rcd/rc.local_shutdown
-#     echo "Limpeza geram nos diretórios temporários" >> $rcd/rc.local_shutdown
+#     echo "Limpeza geral nos diretórios temporários" >> $rcd/rc.local_shutdown
 #     echo "cd /tmp && rm -rf -- *[!"ahlr"]* 2>/dev/null" >> $rcd/rc.local_shutdown
 #     echo "cd /var/tmp && rm -rf * 2>/dev/null" >> $rcd/rc.local_shutdown
 #     echo "/usr/bin/find /tmp -mindepth 1 -maxdepth 1 -exec /bin/rm -rf {} +;" >> $rcd/rc.local_shutdown
@@ -179,15 +196,7 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 #     echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
 #     echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
 #     echo "fi" >> $rcd/rc.local
-#     
-#     
-#     echo -e "$samba2txt"
-#     echo "#Inicializando o deamon rc.samba" >> $rcd/rc.local
-#     echo "if [ -x $rcd/rc.samba ]; then" >> $rcd/rc.local
-#     echo "$rcd/rc.samba start" >> $rcd/rc.local
-#     echo "fi" >> $rcd/rc.local
-#
-#
+
 #     echo -e "$mirrorstxt"
 #     wget -q  -nv -e robots=0 -r -nd -cP $crondaily http://www.slackware.com/~alien/tools/mirror-slackware-current.sh
 #     sed -i "s|BUILDER:-\"Eric Hameleers <alien@slackware.com>\"|BUILDER:-\"Fela  <ahlr_2000@yahoo.com>\"|g" $crondaily/mirror-slackware-current.sh

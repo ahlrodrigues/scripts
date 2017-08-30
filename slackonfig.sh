@@ -45,57 +45,61 @@ slackonfig=on
 
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
 # Veja as funcões de cada script na página inicial do projeto slackonfig: https://github.com/ahlrodrigues/slackonfig
-bnb=no 
-numLock=no
+
 cleanret=no
 mvrejsgr=no
 cleansici=no
 backupprojetos=no
 cleansai=no
-ntp=no
 cleancache=no
-cups=no
+ntp=no
 samba=no
 sanba2=no
+cups=no
 shutdown=no
 teamviewerd=no
 plex=no
-mirrors=no
-inittab=no
-networkmanager=no
-boinc=no
-reccx=no
-brother=no
-lang=no
-thunderbird=no
-thunderbackup=no
-bbazetonico=no
-bbazenet4you=0
-data=no
-pkgs=no
-slackpkg=no
-teamviewer=no
-multilib=no
-konsole=no
-winbox=no
-skyline=no
-
+  mirrors=no
+  inittab=no
+  networkmanager=no
+  boinc=no
+  reccx=no
+  brother=no
+  lang=no
+  thunderbird=no
+  thunderbackup=no
+  bbazetonico=no
+  bbazenet4you=0
+  data=no
+  pkgs=no
+  slackpkg=no
+  teamviewer=no
+  multilib=no
+  konsole=no
+  winbox=no
+  skyline=no
+  bnb=no 
+  numLock=no
 # --------- Mensagens --------- #
 
-bnbtxt="\e[ \t$GREEN bnb.sh => Busca arquivos de retorno da BNB $NC"
-numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
-cleanrettxt="\e[ \t$GREEN cleanret.sh => Move os arquivos de retorno da caixa $NC"
-mvrejsgrtxt="\e[ \t$GREEN mvrejsgr.sh => Move os arquivos de rejeitados e francesinha do BNB $NC"
-cleansicitxt="\e[ \t$GREEN cleansici.sh => Move os arquivos declaração do SICI para o Dropbox $NC"
-backupprojetostxt="\e[ \t$GREEN backupprojetos.sh => Mover os arquivos de backup das configuracoes $NC"
-cleansaitxt="\e[ \t$GREEN cleansai.sh => Move os arquivos de retorno do bnb $NC"
-cleancachetxt="\e[ \t$GREEN cleancache.sh => Limpa o cache $NC"
-cupstxt="\e[ \t$GREEN Inicializando do CUPS $NC"
-sambatxt="\e[ \t$GREEN Configuraçoes do Samba $NC"
-samba2txt="\e[ \t$GREEN Incluindo inicialização do deamon do Samba no rc.local $NC"
-shutdowntxt="\e[ \t$GREEN Configuracoes de rc.local_shutdown $NC"
-teamviewerdtxt="\e[ \t$GREEN Incluindo inicialização do deamon do teamviewer no rc.local $NC"
-plextxt="\e[ \t$GREEN Incluindo inicialização do deamon do Plex no rc.local $NC"
+cleanrettxt="\e[ \t$GREEN cleanret.sh => Move os arquivos de retorno da caixa; $NC"
+mvrejsgrtxt="\e[ \t$GREEN mvrejsgr.sh => Move os arquivos de rejeitados e francesinha do BNB; $NC"
+cleansicitxt="\e[ \t$GREEN cleansici.sh => Move os recibo de declaração do SICI para o Dropbox; $NC"
+backupprojetostxt="\e[ \t$GREEN backupprojetos.sh => Mover os arquivos de backup das configuraões; $NC"
+cleansaitxt="\e[ \t$GREEN cleansai.sh => Move os arquivos de retorno do bnb; $NC"
+cleancachetxt="\e[ \t$GREEN cleancache.sh => Limpa o cache; $NC"
+ntptxt="\e[ \t$GREEN ntp.sh => Habilita o NTP pool server brasileiro; $NC"
+sambatxt="\e[ \t$GREEN Configura o grupo de trabalho do Samba; $NC"
+samba2txt="\e[ \t$GREEN Incluindo inicialização do deamon do Samba no rc.local; $NC"
+cupstxt="\e[ \t$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
+shutdowntxt="\e[ \t$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
+teamviewerdtxt="\e[ \t$GREEN Incluindo inicialização do daemon do teamviewer no rc.local $NC"
+plextxt="\e[ \t$GREEN Incluindo inicialização do daemon do Plex no rc.local $NC"
+
+
+
+
+
 mirrorstxt="\e[ \t$GREEN mirror-slackware => Administracao dos mirros locais $NC"
 inittabtxt="\e[ \t$GREEN Habilitando o init 4 $NC"
 networkmanagertxt="\e[ \t$GREEN rc.4 => Inicialzando networkmanager $NC"
@@ -105,8 +109,8 @@ brothertxt="\e[ \t$GREEN instalacao do driver da impressora $NC"
 langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
 thunderbirdtxt="\e[ \t$GREEN thunderbirdbackup.sh => Restauracao do Thunderbird $NC"
 thunderbackuptxt="\e[ \t$GREEN thunderbackup.sh => Backup do Thunderbird $NC"
-$bbazetonicotxt="\e[ \t$GREEN bbazetonico.sh => Faz backup no Backblaze $NC"
-$bbazenet4you="\e[ \t$GREEN bbazenet4you.sh => Faz backup no Backblaze $NC"
+bbazetonicotxt="\e[ \t$GREEN bbazetonico.sh => Faz backup no Backblaze $NC"
+bbazenet4you="\e[ \t$GREEN bbazenet4you.sh => Faz backup no Backblaze $NC"
 datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
 pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
@@ -114,8 +118,9 @@ multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
 konsoletxt="\e[ \t$GREEN Configura o profile do Konsole $NC"
 winboxtxt="\e[ \t$GREEN winbox.sh => Cria a entrada do Winbox no mennu do KDE $NC"
 skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE $NC"
-ntptxt="\e[ \t$GREEN ntp.sh => Habilita o NTP pool server brasileiro $NC"
 
+bnbtxt="\e[ \t$GREEN bnb.sh => Busca arquivos de retorno da BNB $NC"
+numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
 # --------- Utilização de Cores  --------- #
 BLACK='\e[1;30m'
 RED='\e[1;31m'
@@ -177,14 +182,6 @@ if [[ $(whoami) == "root" ]]; then
 echo -e "\e $WHITE Vamos executar as seguintes funções do script:$NC\n"  
 echo
 	
-	if [ $bnb == yes ]; then
-	  echo -e "$bnbtxt"
-	fi
-
-	if [ $numLock == yes ]; then
-	  echo -e "$numLocktxt"
-	fi
-	
 	if [ $cleanret == yes ]; then
 	  echo -e "$cleanrettxt"
 	fi
@@ -204,17 +201,13 @@ echo
 	if [ $cleansai == yes ]; then
 	  echo -e "$cleansaitxt"
 	fi
-		
-	if [ $ntp == yes ]; then
-	  echo -e "$ntptxt"
-	fi
 	
 	if [ $cleancache == yes ]; then
 	  echo -e "$cleancachetxt"
 	fi
 	
-	if [ $cups == yes ]; then
-	  echo -e "$cupstxt"
+	if [ $ntp == yes ]; then
+	  echo -e "$ntptxt"
 	fi
 	
 	if [ $samba == yes ]; then
@@ -225,6 +218,10 @@ echo
 	  echo -e "$samba2txt"
 	fi
 	
+	if [ $cups == yes ]; then
+	  echo -e "$cupstxt"
+	fi
+
 	if [ $shutdown == yes ]; then
 	  echo -e "$shutdowntxt"
 	fi
@@ -293,6 +290,13 @@ echo
 	  echo -e "$skylinetxt"
 	fi
 
+	if [ $bnb == yes ]; then
+	  echo -e "$bnbtxt"
+	fi
+
+	if [ $numLock == yes ]; then
+	  echo -e "$numLocktxt"
+	fi
 # --------- Listando funções --------- #
 	echo
 	echo
@@ -447,14 +451,6 @@ if [ $ntp == yes ]; then
     sleep 3
 fi
 
-# Inicia o servidor de impressão CUPS
-if [ $cups == yes ]; then
-    echo -e "$cupstxt"
-    chmod +x $rcd/rc.cups
-    $rcd/rc.cups restart
-    sleep 3
-fi
-
 # Configura o servidor de compartilhamento de aquivos Samba
 if [ $samba == yes ]; then
     echo -e "$sambatxt"
@@ -472,6 +468,14 @@ if [ $samba2 == yes ]; then
     echo "fi" >> $rcd/rc.local
     echo "#" >> $rcd/rc.local
     chmod +x $rcd/rc.samba >> $rcd/rc.local
+    sleep 3
+fi
+
+# Inicia o servidor de impressão CUPS
+if [ $cups == yes ]; then
+    echo -e "$cupstxt"
+    chmod +x $rcd/rc.cups
+    $rcd/rc.cups restart
     sleep 3
 fi
 
