@@ -1,0 +1,10 @@
+
+Index of /pool/non-free/s/spotify-client/
+
+Index of /pool/non-free/s/spotify-client/../
+spotify-client_1.0.49.125.g72ee7853-111_amd64.deb  23-Feb-2017 16:39            73404932
+spotify-client_1.0.49.125.g72ee7853-22_i386.deb    23-Feb-2017 16:39            74637938
+spotify-client_1.0.59.395.ge6ca9946-18_amd64.deb   20-Jul-2017 13:04            92116168
+spotify-client_1.0.59.395.ge6ca9946-18_i386.deb    20-Jul-2017 13:21            91841556
+
+

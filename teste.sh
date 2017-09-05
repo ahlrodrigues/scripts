@@ -60,7 +60,7 @@ skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE
 
 bnbtxt="\e[ \t$GREEN bnb.sh => Busca arquivos de retorno da BNB $NC"
 numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
-
+spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 
 #echo "#" >>
 # --------- Testando script  --------- #
@@ -428,3 +428,15 @@ numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
 #     echo "   unset PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh 
 #     echo "fi" >> $crondaily/backblaze_NET4YOU.sh
+#
+#
+#echo "$spotifytxty"
+wget -q -O - http://repository.spotify.com/pool/non-free/s/spotify-client/ | grep -Eo "spotify-client_[^\'\"]*" | sort | tail -1 > Arquivo
+wget -cP  /tmp http://repository.spotify.com/pool/non-free/s/spotify-client/$arquivo
+wget -e robots=0 -A .tar.gz -r  -nd -cP  /tmp http://slackbuilds.org/slackbuilds/14.2/multimedia/spotify.tar.gz | grep -o -m 2 "http-[^\'\"]*" | sort | tail -1
+cd /tmp
+tar zvxf spotify.tar.gz
+mv spotify*_amd64.deb spotyfy/
+cd spotyfy/ && ./spotify.SlackBuild
+installpkg spotify*.txz
+#rm -fR /tmp/spotify*

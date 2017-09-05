@@ -59,9 +59,11 @@ cups=no
 shutdown=no
 teamviewerd=no
 plex=no
-  mirrors=no
-  inittab=no
-  networkmanager=no
+mirrors=no
+inittab=no
+networkmanager=no
+konsole=no
+
   boinc=no
   reccx=no
   brother=no
@@ -75,7 +77,7 @@ plex=no
   slackpkg=no
   teamviewer=no
   multilib=no
-  konsole=no
+
   winbox=no
   skyline=no
   bnb=no 
@@ -95,16 +97,15 @@ cupstxt="\e[ \t$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
 shutdowntxt="\e[ \t$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
 teamviewerdtxt="\e[ \t$GREEN Incluindo inicialização do daemon do teamviewer no rc.local $NC"
 plextxt="\e[ \t$GREEN Incluindo inicialização do daemon do Plex no rc.local $NC"
-
-
-
-
-
 mirrorstxt="\e[ \t$GREEN mirror-slackware => Administracao dos mirros locais $NC"
 inittabtxt="\e[ \t$GREEN Habilitando o init 4 $NC"
 networkmanagertxt="\e[ \t$GREEN rc.4 => Inicialzando networkmanager $NC"
-boinctxt="\e[ \t$GREEN boinc.sh => Arquivo de inicialização do BOIC $NC"
-reccxtxt="\e[ \t$GREEN Cria pasta para os arquivos da CEF e dá permissão de execucao $NC"
+konsoletxt="\e[ \t$GREEN Configura o profile do Konsole $NC"
+reccxtxt="\e[ \t$GREEN Cria pasta para os arquivos da CEF e dá permissão de usuário $NC"
+
+
+
+
 brothertxt="\e[ \t$GREEN instalacao do driver da impressora $NC"
 langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
 thunderbirdtxt="\e[ \t$GREEN thunderbirdbackup.sh => Restauracao do Thunderbird $NC"
@@ -115,9 +116,10 @@ datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
 pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 multilibtxt="\e[ \t$GREEN slackpkg => Aplicacao do layer multilib $NC"
-konsoletxt="\e[ \t$GREEN Configura o profile do Konsole $NC"
+
 winboxtxt="\e[ \t$GREEN winbox.sh => Cria a entrada do Winbox no mennu do KDE $NC"
 skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE $NC"
+boinctxt="\e[ \t$GREEN boinc.sh => Arquivo de inicialização do BOIC $NC"
 
 bnbtxt="\e[ \t$GREEN bnb.sh => Busca arquivos de retorno da BNB $NC"
 numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
@@ -246,6 +248,10 @@ echo
 	  echo -e "$networkmanagertxt"
 	fi
 	
+	if [ $konsole == yes ]; then
+	  echo -e "$konsoletxt"
+	fi
+		
 	if [ $boinc == yes ]; then
 	  echo -e "$boinctxt"
 	fi
@@ -273,11 +279,7 @@ echo
 	if [ $lang == yes ]; then
 	  echo -e "$langtxt"
 	fi
-	
-	if [ $konsole == yes ]; then
-	  echo -e "$konsoletxt"
-	fi
-	
+
 	if [ $thunderbackup == yes ]; then
 	  echo -e "$thunderbackuptxt"
 	fi

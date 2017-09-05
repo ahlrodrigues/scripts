@@ -46,7 +46,13 @@ normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/
 - Incluindo inicialização do daemon do Samba no rc.local;
 - Inicializa o deamon do servidor de impressão CUPS;
 - rc.local_shutdown => para limpeza dos /tmp's no shutdown;
+- Acrescenta inicialização do "daemon" do TeamViewer a cada boot do sistema;
+- Acrescenta inicialização do "daemon" do Plex a cada boot do sistema;
 - mirror-slackware => Administracao dos mirros locais;
+- Habilita o "init:4" para inicialização do KDM;
+- Inicializa o servidor de rede Networkmanager;
+- Configura o profile do Konsole para mostrar os diretórios;
+- Cria pasta para os arquivos da CEF e dá permissão de usuário
 
 
 - Instalação do Skyline administrador dos arquivos de remessa (.REM) e de  retorno (.SAI) do BNB;
@@ -62,11 +68,10 @@ normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/
 - Configura a data e hora do sistema acrescentando o pool.ntp.org  no arquivo /etc/ntp.conf;
 - Inicializa o servidor de impressão CUPS;
 - Configura o grupo de trabalho e inicializa o servidor de compartilhamento de arquivos Samba;
-- Acrescenta inicialização do "deamon" do TeamViewer a cada boot do sistema;
-- Acrescenta inicialização do "deamon" do Plex a cada boot do sistema;
+
 - Copia os scripts de administração dos mirros locais do Slackware-current, x86_64 e 86;
-- Habilita o "init:4" para inicialização do KDM;
-- Inicializa o servidor de rede Networkmanager;
+
+
 - Cria script de calculo data;
 - Cria script de backups e restauracao das configurações do Thunderbird;
 - Configuração do "/etc/rc.d/rc.4" para inicialização do KDE como ambiente gráfico;
