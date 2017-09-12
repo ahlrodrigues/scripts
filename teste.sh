@@ -15,15 +15,18 @@ WHITE='\e[1;37m'
 crondaily=/home/ahlr
 cronhourly=/home/ahlr
 minilicense=/tmp/minilicense.txt
+pkgs=/tmp/pkgs.txt
 rcd=/home/ahlr
 ulbin=/home/ahlr
 usa=/home/ahlr
 blacklist=">> /etc/slackpkg/blacklist"
-
+rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
+rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
 
 # --------- Mensagens --------- #
 
-
+aminilicensetxt="\e[ \t$GREEN minilicense.txt => Arquivo de licença a ser incluído nos spripts $NC"
+apkgstxt="\e[ \t$GREEN pkgs.txt => Arquivo com lista de pacotes a serem instalados automaticamente $NC"
 cleanrettxt="\e[ \t$GREEN cleanret.sh => Move os arquivos de retorno da caixa $NC"
 mvrejsgrtxt="\e[ \t$GREEN mvrejsgr.sh => Move os arquivos de rejeitados e francesinha do BNB $NC"
 cleansicitxt="\e[ \t$GREEN cleansici.sh => Move os arquivos declaração do SICI para o Dropbox $NC"
@@ -62,7 +65,28 @@ bnbtxt="\e[ \t$GREEN bnb.sh => Busca arquivos de retorno da BNB $NC"
 numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
 spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 
-#echo "#" >>
+
+# --------- Baixando arquivos auxiliares no diretório /tmp --------- #
+
+#     echo
+#     echo
+#     echo -e "\e[ \t\e[1;31;40m Baixando os arquivos necessários:$NC"
+#     echo
+#     echo
+#     if [ ! -f "$minilicense" ]; then
+# 	echo -e "$aminilicensetxt"
+# 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
+# 	$rawdocs/minilicense.txt
+# 	sleep 5
+#     fi
+#     
+#     if [ ! -f "$pkgs" ]; then
+# 	echo -e "$apkgstxt"
+# 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
+# 	$rawconfigs/pkgs.txt
+# 	sleep 5
+#     fi
+
 # --------- Testando script  --------- #
 
 
@@ -430,13 +454,15 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "fi" >> $crondaily/backblaze_NET4YOU.sh
 #
 #
-#echo "$spotifytxty"
-wget -q -O - http://repository.spotify.com/pool/non-free/s/spotify-client/ | grep -Eo "spotify-client_[^\'\"]*" | sort | tail -1 > Arquivo
-wget -cP  /tmp http://repository.spotify.com/pool/non-free/s/spotify-client/$arquivo
-wget -e robots=0 -A .tar.gz -r  -nd -cP  /tmp http://slackbuilds.org/slackbuilds/14.2/multimedia/spotify.tar.gz | grep -o -m 2 "http-[^\'\"]*" | sort | tail -1
-cd /tmp
-tar zvxf spotify.tar.gz
-mv spotify*_amd64.deb spotyfy/
-cd spotyfy/ && ./spotify.SlackBuild
-installpkg spotify*.txz
-#rm -fR /tmp/spotify*
+#     echo "#!"$SHELL > $ulbin/aviso.sh
+#     cat $minilicense >> $ulbin/aviso.sh
+#     echo "kdialog --title \"Baixa dos Títulos de Cobrança\" --warningyesno \"Você já baixou os títulos hoje?\"" >> $ulbin/aviso.sh
+#     echo "#" >> $ulbin/aviso.sh
+#     echo "if [ "\$?" = "1" ]; then" >> $ulbin/aviso.sh
+#     echo "	/usr/local/bin/bnb.sh" >> $ulbin/aviso.sh
+#     echo "else" >> $ulbin/aviso.sh
+#     echo "	exit 0" >> $ulbin/aviso.sh
+#     echo "#" >> $ulbin/aviso.sh
+#     echo "fi" >> $ulbin/aviso.sh
+#     chmod +x $ulbin/aviso.sh
+

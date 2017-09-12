@@ -409,12 +409,6 @@ fi
 	  sleep 3
 	fi  
 
-	if [ $reccx == yes ]; then
-	  echo -e "$reccxtxt"
-	  mkdir -p /opt/caixa/Recebidos
-	  chmod -R 777 /opt/caixa
-	  sleep 3
-	fi
 	
 #cp mirror-slackware-live.sh /usr/local/bin/
 	
@@ -460,18 +454,7 @@ fi
 	  sleep 3
         fi
         
-	if [ $brother == yes ]; then
-	  echo -e "$brothertxt"
-	  wget -cP /tmp http://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.1.1-1.gz
-	  gunzip /tmp/linux-brprinter-installer*
-	  ./linux-brprinter-installer*
-	  rm /tmp/linux-brprinter-installer*
-	  rm /tmp/uninstaller_*
-	  rm /tmp/brscan*
-	  rm /tmp/cupswr*
-	  rm /tmp/dcp7065*
-	  sleep 3
-	 fi
+
         
         
 #echo -e "\e[ \t$CYAN Instalacao do Dropbox \e$NC"
