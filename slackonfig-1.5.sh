@@ -32,7 +32,7 @@
 #                                                                                #
 # Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux    #
 #                                                                                #
-# V0.1                                                                           #
+# V0.1.5                                                                       #
 #                                                                                #
 # Last update: 22/08/2017                                                        #
 #                                                                                #
@@ -600,6 +600,7 @@ if [ $thunderbackup == yes ]; then
     chmod +x $crondaily/thunderbirdbackup.sh
 fi
 
+#Criação do arquivo para restauração do thunderbird
 if [ $thunderbird == yes ]; then
     mkdir /home/ahlr/.thunderbird
     chown -R ahlr /home/ahlr/.thunderbird/
@@ -837,7 +838,7 @@ if [ $numLock == yes ]; then
     sed -i "s/#NumLock=Off/NumLock=On/" /etc/kde/kdm/kdmrc
     sleep 3
 fi
-
+#Instalação do slackpkgplus
 if [ $slackpkg == yes ]; then
     echo -e "$slackpkgtxt"
     echo "Baixando slackpkg+"
@@ -849,6 +850,7 @@ if [ $slackpkg == yes ]; then
     sleep 3
 fi
 
+#Instalação dos programas listados no arquivo okg.txt
 if [ $pkgs == yes ]; then
     echo -e "$pkgstxt"
     slackpkg install $(cat /tmp/pkgs.txt)

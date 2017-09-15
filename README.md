@@ -61,7 +61,7 @@ normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/
 - skyline.sh => Cria a entrada do Skyline no mennu do KDE;
 - numlockon.sh => Ativando o NumLock na inicialização;
 - Instalação e configuração do Slackpkg+;
-
+- Instalando lista de pacotes do arquivo pkgs.txt;
 
 
 
@@ -85,7 +85,7 @@ normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/
 - Instalação do Dropbox;
 
 - Compilando e Instalando pacotes: TeamViewer, Bogofilter,
-- Instalando lista de pacotes do arquivo pkgs.txt: ;
+
 
 ```
 
