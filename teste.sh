@@ -9,7 +9,7 @@ BLUE='\e[1;34m'
 PINK='\e[1;35m'
 CYAN='\e[1;36m'
 WHITE='\e[1;37m'
-
+YELLOW='\e[1;33m'
 
 # --------- Caminhos mais usados  --------- #
 crondaily=/home/ahlr
@@ -52,7 +52,7 @@ langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
 thunderbirdtxt="\e[ \t$GREEN thunderbirdbackup.sh => Restauracao do Thunderbird $NC"
 thunderbackuptxt="\e[ \t$GREEN thunderbackup.sh => Backup do Thunderbird $NC"
 bbazetonicotxt="\e[ \t$GREEN bbazetonico.sh => Faz backup no Backblaze $NC"
-bbazenet4you="\e[ \t$GREEN bbazenet4you.sh => Faz backup no Backblaze $NC"
+bbazenet4youtxt="\e[ \t$GREEN bbazenet4you.sh => Faz backup no Backblaze $NC"
 datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
 pkgstxt="\e[ \t$GREEN Instalacao lista de pacotes $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
@@ -453,16 +453,54 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh 
 #     echo "fi" >> $crondaily/backblaze_NET4YOU.sh
 #
-#
-#     echo "#!"$SHELL > $ulbin/aviso.sh
-#     cat $minilicense >> $ulbin/aviso.sh
-#     echo "kdialog --title \"Baixa dos Títulos de Cobrança\" --warningyesno \"Você já baixou os títulos hoje?\"" >> $ulbin/aviso.sh
-#     echo "#" >> $ulbin/aviso.sh
-#     echo "if [ "\$?" = "1" ]; then" >> $ulbin/aviso.sh
-#     echo "	/usr/local/bin/bnb.sh" >> $ulbin/aviso.sh
-#     echo "else" >> $ulbin/aviso.sh
-#     echo "	exit 0" >> $ulbin/aviso.sh
-#     echo "#" >> $ulbin/aviso.sh
-#     echo "fi" >> $ulbin/aviso.sh
-#     chmod +x $ulbin/aviso.sh
+
+bbazetonico=yes
+bbazenet4you=yes
+
+
+
+	if [ $bbazenet4you == yes ]; then
+	echo -e "$bbazenet4youtxt"
+	echo
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
+	echo
+	echo
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+	sleep 5
+	    
+	vim $crondaily/backblaze_NET4YOU.sh
+	
+	echo -e "\e[ \t$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
+
+echo
+echo	
+echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo
+echo
+	fi
+	
+	if [ $bbazetonico == yes ]; then
+	echo -e "$bbazetonicotxt"
+	echo
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
+	echo
+	echo
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+	sleep 5
+	    
+	vim $crondaily/backblaze_TONICO.sh
+	
+	echo -e "\e[ \t$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
+echo
+echo	
+echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo
+echo
+	fi
+	
+
+echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
+echo
+echo
+
 

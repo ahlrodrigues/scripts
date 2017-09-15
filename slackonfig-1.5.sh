@@ -860,10 +860,48 @@ fi
  
 
 
-# --------- Fim das funções --------- #	
+# --------- Início das configurações --------- #	
+	if [ $bbazenet4you == yes ]; then
+	echo -e "$bbazenet4youtxt"
+	echo
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
+	echo
+	echo
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+	sleep 5
+	    
+	vim $crondaily/backblaze_NET4YOU.sh
+	
+	echo -e "\e[ \t$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
+
+echo
+echo	
+echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
 echo
 echo
-echo -e "\e[ \t$CYAN Pacotes instalados e Configurações copiadas!! $NC"
+	fi
+	
+	if [ $bbazetonico == yes ]; then
+	echo -e "$bbazetonicotxt"
+	echo
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
+	echo
+	echo
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+	sleep 5
+	    
+	vim $crondaily/backblaze_TONICO.sh
+	
+	echo -e "\e[ \t$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
+echo
+echo	
+echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo
+echo
+	fi
+	
+
+echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
 echo
 echo
 	  
