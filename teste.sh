@@ -68,24 +68,30 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 
 # --------- Baixando arquivos auxiliares no diretório /tmp --------- #
 
-#     echo
-#     echo
-#     echo -e "\e[ \t\e[1;31;40m Baixando os arquivos necessários:$NC"
-#     echo
-#     echo
-#     if [ ! -f "$minilicense" ]; then
-# 	echo -e "$aminilicensetxt"
-# 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
-# 	$rawdocs/minilicense.txt
-# 	sleep 5
-#     fi
-#     
-#     if [ ! -f "$pkgs" ]; then
-# 	echo -e "$apkgstxt"
-# 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
-# 	$rawconfigs/pkgs.txt
-# 	sleep 5
-#     fi
+    echo
+    echo
+    echo -e "\e[ \t\e[$RED Verificando se é necessários baixar arquivos auxiliare...:$NC"
+    echo
+    echo
+    if [ ! -f "$minilicense" ]; then
+	echo -e "$aminilicensetxt"
+	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
+	$rawdocs/minilicense.txt
+	echo
+	echo 
+	echo -e "\e[ \t\e[$RED Arquivo $GREEN minilicense.txt encontrado.$NC"
+	sleep 5
+    fi
+    
+    if [ ! -f "$pkgs" ]; then
+	echo -e "$apkgstxt"
+	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
+	$rawconfigs/pkgs.txt
+	echo
+	echo 
+	echo -e "\e[ \t\e[$RED Arquivo $GREEN pkgs.txt encontrado.$NC"
+	sleep 5
+    fi
 
 # --------- Testando script  --------- #
 
@@ -453,54 +459,58 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh 
 #     echo "fi" >> $crondaily/backblaze_NET4YOU.sh
 #
-
-bbazetonico=yes
-bbazenet4you=yes
+# 
 
 
 
-	if [ $bbazenet4you == yes ]; then
-	echo -e "$bbazenet4youtxt"
-	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
-	echo
-	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
-	sleep 5
-	    
-	vim $crondaily/backblaze_NET4YOU.sh
-	
-	echo -e "\e[ \t$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
 
-echo
-echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
-echo
-echo
-	fi
-	
-	if [ $bbazetonico == yes ]; then
-	echo -e "$bbazetonicotxt"
-	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
-	echo
-	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
-	sleep 5
-	    
-	vim $crondaily/backblaze_TONICO.sh
-	
-	echo -e "\e[ \t$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
-echo
-echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
-echo
-echo
-	fi
-	
-
-echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
-echo
-echo
+# bbazetonico=yes
+# bbazenet4you=yes
+# 
+# 
+# 
+# 	if [ $bbazenet4you == yes ]; then
+# 	echo -e "$bbazenet4youtxt"
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
+# 	echo
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+# 	sleep 5
+# 	    
+# 	vim $crondaily/backblaze_NET4YOU.sh
+# 	
+# 	echo -e "\e[ \t$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
+# 
+# echo
+# echo	
+# echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+# echo
+# echo
+# 	fi
+# 	
+# 	if [ $bbazetonico == yes ]; then
+# 	echo -e "$bbazetonicotxt"
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
+# 	echo
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+# 	sleep 5
+# 	    
+# 	vim $crondaily/backblaze_TONICO.sh
+# 	
+# 	echo -e "\e[ \t$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
+# echo
+# echo	
+# echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+# echo
+# echo
+# 	fi
+# 	
+# 
+# echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
+# echo
+# echo
 
 

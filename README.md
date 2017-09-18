@@ -41,6 +41,7 @@ normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/
 - backupprojetos.sh => Mover os arquivos de backup das configurações;
 - cleansai.sh => Move os arquivos de retorno do bnb;
 - cleancache.sh => Limpa o cache;
+- ntp.sh => Habilita o NTP pool server brasileiro;
 - Inicializa o deamon do servidor de impressão CUPS;
 - rc.local_shutdown => para limpeza dos /tmp's no shutdown;
 - Acrescenta inicialização do "daemon" do TeamViewer no ../rc.local;
@@ -66,7 +67,7 @@ normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/
 
 
 
-- ntp.sh => Habilita o NTP pool server brasileiro;
+
 - Configura o grupo de trabalho do Samba;
 - Incluindo inicialização do daemon do Samba no rc.local;
 - Cria pasta para os arquivos da CEF e dá permissão de usuário

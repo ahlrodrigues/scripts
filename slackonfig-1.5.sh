@@ -76,6 +76,7 @@ skyline=no
 numLock=no
 slackpkg=no
 pkgs=no
+
 # --------- Mensagens --------- #
 aminilicensetxt="\e[ \t$GREEN minilicense.txt => Arquivo de licença a ser incluído nos spripts $NC"
 apkgstxt="\e[ \t$GREEN pkgs.txt => Arquivo com lista de pacotes a serem instalados automaticamente $NC"
@@ -109,6 +110,7 @@ skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE
 numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 pkgstxt="\e[ \t$CYAN Instalacao lista de pacotes \e$NC"
+
 # --------- Caminhos mais usados  --------- #
 crondaily=/etc/cron.daily
 cronhourly=/etc/cron.hourly
@@ -150,13 +152,15 @@ if [[ $(whoami) == "root" ]]; then
 
     echo
     echo
-    echo -e "\e[ \t\e[1;31;40m Baixando os arquivos necessários:$NC"
+    echo -e "\e[ \t\e[$RED Verificando se é necessários baixar arquivos auxiliare...:$NC"
     echo
     echo
     if [ ! -f "$minilicense" ]; then
 	echo -e "$aminilicensetxt"
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	$rawdocs/minilicense.txt
+    else
+	echo -e "\e[ \t\e[$RED Arquivo $GREEN minilicense.txt encontrado.$NC"
 	sleep 5
     fi
     
@@ -164,6 +168,8 @@ if [[ $(whoami) == "root" ]]; then
 	echo -e "$apkgstxt"
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	$rawconfigs/pkgs.txt
+    else
+	echo -e "\e[ \t\e[$RED Arquivo $GREEN pkgs.txt encontrado.$NC"
 	sleep 5
     fi
     
@@ -857,7 +863,7 @@ if [ $pkgs == yes ]; then
     rm /tmp/pkgs.txt
     sleep 3
 fi
- 
+
 
 
 # --------- Início das configurações --------- #	
@@ -867,7 +873,7 @@ fi
 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
 	echo
 	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
 	sleep 5
 	    
 	vim $crondaily/backblaze_NET4YOU.sh
@@ -887,7 +893,7 @@ echo
 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
 	echo
 	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
 	sleep 5
 	    
 	vim $crondaily/backblaze_TONICO.sh
