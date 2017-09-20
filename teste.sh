@@ -82,16 +82,6 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 	echo -e "\e[ \t\e[$RED Arquivo $GREEN minilicense.txt encontrado.$NC"
 	sleep 5
     fi
-    
-    if [ ! -f "$pkgs" ]; then
-	echo -e "$apkgstxt"
-	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
-	$rawconfigs/pkgs.txt
-	echo
-	echo 
-	echo -e "\e[ \t\e[$RED Arquivo $GREEN pkgs.txt encontrado.$NC"
-	sleep 5
-    fi
 
 # --------- Testando script  --------- #
 
@@ -525,8 +515,8 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "   unset PASSPHRASE" >> $crondaily/hubiC_TONICO.sh
 #     echo "   unset SIGN_PASSPHRASE" >> $crondaily/hubiC_TONICO.sh 
 #     echo "fi" >> $crondaily/hubiC_TONICO.sh
-# #
-# #
+#
+# 
 #     echo "#!"$SHELL > $crondaily/hubiC_NET4YOU.sh
 #     cat $minilicense >> $crondaily/hubiC_NET4YOU.sh
 #     echo "clear" >> $crondaily/hubiC_NET4YOU.sh
@@ -592,8 +582,8 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "   unset PASSPHRASE" >> $crondaily/hubiC_NET4YOU.sh
 #     echo "   unset SIGN_PASSPHRASE" >> $crondaily/hubiC_NET4YOU.sh 
 #     echo "fi" >> $crondaily/hubiC_NET4YOU.sh
-    
-
+#     
+# 
 #     echo "#!"$SHELL > /home/ahlr/.hubiC_credentials
 #     cat $minilicense >> /home/ahlr/.hubiC_credentials
 #     echo "[hubic]" >> /home/ahlr/.hubiC_credentials
@@ -605,63 +595,112 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "client_secret = 6WXtVMrG2zKJVBCD1ApzzH1sb1P5AFl1NQZpcHV506VHfAUTsOhwURURoIZWLMN0" >> /home/ahlr/.hubiC_credentials
 #     echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubiC_credentials
 #     chown 600 /home/ahlr/.hubiC_credentials
-
-    echo "" >> /home/ahlr/.hubiC_credentials
-    echo "" >> /home/ahlr/.hubiC_credentials
-    echo "#Backup da pasta /home/ahlr/Dropbox/NET4YOU/" >> /home/ahlr/.hubiC_credentials
-    echo "email = financeio@net4you.com.br" >> /home/ahlr/.hubiC_credentials
-    echo "password = sc0tl@nd" >> /home/ahlr/.hubiC_credentials
-    echo "client_id = api_hubic_AX1GBGXFqcoFRaB6TcmORhneQ33DYgdp" >> /home/ahlr/.hubiC_credentials
-    echo "client_secret = mraqgIdiNnxdp6oPX2SrH0w0CDFsmviE822hKvba9OA5KFw9SFatkB6Gl0mQEou5" >> /home/ahlr/.hubiC_credentials
-    echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubiC_credentials
-
-# bbazetonico=yes
-# bbazenet4you=yes
+# 
+#
+#     echo "" >> /home/ahlr/.hubiC_credentials
+#     echo "" >> /home/ahlr/.hubiC_credentials
+#     echo "#Backup da pasta /home/ahlr/Dropbox/NET4YOU/" >> /home/ahlr/.hubiC_credentials
+#     echo "email = financeio@net4you.com.br" >> /home/ahlr/.hubiC_credentials
+#     echo "password = sc0tl@nd" >> /home/ahlr/.hubiC_credentials
+#     echo "client_id = api_hubic_AX1GBGXFqcoFRaB6TcmORhneQ33DYgdp" >> /home/ahlr/.hubiC_credentials
+#     echo "client_secret = mraqgIdiNnxdp6oPX2SrH0w0CDFsmviE822hKvba9OA5KFw9SFatkB6Gl0mQEou5" >> /home/ahlr/.hubiC_credentials
+#     echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubiC_credentials
 # 
 # 
-# 
-# 	if [ $bbazenet4you == yes ]; then
-# 	echo -e "$bbazenet4youtxt"
-# 	echo
-# 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
-# 	echo
-# 	echo
-# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE Mim" $NC"
+#     if [ ! -f "$pkgs" ]; then
+# 	echo -e "$apkgstxt"
+# 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
+# 	$rawconfigs/pkgs.txt
+#     else
+# 	echo -e "\e[ \t\e[$RED Arquivo $GREEN pkgs.txt encontrado.$NC"
 # 	sleep 5
-# 	    
-# 	vim $crondaily/backblaze_NET4YOU.sh
-# 	
-# 	echo -e "\e[ \t$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
-# 
-# echo
-# echo	
-# echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
-# echo
-# echo
-# 	fi
-# 	
-# 	if [ $bbazetonico == yes ]; then
-# 	echo -e "$bbazetonicotxt"
-# 	echo
-# 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
-# 	echo
-# 	echo
-# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE Mim" $NC"
-# 	sleep 5
-# 	    
-# 	vim $crondaily/backblaze_TONICO.sh
-# 	
-# 	echo -e "\e[ \t$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
-# echo
-# echo	
-# echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
-# echo
-# echo
-# 	fi
-# 	
-# 
-# echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
-# echo
-# echo
+#     fi
+#     echo -e "$pkgstxt"
+#     slackpkg install $(cat /tmp/pkgs.txt)
+#     rm /tmp/pkgs.txt
+
+
+# --------- Início das configurações --------- #	
+	if [ $bbazenet4you == yes ]; then
+	echo -e "$bbazenet4youtxt"
+	echo
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
+	echo
+	echo
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
+	sleep 5
+	    
+	vim $crondaily/backblaze_NET4YOU.sh
+	
+	echo -e "\e[ \t$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
+
+echo
+echo	
+echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo
+echo
+	fi
+	
+	if [ $bbazetonico == yes ]; then
+	echo -e "$bbazetonicotxt"
+	echo
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
+	echo
+	echo
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
+	sleep 5
+	    
+	vim $crondaily/backblaze_TONICO.sh
+	
+	echo -e "\e[ \t$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
+echo
+echo	
+echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo
+echo
+	fi
+	
+	if [ $credhubiCTONICO == yes ]; then
+	echo -e "$credhubiCTONICOTXT"
+	echo
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubiC_credentials $YELLOW no konsole....  $NC"
+	echo
+	echo
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE 2014$GREEN" $NC"
+	sleep 5
+	    
+	vim /home/ahlr/.hubiC_credentials
+	
+	echo -e "\e[ \t$BLUE hubiC_credentials $YELLOW configurado!  $NC"
+echo
+echo	
+echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo
+echo
+	fi
+	
+	
+	if [ $credhubiCNET4YOU == yes ]; then
+	echo -e "$credhubiCNET4YOUtxt"
+	echo
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubiC_credentials $YELLOW no konsole....  $NC"
+	echo
+	echo
+	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE @$GREEN +$WHITE 2014" $NC"
+	sleep 5
+	    
+	vim /home/ahlr/.hubiC_credentials
+	
+	echo -e "\e[ \t$BLUE hubiC_credentials $YELLOW configurado!  $NC"
+echo
+echo	
+echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo
+echo
+	fi
+
+echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
+echo
+echo
 
 

@@ -42,6 +42,8 @@ normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/
 - cleansai.sh => Move os arquivos de retorno do bnb;
 - cleancache.sh => Limpa o cache;
 - ntp.sh => Habilita o NTP pool server brasileiro;
+- Configura o grupo de trabalho do Samba;
+- Incluindo inicialização do daemon do Samba no rc.local;
 - Inicializa o deamon do servidor de impressão CUPS;
 - rc.local_shutdown => para limpeza dos /tmp's no shutdown;
 - Acrescenta inicialização do "daemon" do TeamViewer no ../rc.local;
@@ -59,35 +61,14 @@ normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/
 - backblaze_NET4YOU.sh => Faz backup no Backblaze;
 - data.sh => Cria script de calculo data;
 - winbox.sh => Cria a entrada do Winbox no mennu do KDE;
-- skyline.sh => Cria a entrada do Skyline no mennu do KDE;
+- skyline.sh => Cria a entrada do Skyline no menu do KDE;
 - numlockon.sh => Ativando o NumLock na inicialização;
 - Instalação e configuração do Slackpkg+;
 - Instalando lista de pacotes do arquivo pkgs.txt;
-
-
-
-
-
-- Configura o grupo de trabalho do Samba;
-- Incluindo inicialização do daemon do Samba no rc.local;
-- Cria pasta para os arquivos da CEF e dá permissão de usuário
-- Instalação do Skyline administrador dos arquivos de remessa (.REM) e de  retorno (.SAI) do BNB;
-- bnb.sh => Cria script de inicialização do Skyline; 
-- Configura a data e hora do sistema acrescentando o pool.ntp.org  no arquivo /etc/ntp.conf;
-- Configura o grupo de trabalho e inicializa o servidor de compartilhamento de arquivos Samba;
-- Copia os scripts de administração dos mirros locais do Slackware-current, x86_64 e 86;
-
-- Cria script de backups e restauracao das configurações do Thunderbird;
-- Configuração do "/etc/rc.d/rc.4" para inicialização do KDE como ambiente gráfico;
-- Cria o arquivo de inicialização do BOIC;
-- Configuração do Slackpkg;
-
-- Aplicação do layer para transformar Slackware => Slackware Multilib;
-- Instalação do Dropbox;
-
-- Compilando e Instalando pacotes: TeamViewer, Bogofilter,
-
-
+- hubiC_TONICO => Faz backup no hubic;
+- hubiC_NET4YOU => Faz backup no hubic;
+- Cria o arquivo de credenciais do TONICO para backup no hubiC;
+- Cria o arquivo de credenciais do NET4YOU para backup no hubiC;
 ```
 
 
@@ -102,7 +83,13 @@ ou escolha no diretório /Configs o script que mais lhe agradar.
 Feature:
 --------
 ```
-- Documentação em cada script;
+- Instalação do Skyline administrador dos arquivos de remessa (.REM) e de  retorno (.SAI) do BNB;
+- bnb.sh => Cria script de inicialização do Skyline; 
+- Cria o arquivo de inicialização do BOIC;
+- Configuração do Slackpkg;
+- Aplicação do layer para transformar Slackware => Slackware Multilib;
+- Instalação do Dropbox;
+- Compilando e Instalando pacotes: TeamViewer;
 ```
 
 
