@@ -346,8 +346,8 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_TONICO.sh
 #     echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
 #     echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
-#     echo "   export PASSPHRASE="\&ntu\$1@\$M0"" >> $crondaily/backblaze_TONICO.sh
-#     echo "   export SIGN_PASSPHRASE="\&ntu\$1@\$M0" " >> $crondaily/backblaze_TONICO.sh
+#     echo "   export PASSPHRASE="'\&ntu\$1@\$M0'"" >> $crondaily/backblaze_TONICO.sh
+#     echo "   export SIGN_PASSPHRASE="'\&ntu\$1@\$M0'" " >> $crondaily/backblaze_TONICO.sh
 #     echo "" >> $crondaily/backblaze_TONICO.sh
 #     echo "   # Remove files older than 90 days" >> $crondaily/backblaze_TONICO.sh
 #     echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
@@ -421,20 +421,20 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_NET4YOU.sh
-#     echo "   export PASSPHRASE="\&ntu\$1@\$M0"" >> $crondaily/backblaze_NET4YOU.sh
-#     echo "   export SIGN_PASSPHRASE="\&ntu\$1@\$M0" " >> $crondaily/backblaze_NET4YOU.sh
+#     echo "   export PASSPHRASE="'\&ntu\$1@\$M0'"" >> $crondaily/backblaze_NET4YOU.sh
+#     echo "   export SIGN_PASSPHRASE="'\&ntu\$1@\$M0'" " >> $crondaily/backblaze_NET4YOU.sh
 #     echo "" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   # Remove files older than 90 days" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   duplicity \\" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   remove-older-than 90D --force \\" >> $crondaily/backblaze_NET4YOU.sh
-#     echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_NET4YOU.sh
+#     echo "   cf+hubic://${REMOTE_DIR}" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   duplicity \\" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   --full-if-older-than 30D \\" >> $crondaily/backblaze_NET4YOU.sh
-#     echo "   \${LOCAL_DIR} b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_NET4YOU.sh
+#     echo "   \${LOCAL_DIR} cf+hubic://${REMOTE_DIR}" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   # Cleanup failures" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   duplicity \\" >> $crondaily/backblaze_NET4YOU.sh
@@ -445,7 +445,7 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "   # Show collection-status" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   duplicity collection-status \\" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_NET4YOU.sh
-#     echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_NET4YOU.sh
+#     echo "   cf+hubic://${REMOTE_DIR}" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   # Unset variables" >> $crondaily/backblaze_NET4YOU.sh
 #     echo "   unset B2_ACCOUNT" >> $crondaily/backblaze_NET4YOU.sh
@@ -459,10 +459,161 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 #     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh 
 #     echo "fi" >> $crondaily/backblaze_NET4YOU.sh
 #
-# 
+#
+#     echo "#!"$SHELL > $crondaily/hubiC_TONICO.sh
+#     cat $minilicense >> $crondaily/hubiC_TONICO.sh
+#     echo "clear" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "if [[ \$(whoami) == "ahlr" ]]; then" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo -e "'"\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"'"" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo" >> $crondaily/hubiC_TONICO.sh
+#     echo "   exit 0" >> $crondaily/hubiC_TONICO.sh
+#     echo "   else" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   #Ajustando permissões" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo -e "'"\e[ \t\e[1;31;40m Ajustando as permissões dos dados... aguarde...\e[0m"'"" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo" >> $crondaily/hubiC_TONICO.sh
+#     echo "   echo" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   find /home/ahlr/Dropbox/TONICO/ -type f -exec chmod 644 {} \;" >> $crondaily/hubiC_TONICO.sh
+#     echo "   find /home/ahlr/Dropbox/TONICO/ -type d -exec chmod 755 {} \;" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   #hubiC configuration variables" >> $crondaily/hubiC_TONICO.sh
+#     echo "   LOCAL_DIR=/home/ahlr/Dropbox/TONICO/" >> $crondaily/hubiC_TONICO.sh
+#     echo "   REMOTE_DIR=default" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   # GPG key (last 8 characters)" >> $crondaily/hubiC_TONICO.sh
+#     echo "   ENC_KEY="A2133DA2"" >> $crondaily/hubiC_TONICO.sh
+#     echo "   SGN_KEY="A2133DA2"" >> $crondaily/hubiC_TONICO.sh
+#     echo "   export PASSPHRASE="'\&ntu\$1@\$M0'"" >> $crondaily/hubiC_TONICO.sh
+#     echo "   export SIGN_PASSPHRASE="'\&ntu\$1@\$M0'" " >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   # Remove files older than 90 days" >> $crondaily/hubiC_TONICO.sh
+#     echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   remove-older-than 90D --force \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/hubiC_TONICO.sh
+#     echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   --full-if-older-than 30D \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   \${LOCAL_DIR} cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   # Cleanup failures" >> $crondaily/hubiC_TONICO.sh
+#     echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   cleanup --force \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   # Show collection-status" >> $crondaily/hubiC_TONICO.sh
+#     echo "   duplicity collection-status \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
+#     echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_TONICO.sh
+#     echo "" >> $crondaily/hubiC_TONICO.sh
+#     echo "   # Unset variables" >> $crondaily/hubiC_TONICO.sh
+#     echo "   unset REMOTE_DIR" >> $crondaily/hubiC_TONICO.sh
+#     echo "   unset LOCAL_DIR" >> $crondaily/hubiC_TONICO.sh
+#     echo "   unset ENC_KEY" >> $crondaily/hubiC_TONICO.sh
+#     echo "   unset SGN_KEY" >> $crondaily/hubiC_TONICO.sh
+#     echo "   unset PASSPHRASE" >> $crondaily/hubiC_TONICO.sh
+#     echo "   unset SIGN_PASSPHRASE" >> $crondaily/hubiC_TONICO.sh 
+#     echo "fi" >> $crondaily/hubiC_TONICO.sh
+# #
+# #
+#     echo "#!"$SHELL > $crondaily/hubiC_NET4YOU.sh
+#     cat $minilicense >> $crondaily/hubiC_NET4YOU.sh
+#     echo "clear" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "if [[ \$(whoami) == "ahlr" ]]; then" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo -e "'"\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"'"" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   exit 0" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   else" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   #Ajustando permissões" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo -e "'"\e[ \t\e[1;31;40m Ajustando as permissões dos dados... aguarde...\e[0m"'"" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   find /home/ahlr/Dropbox/NET4YOU/ -type f -exec chmod 644 {} \;" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   find /home/ahlr/Dropbox/NET4YOU/ -type d -exec chmod 755 {} \;" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   #hubiC configuration variables" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   LOCAL_DIR=/home/ahlr/Dropbox/NET4YOU/" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   REMOTE_DIR=default" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   # GPG key (last 8 characters)" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   ENC_KEY="A2133DA2"" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   SGN_KEY="A2133DA2"" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   export PASSPHRASE="'\&ntu\$1@\$M0'"" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   export SIGN_PASSPHRASE="'\&ntu\$1@\$M0'" " >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   # Remove files older than 90 days" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   remove-older-than 90D --force \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   --full-if-older-than 30D \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   \${LOCAL_DIR} cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   # Cleanup failures" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   cleanup --force \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   # Show collection-status" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   duplicity collection-status \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   # Unset variables" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   unset REMOTE_DIR" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   unset LOCAL_DIR" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   unset ENC_KEY" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   unset SGN_KEY" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   unset PASSPHRASE" >> $crondaily/hubiC_NET4YOU.sh
+#     echo "   unset SIGN_PASSPHRASE" >> $crondaily/hubiC_NET4YOU.sh 
+#     echo "fi" >> $crondaily/hubiC_NET4YOU.sh
+    
 
+#     echo "#!"$SHELL > /home/ahlr/.hubiC_credentials
+#     cat $minilicense >> /home/ahlr/.hubiC_credentials
+#     echo "[hubic]" >> /home/ahlr/.hubiC_credentials
+#     echo "" >> /home/ahlr/.hubiC_credentials
+#     echo "#Backup da pasta /home/ahlr/Dropbox/TONICO/" >> /home/ahlr/.hubiC_credentials
+#     echo "email = ahlr_2000@yahoo.com" >> /home/ahlr/.hubiC_credentials
+#     echo "password = scotland2014" >> /home/ahlr/.hubiC_credentials
+#     echo "client_id = api_hubic_LTIbEJKF9XFjOt1eGCAbMDlLUFImY4vg" >> /home/ahlr/.hubiC_credentials
+#     echo "client_secret = 6WXtVMrG2zKJVBCD1ApzzH1sb1P5AFl1NQZpcHV506VHfAUTsOhwURURoIZWLMN0" >> /home/ahlr/.hubiC_credentials
+#     echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubiC_credentials
+#     chown 600 /home/ahlr/.hubiC_credentials
 
-
+    echo "" >> /home/ahlr/.hubiC_credentials
+    echo "" >> /home/ahlr/.hubiC_credentials
+    echo "#Backup da pasta /home/ahlr/Dropbox/NET4YOU/" >> /home/ahlr/.hubiC_credentials
+    echo "email = financeio@net4you.com.br" >> /home/ahlr/.hubiC_credentials
+    echo "password = sc0tl@nd" >> /home/ahlr/.hubiC_credentials
+    echo "client_id = api_hubic_AX1GBGXFqcoFRaB6TcmORhneQ33DYgdp" >> /home/ahlr/.hubiC_credentials
+    echo "client_secret = mraqgIdiNnxdp6oPX2SrH0w0CDFsmviE822hKvba9OA5KFw9SFatkB6Gl0mQEou5" >> /home/ahlr/.hubiC_credentials
+    echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubiC_credentials
 
 # bbazetonico=yes
 # bbazenet4you=yes
@@ -475,7 +626,7 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 # 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
 # 	echo
 # 	echo
-# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE Mim" $NC"
 # 	sleep 5
 # 	    
 # 	vim $crondaily/backblaze_NET4YOU.sh
@@ -495,7 +646,7 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 # 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
 # 	echo
 # 	echo
-# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "Deus$GREEN +$WHITE Dentro$GREEN +$WHITE MIM" $NC"
+# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE Mim" $NC"
 # 	sleep 5
 # 	    
 # 	vim $crondaily/backblaze_TONICO.sh

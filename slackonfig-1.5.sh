@@ -76,7 +76,8 @@ skyline=no
 numLock=no
 slackpkg=no
 pkgs=no
-
+hubiCTONICO=no
+hubiCNET4YOU=no
 # --------- Mensagens --------- #
 aminilicensetxt="\e[ \t$GREEN minilicense.txt => Arquivo de licença a ser incluído nos spripts $NC"
 apkgstxt="\e[ \t$GREEN pkgs.txt => Arquivo com lista de pacotes a serem instalados automaticamente $NC"
@@ -110,6 +111,8 @@ skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE
 numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 pkgstxt="\e[ \t$CYAN Instalacao lista de pacotes \e$NC"
+hubiCTONICOtxt="\e[ \t$CYAN hubiC_TONICO => Faz backup no hubic \e$NC"
+hubiCNET4YOUtxt="\e[ \t$CYAN hubiC_NET4YOU => Faz backup no hubic \e$NC"
 
 # --------- Caminhos mais usados  --------- #
 crondaily=/etc/cron.daily
@@ -302,6 +305,13 @@ echo
 	  echo -e "$pkgstxt"
 	fi
 
+	if [ $hubiCTONICO == yes ]; then
+	  echo -e "$hubiCTONICOtxt"
+	fi
+
+	if [ $hubiCNET4YOU == yes ]; then
+	  echo -e "$hubiCNET4YOUtxt"
+	fi
 # --------- Listando funções --------- #
 	echo
 	echo
@@ -864,7 +874,37 @@ if [ $pkgs == yes ]; then
     sleep 3
 fi
 
+#Criação do arquivo de credenciais do hubiC
+if [ $hubiCTONICO == yes ]; then
+    echo -e "$hubiCTONICOtxt"
+    echo "#!"$SHELL > /home/ahlr/.hubiC_credentials
+    cat $minilicense >> /home/ahlr/.hubiC_credentials
+    echo "[hubic]" >> /home/ahlr/.hubiC_credentials
+    echo "" >> /home/ahlr/.hubiC_credentials
+    echo "#Backup da pasta /home/ahlr/Dropbox/TONICO/" >> /home/ahlr/.hubiC_credentials
+    echo "email = ahlr_2000@yahoo.com" >> /home/ahlr/.hubiC_credentials
+    echo "password = scotland2014" >> /home/ahlr/.hubiC_credentials
+    echo "client_id = api_hubic_LTIbEJKF9XFjOt1eGCAbMDlLUFImY4vg" >> /home/ahlr/.hubiC_credentials
+    echo "client_secret = 6WXtVMrG2zKJVBCD1ApzzH1sb1P5AFl1NQZpcHV506VHfAUTsOhwURURoIZWLMN0" >> /home/ahlr/.hubiC_credentials
+    echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubiC_credentials
+    chown 600 /home/ahlr/.hubiC_credentials
+    sleep 3
+fi
 
+#Criação do arquivo de credenciais do hubiC
+if [ $hubiCNET4YOU == yes ]; then
+    echo -e "$hubiCNET4YOUtxt"
+    echo "" >> /home/ahlr/.hubiC_credentials
+    echo "" >> /home/ahlr/.hubiC_credentials
+    echo "#Backup da pasta /home/ahlr/Dropbox/NET4YOU/" >> /home/ahlr/.hubiC_credentials
+    echo "email = financeio@net4you.com.br" >> /home/ahlr/.hubiC_credentials
+    echo "password = sc0tl@nd" >> /home/ahlr/.hubiC_credentials
+    echo "client_id = api_hubic_AX1GBGXFqcoFRaB6TcmORhneQ33DYgdp" >> /home/ahlr/.hubiC_credentials
+    echo "client_secret = mraqgIdiNnxdp6oPX2SrH0w0CDFsmviE822hKvba9OA5KFw9SFatkB6Gl0mQEou5" >> /home/ahlr/.hubiC_credentials
+    echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubiC_credentials
+    chown 600 /home/ahlr/.hubiC_credentials
+    sleep 3
+fi
 
 # --------- Início das configurações --------- #	
 	if [ $bbazenet4you == yes ]; then

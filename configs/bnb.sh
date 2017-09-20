@@ -52,10 +52,10 @@ if [[ $(whoami) == "root" ]]; then
 	    echo
 	    mv /home/ahlr/Downloads/$arquivos1 /home/ahlr/.wine/drive_c/skyline/outbox #Move para outbox
 	    wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null #Abre o skyline
-	    echo -e "\e[ \t$CYAN $msm3 $NC" #Arquivo transferido
+	    echo -e "\e[ \t$CYAN `cat /home/ahlr/.wine/drive_c/skyline/SESSION.LOG | grep -i "Transmitindo arquivo 'C"` $NC" #Arquivo transferido
 	    sleep 05
 	    echo
-	    echo
+	    echo "`$msm3`"
 	    echo
 	    echo -e "\e[ \t$CYAN Arquivo transferido [$GREEN OK$NC $CYAN] $NC"
 	    echo
@@ -79,7 +79,7 @@ if [[ $(whoami) == "root" ]]; then
 		    echo
 		    echo
 		    echo
-		    echo -e "\e[ \t$RED $msm2 $NC" #Nenhum arquivo
+		    echo -e "\e[ \t$RED `$msm2` $NC" #Nenhum arquivo
 		    echo
 		    echo
 		    echo -e "\e[ \t$RED $msm4 $NC" #Tente mais tarde
@@ -93,7 +93,7 @@ if [[ $(whoami) == "root" ]]; then
 		    echo
 		    echo
 		    echo
-		    echo -e "\e[ \t$CYAN $msm1 $NC" #Recebido
+		    echo -e "\e[ \t$CYAN `$msm1` $NC" #Recebido
 		    echo
 		    echo
 		    echo
@@ -106,7 +106,7 @@ if [[ $(whoami) == "root" ]]; then
 	    echo
 	    echo
 	    echo
-	    echo -e "\e[ \t$CYAN $msm1 $NC" #Recebido
+	    echo -e "\e[ \t$CYAN `$msm1` $NC" #Recebido
 	    echo
 	    echo
 	    echo
