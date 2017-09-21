@@ -55,7 +55,7 @@ if [[ $(whoami) == "root" ]]; then
 	    echo -e "\e[ \t$CYAN `cat /home/ahlr/.wine/drive_c/skyline/SESSION.LOG | grep -i "Transmitindo arquivo 'C"` $NC" #Arquivo transferido
 	    sleep 05
 	    echo
-	    echo "`$msm3`"
+	    echo "$msm3"
 	    echo
 	    echo -e "\e[ \t$CYAN Arquivo transferido [$GREEN OK$NC $CYAN] $NC"
 	    echo
@@ -72,6 +72,8 @@ if [[ $(whoami) == "root" ]]; then
 	if [ "$arquivos2" == "" ]; then #Se não existe arquivo de retorno
 		    
 	    wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null
+	    
+	    sleep 05
 		    
 		if [ "$arquivos2" == "" ]; then #Se não existe arquivo de retorno
 			
@@ -79,7 +81,7 @@ if [[ $(whoami) == "root" ]]; then
 		    echo
 		    echo
 		    echo
-		    echo -e "\e[ \t$RED `$msm2` $NC" #Nenhum arquivo
+		    echo -e "\e[ \t$RED $msm2 $NC" #Nenhum arquivo
 		    echo
 		    echo
 		    echo -e "\e[ \t$RED $msm4 $NC" #Tente mais tarde
@@ -98,6 +100,7 @@ if [[ $(whoami) == "root" ]]; then
 		    echo
 		    echo
 		    sleep 10
+		    exit 1
 
 		fi
 	else

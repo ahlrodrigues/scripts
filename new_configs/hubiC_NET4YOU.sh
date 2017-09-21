@@ -55,8 +55,8 @@ clear
    # GPG key (last 8 characters)
    ENC_KEY=A2133DA2
    SGN_KEY=A2133DA2
-   export PASSPHRASE=\&ntu\$1@\$M0
-   export SIGN_PASSPHRASE=\&ntu\$1@\$M0 
+   export PASSPHRASE=xxxxxxxxxxxxxxxxx
+   export SIGN_PASSPHRASE=xxxxxxxxxxxxxxxxxxxxx
 
    # Remove files older than 90 days
    duplicity \

@@ -910,8 +910,8 @@ if [ $hubiCTONICO == yes ]; then
     echo "   # GPG key (last 8 characters)" >> $crondaily/hubiC_TONICO.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/hubiC_TONICO.sh
     echo "   SGN_KEY="A2133DA2"" >> $crondaily/hubiC_TONICO.sh
-    echo "   export PASSPHRASE="'\&ntu\$1@\$M0'"" >> $crondaily/hubiC_TONICO.sh
-    echo "   export SIGN_PASSPHRASE="'\&ntu\$1@\$M0'" " >> $crondaily/hubiC_TONICO.sh
+    echo "   export PASSPHRASE="'xxxxxxxxx'"" >> $crondaily/hubiC_TONICO.sh
+    echo "   export SIGN_PASSPHRASE="'xxxxxxxxx'" " >> $crondaily/hubiC_TONICO.sh
     echo "" >> $crondaily/hubiC_TONICO.sh
     echo "   # Remove files older than 90 days" >> $crondaily/hubiC_TONICO.sh
     echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
@@ -981,8 +981,8 @@ if [ $hubiCNET4YOU == yes ]; then
     echo "   # GPG key (last 8 characters)" >> $crondaily/hubiC_NET4YOU.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/hubiC_NET4YOU.sh
     echo "   SGN_KEY="A2133DA2"" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   export PASSPHRASE="'\&ntu\$1@\$M0'"" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   export SIGN_PASSPHRASE="'\&ntu\$1@\$M0'" " >> $crondaily/hubiC_NET4YOU.sh
+    echo "   export PASSPHRASE="'xxxxxxxxx'"" >> $crondaily/hubiC_NET4YOU.sh
+    echo "   export SIGN_PASSPHRASE="'xxxxxxxxx'" " >> $crondaily/hubiC_NET4YOU.sh
     echo "" >> $crondaily/hubiC_NET4YOU.sh
     echo "   # Remove files older than 90 days" >> $crondaily/hubiC_NET4YOU.sh
     echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
@@ -1022,32 +1022,31 @@ fi
 #Criação do arquivo de credenciais do hubiC
 if [ $hubiCTONICO == yes ]; then
     echo -e "$credhubiCTONICOtxt"
-    echo "#!"$SHELL > /home/ahlr/.hubiC_credentials
-    cat $minilicense >> /home/ahlr/.hubiC_credentials
-    echo "[hubic]" >> /home/ahlr/.hubiC_credentials
-    echo "" >> /home/ahlr/.hubiC_credentials
-    echo "#Backup da pasta /home/ahlr/Dropbox/TONICO/" >> /home/ahlr/.hubiC_credentials
-    echo "email = ahlr_2000@yahoo.com" >> /home/ahlr/.hubiC_credentials
-    echo "password = scotland2014" >> /home/ahlr/.hubiC_credentials
-    echo "client_id = api_hubic_LTIbEJKF9XFjOt1eGCAbMDlLUFImY4vg" >> /home/ahlr/.hubiC_credentials
-    echo "client_secret = 6WXtVMrG2zKJVBCD1ApzzH1sb1P5AFl1NQZpcHV506VHfAUTsOhwURURoIZWLMN0" >> /home/ahlr/.hubiC_credentials
-    echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubiC_credentials
-    chown 600 /home/ahlr/.hubiC_credentials
+    cat $minilicense > /home/ahlr/.hubic_credentials
+    echo "[hubic]" >> /home/ahlr/.hubic_credentials
+    echo "" >> /home/ahlr/.hubic_credentials
+    echo "#Backup da pasta /home/ahlr/Dropbox/TONICO/" >> /home/ahlr/.hubic_credentials
+    echo "email = ahlr_2000@yahoo.com" >> /home/ahlr/.hubic_credentials
+    echo "password = xxxxxxxxx" >> /home/ahlr/.hubic_credentials
+    echo "client_id = api_hubic_LTIbEJKF9XFjOt1eGCAbMDlLUFImY4vg" >> /home/ahlr/.hubic_credentials
+    echo "client_secret = 6WXtVMrG2zKJVBCD1ApzzH1sb1P5AFl1NQZpcHV506VHfAUTsOhwURURoIZWLMN0" >> /home/ahlr/.hubic_credentials
+    echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubic_credentials
+    chown 600 /home/ahlr/.hubic_credentials
     sleep 3
 fi
 
 #Criação do arquivo de credenciais do hubiC
 if [ $hubiCNET4YOU == yes ]; then
     echo -e "$credhubiCNET4YOUtxt"
-    echo "" >> /home/ahlr/.hubiC_credentials
-    echo "" >> /home/ahlr/.hubiC_credentials
-    echo "#Backup da pasta /home/ahlr/Dropbox/NET4YOU/" >> /home/ahlr/.hubiC_credentials
-    echo "email = financeio@net4you.com.br" >> /home/ahlr/.hubiC_credentials
-    echo "password = sc0tl@nd" >> /home/ahlr/.hubiC_credentials
-    echo "client_id = api_hubic_AX1GBGXFqcoFRaB6TcmORhneQ33DYgdp" >> /home/ahlr/.hubiC_credentials
-    echo "client_secret = mraqgIdiNnxdp6oPX2SrH0w0CDFsmviE822hKvba9OA5KFw9SFatkB6Gl0mQEou5" >> /home/ahlr/.hubiC_credentials
-    echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubiC_credentials
-    chown 600 /home/ahlr/.hubiC_credentials
+    echo "" >> /home/ahlr/.hubic_credentials
+    echo "" >> /home/ahlr/.hubic_credentials
+    echo "#Backup da pasta /home/ahlr/Dropbox/NET4YOU/" >> /home/ahlr/.hubic_credentials
+    echo "email = financeio@net4you.com.br" >> /home/ahlr/.hubic_credentials
+    echo "password = xxxxxxxxx" >> /home/ahlr/.hubic_credentials
+    echo "client_id = api_hubic_AX1GBGXFqcoFRaB6TcmORhneQ33DYgdp" >> /home/ahlr/.hubic_credentials
+    echo "client_secret = mraqgIdiNnxdp6oPX2SrH0w0CDFsmviE822hKvba9OA5KFw9SFatkB6Gl0mQEou5" >> /home/ahlr/.hubic_credentials
+    echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubic_credentials
+    chown 600 /home/ahlr/.hubic_credentials
     sleep 3
 fi
 
@@ -1096,15 +1095,15 @@ echo
 	if [ $credhubiCTONICO == yes ]; then
 	echo -e "$credhubiCTONICOTXT"
 	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubiC_credentials $YELLOW no konsole....  $NC"
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubic_credentials $YELLOW no konsole....  $NC"
 	echo
 	echo
 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE 2014$GREEN" $NC"
 	sleep 5
 	    
-	vim /home/ahlr/.hubiC_credentials
+	vim /home/ahlr/.hubic_credentials
 	
-	echo -e "\e[ \t$BLUE hubiC_credentials $YELLOW configurado!  $NC"
+	echo -e "\e[ \t$BLUE hubic_credentials $YELLOW configurado!  $NC"
 echo
 echo	
 echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
@@ -1116,15 +1115,15 @@ echo
 	if [ $credhubiCNET4YOU == yes ]; then
 	echo -e "$credhubiCNET4YOUtxt"
 	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubiC_credentials $YELLOW no konsole....  $NC"
+	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubic_credentials $YELLOW no konsole....  $NC"
 	echo
 	echo
 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE @$GREEN +$WHITE 2014" $NC"
 	sleep 5
 	    
-	vim /home/ahlr/.hubiC_credentials
+	vim /home/ahlr/.hubic_credentials
 	
-	echo -e "\e[ \t$BLUE hubiC_credentials $YELLOW configurado!  $NC"
+	echo -e "\e[ \t$BLUE hubic_credentials $YELLOW configurado!  $NC"
 echo
 echo	
 echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
