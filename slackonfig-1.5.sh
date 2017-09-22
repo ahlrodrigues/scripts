@@ -354,6 +354,8 @@ if [ $cleanret == yes ]; then
     echo "#" >> $crondaily/cleanret.sh
     echo "# Move arquivos *.ret para a pasta de Recebidos" >> $crondaily/cleanret.sh
     echo "mv \$pasta_origem/*.ret \$pasta_destino" >> $crondaily/cleanret.sh
+    chmod +x $crondaily/cleanret.sh
+    chmod 755 $crondaily/cleanret.sh
     sleep 3
 fi
 
@@ -376,6 +378,7 @@ if [ $mvrejsgr == yes ]; then
     echo "mv \$pasta_origem/Francesinha*.pdf \$pasta_destino 2> /dev/null" >> $crondaily/mvrejsgr.sh
     echo "mv \$pasta_origem/Rejeitados*.pdf \$pasta_destino 2> /dev/null" >> $crondaily/mvrejsgr.sh
     chmod +x $crondaily/mvrejsgr.sh
+    chmod 755 $crondaily/mvrejsgr.sh
     sleep 3
 fi
 
@@ -394,6 +397,7 @@ if [ $cleansici == yes ]; then
     echo "# Move o recibo de entrehga do SICI para a pasta de backup ../SCM/SICI" >> $crondaily/cleansici.sh
     echo "mv \$pasta_origem/sici*.xml \$pasta_destino 2> /dev/null" >> $crondaily/cleansici.sh
     chmod +x $crondaily/cleansici.sh
+    chmod 755 $crondaily/cleansici.sh
     sleep 3
 fi
 
@@ -406,6 +410,7 @@ if [ $backupprojetos == yes ]; then
     echo "#" >> $cronhourly/backupprojetos.sh
     echo "rsync -azhv /mnt/sda3/Projetos/ /home/ahlr/Dropbox/TONICO/Projetos/" >> $cronhourly/backupprojetos.sh
     chmod +x $cronhourly/backupprojetos.sh
+    chmod 755 $cronhourly/backupprojetos.sh
     sleep 3
 fi
 
@@ -427,6 +432,7 @@ fi
     echo "#Copia os arquivos de retorno para a pasta de backup" >> $crondaily/cleansai.sh
     echo "mv \$pasta_origem/*.SAI \$pasta_destino" >> $crondaily/cleansai.sh
     chmod +x $crondaily/cleansai.sh
+    chmod 755 $crondaily/cleansai.sh
     sleep 3
 fi
 
@@ -439,6 +445,8 @@ if [ $cleancache == yes ]; then
     echo "#" >> $crondaily/cleancache.sh
     echo "#Move tudo para o lixo" >> $crondaily/cleancache.sh
     echo "echo 3 > /proc/sys/vm/drop_caches" >> $crondaily/cleancache.sh
+    chmod +x $crondaily/cleancache.sh
+    chmod 755 $crondaily/cleancache.sh
     sleep 3
 fi
 
@@ -447,8 +455,8 @@ if [ $ntp == yes ]; then
     echo -e "$ntptxt"
     sed -i "s/^#*/#/" /etc/ntp.conf # --------- comenta todas as linhas --------- #	
     sed -i "s/#server 3.pool.ntp.org/server pool.ntp.br/g" /etc/ntp.conf
-    chmod +x $rcd/rc.ntpd
-	if [ -x $rcd/rc.ntpd ]; then
+    	if [ -x $rcd/rc.ntpd ]; then
+	  chmod +x $rcd/rc.ntpd
 	  $rcd/rc.ntpd start
 	fi
     sleep 3
@@ -465,12 +473,10 @@ fi
 # Iniciando do deamon Samba
 if [ $samba2 == yes ]; then
     echo -e "$samba2txt"
-    echo "#Inicializando o deamon rc.samba" >> $rcd/rc.local
-    echo "if [ -x $rcd/rc.samba ]; then" >> $rcd/rc.local
-    echo "$rcd/rc.samba start" >> $rcd/rc.local
-    echo "fi" >> $rcd/rc.local
-    echo "#" >> $rcd/rc.local
-    chmod +x $rcd/rc.samba >> $rcd/rc.local
+    if [ -x $rcd/rc.samba ]; then
+	chmod +x $rcd/rc.samba
+	$rcd/rc.samba start
+    fi
     sleep 3
 fi
 
@@ -506,6 +512,8 @@ if [ $teamviewerd == yes ]; then
     echo "if [ -x $rcd/rc.teamviewerd ]; then" >> $rcd/rc.local
     echo "$rcd/rc.teamviewerd start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
+    chmod +x $rcd/rc.teamviewerd
+    $rcd/rc.teamviewerd start
     sleep 3
 fi
 
@@ -516,8 +524,8 @@ if [ $plex == yes ]; then
     echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
     echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
-    echo "#" >> $rcd/rc.local
-    chmod +x $rcd/rc.plexmediaserver >> $rcd/rc.local
+    chmod +x $rcd/rc.plexmediaserver
+    $rcd/rc.plexmediaserver start
     sleep 3
 fi
 
@@ -609,6 +617,7 @@ if [ $thunderbackup == yes ]; then
     echo "#do tunderbird para a pasta /mnt/sda3/Thunderbird" >> $crondaily/thunderbirdbackup.sh
     echo "rsync -azhv /home/ahlr/.thunderbird/ /mnt/sda3/Thunderbird/" >> $crondaily/thunderbirdbackup.sh
     chmod +x $crondaily/thunderbirdbackup.sh
+    chmod 755 $crondaily/thunderbirdbackup.sh
 fi
 
 #Criação do arquivo para restauração do thunderbird
@@ -665,8 +674,8 @@ if [ $bbazetonico == yes ]; then
     echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_TONICO.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
     echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
-    echo "   export PASSPHRASE="\&ntu\$1@\$M0"" >> $crondaily/backblaze_TONICO.sh
-    echo "   export SIGN_PASSPHRASE="\&ntu\$1@\$M0" " >> $crondaily/backblaze_TONICO.sh
+    echo "   export PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
+    echo "   export SIGN_PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   # Remove files older than 90 days" >> $crondaily/backblaze_TONICO.sh
     echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
@@ -702,6 +711,8 @@ if [ $bbazetonico == yes ]; then
     echo "   unset PASSPHRASE" >> $crondaily/backblaze_TONICO.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_TONICO.sh 
     echo "fi" >> $crondaily/backblaze_TONICO.sh
+    chmod +x $crondaily/backblaze_TONICO.sh
+    chmod 755 $crondaily/backblaze_TONICO.sh
 fi
 
 #Criação do arquivo backblaze_NET4YOU.sh
@@ -743,8 +754,8 @@ if [ $bbazenet4you == yes ]; then
     echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_NET4YOU.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_NET4YOU.sh
     echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   export PASSPHRASE="\&ntu\$1@\$M0"" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   export SIGN_PASSPHRASE="\&ntu\$1@\$M0" " >> $crondaily/backblaze_NET4YOU.sh
+    echo "   export PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   export SIGN_PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_NET4YOU.sh
     echo "" >> $crondaily/backblaze_NET4YOU.sh
     echo "   # Remove files older than 90 days" >> $crondaily/backblaze_NET4YOU.sh
     echo "   duplicity \\" >> $crondaily/backblaze_NET4YOU.sh
@@ -780,6 +791,8 @@ if [ $bbazenet4you == yes ]; then
     echo "   unset PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh 
     echo "fi" >> $crondaily/backblaze_NET4YOU.sh
+    chmod +x $crondaily/backblaze_NET4YOU.sh
+    chmod 755 $crondaily/backblaze_NET4YOU.sh
 fi
 
 # Cria script que calcula valor do boleto entre duas datas
@@ -805,6 +818,7 @@ if [ $data == yes ]; then
     echo "#" >> $ulbin/data.sh
     echo "exit 1" >> $ulbin/data.sh
     chmod +x $ulbin/data.sh
+    chmod 755 $ulbin/data.sh
     sleep 3
 fi  
 
@@ -883,15 +897,6 @@ if [ $hubiCTONICO == yes ]; then
     cat $minilicense >> $crondaily/hubiC_TONICO.sh
     echo "clear" >> $crondaily/hubiC_TONICO.sh
     echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "if [[ \$(whoami) == "ahlr" ]]; then" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo -e "'"\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"'"" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo" >> $crondaily/hubiC_TONICO.sh
-    echo "   exit 0" >> $crondaily/hubiC_TONICO.sh
-    echo "   else" >> $crondaily/hubiC_TONICO.sh
     echo "" >> $crondaily/hubiC_TONICO.sh
     echo "   #Ajustando permissões" >> $crondaily/hubiC_TONICO.sh
     echo "   echo" >> $crondaily/hubiC_TONICO.sh
@@ -906,6 +911,7 @@ if [ $hubiCTONICO == yes ]; then
     echo "   #hubiC configuration variables" >> $crondaily/hubiC_TONICO.sh
     echo "   LOCAL_DIR=/home/ahlr/Dropbox/TONICO/" >> $crondaily/hubiC_TONICO.sh
     echo "   REMOTE_DIR=default" >> $crondaily/hubiC_TONICO.sh
+    echo "   log=/var/log/duplicity/hubiC_TONICO.sh.log" >> $crondaily/hubiC_TONICO.sh
     echo "" >> $crondaily/hubiC_TONICO.sh
     echo "   # GPG key (last 8 characters)" >> $crondaily/hubiC_TONICO.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/hubiC_TONICO.sh
@@ -917,24 +923,24 @@ if [ $hubiCTONICO == yes ]; then
     echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
     echo "   remove-older-than 90D --force \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_TONICO.sh
+    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_TONICO.sh
     echo "" >> $crondaily/hubiC_TONICO.sh
     echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/hubiC_TONICO.sh
     echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
     echo "   --full-if-older-than 30D \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   \${LOCAL_DIR} cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_TONICO.sh
+    echo "   \${LOCAL_DIR} cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_TONICO.sh
     echo "" >> $crondaily/hubiC_TONICO.sh
     echo "   # Cleanup failures" >> $crondaily/hubiC_TONICO.sh
     echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
     echo "   cleanup --force \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_TONICO.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
+    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_TONICO.sh
     echo "" >> $crondaily/hubiC_TONICO.sh
     echo "   # Show collection-status" >> $crondaily/hubiC_TONICO.sh
     echo "   duplicity collection-status \\" >> $crondaily/hubiC_TONICO.sh
     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_TONICO.sh
+    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_TONICO.sh
     echo "" >> $crondaily/hubiC_TONICO.sh
     echo "   # Unset variables" >> $crondaily/hubiC_TONICO.sh
     echo "   unset REMOTE_DIR" >> $crondaily/hubiC_TONICO.sh
@@ -943,7 +949,9 @@ if [ $hubiCTONICO == yes ]; then
     echo "   unset SGN_KEY" >> $crondaily/hubiC_TONICO.sh
     echo "   unset PASSPHRASE" >> $crondaily/hubiC_TONICO.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/hubiC_TONICO.sh 
-    echo "fi" >> $crondaily/hubiC_TONICO.sh
+    echo "   log" >> $crondaily/hubiC_TONICO.sh 
+    chmod +x $crondaily/hubiC_TONICO.sh
+    chmod 755 $crondaily/hubiC_TONICO.sh
     sleep 3
 fi
 
@@ -954,15 +962,6 @@ if [ $hubiCNET4YOU == yes ]; then
     cat $minilicense >> $crondaily/hubiC_NET4YOU.sh
     echo "clear" >> $crondaily/hubiC_NET4YOU.sh
     echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "if [[ \$(whoami) == "ahlr" ]]; then" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo -e "'"\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"'"" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   exit 0" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   else" >> $crondaily/hubiC_NET4YOU.sh
     echo "" >> $crondaily/hubiC_NET4YOU.sh
     echo "   #Ajustando permissões" >> $crondaily/hubiC_NET4YOU.sh
     echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
@@ -977,6 +976,7 @@ if [ $hubiCNET4YOU == yes ]; then
     echo "   #hubiC configuration variables" >> $crondaily/hubiC_NET4YOU.sh
     echo "   LOCAL_DIR=/home/ahlr/Dropbox/NET4YOU/" >> $crondaily/hubiC_NET4YOU.sh
     echo "   REMOTE_DIR=default" >> $crondaily/hubiC_NET4YOU.sh
+    echo "   log=/var/log/duplicity/backup_hubiC_NET4YOU.log" >> $crondaily/hubiC_NET4YOU.sh
     echo "" >> $crondaily/hubiC_NET4YOU.sh
     echo "   # GPG key (last 8 characters)" >> $crondaily/hubiC_NET4YOU.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/hubiC_NET4YOU.sh
@@ -988,24 +988,24 @@ if [ $hubiCNET4YOU == yes ]; then
     echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
     echo "   remove-older-than 90D --force \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_NET4YOU.sh
+    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_NET4YOU.sh
     echo "" >> $crondaily/hubiC_NET4YOU.sh
     echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/hubiC_NET4YOU.sh
     echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
     echo "   --full-if-older-than 30D \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   \${LOCAL_DIR} cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_NET4YOU.sh
+    echo "   \${LOCAL_DIR} cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_NET4YOU.sh
     echo "" >> $crondaily/hubiC_NET4YOU.sh
     echo "   # Cleanup failures" >> $crondaily/hubiC_NET4YOU.sh
     echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
     echo "   cleanup --force \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_NET4YOU.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
+    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_NET4YOU.sh
     echo "" >> $crondaily/hubiC_NET4YOU.sh
     echo "   # Show collection-status" >> $crondaily/hubiC_NET4YOU.sh
     echo "   duplicity collection-status \\" >> $crondaily/hubiC_NET4YOU.sh
     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   cf+hubic://\${REMOTE_DIR}" >> $crondaily/hubiC_NET4YOU.sh
+    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_NET4YOU.sh
     echo "" >> $crondaily/hubiC_NET4YOU.sh
     echo "   # Unset variables" >> $crondaily/hubiC_NET4YOU.sh
     echo "   unset REMOTE_DIR" >> $crondaily/hubiC_NET4YOU.sh
@@ -1014,7 +1014,9 @@ if [ $hubiCNET4YOU == yes ]; then
     echo "   unset SGN_KEY" >> $crondaily/hubiC_NET4YOU.sh
     echo "   unset PASSPHRASE" >> $crondaily/hubiC_NET4YOU.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/hubiC_NET4YOU.sh 
-    echo "fi" >> $crondaily/hubiC_NET4YOU.sh
+    echo "   unset log" >> $crondaily/hubiC_NET4YOU.sh
+    chmod + $crondaily/hubiC_NET4YOU.sh
+    chmod 755 $crondaily/hubiC_NET4YOU.sh
     sleep 3
 fi
 

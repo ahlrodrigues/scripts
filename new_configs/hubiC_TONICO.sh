@@ -28,15 +28,15 @@
 #
 clear
 
-if [[ $(whoami) == ahlr ]]; then
-
-   echo
-   echo
-   echo -e "\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"
-   echo
-   echo
-   exit 0
-   else
+# if [[ $(whoami) == ahlr ]]; then
+# 
+#    echo
+#    echo
+#    echo -e "\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"
+#    echo
+#    echo
+#    exit 0
+#    else
 
    #Ajustando permissões
    echo
@@ -55,8 +55,8 @@ if [[ $(whoami) == ahlr ]]; then
    # GPG key (last 8 characters)
    ENC_KEY=A2133DA2
    SGN_KEY=A2133DA2
-   export PASSPHRASE=xxxxxxxxxxxxxx
-   export SIGN_PASSPHRASE=xxxxxxxxxxxxxxxx
+   export PASSPHRASE="'xxxxxxxxxxxxxxxxx'"
+   export SIGN_PASSPHRASE="'xxxxxxxxxxxxxxxxx'"
 
    # Remove files older than 90 days
    duplicity \
@@ -73,7 +73,7 @@ if [[ $(whoami) == ahlr ]]; then
    # Cleanup failures
    duplicity \
    cleanup --force \
-   --sign-key  --encrypt-key  \
+   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \
    cf+hubic://${REMOTE_DIR}
 
    # Show collection-status
@@ -88,4 +88,4 @@ if [[ $(whoami) == ahlr ]]; then
    unset SGN_KEY
    unset PASSPHRASE
    unset SIGN_PASSPHRASE
-fi
+#fi

@@ -95,7 +95,7 @@ if [[ $(whoami) == "root" ]]; then
 		    echo
 		    echo
 		    echo
-		    echo -e "\e[ \t$CYAN `$msm1` $NC" #Recebido
+		    echo -e "\e[ \t$CYAN $msm1 $NC" #Recebido
 		    echo
 		    echo
 		    echo

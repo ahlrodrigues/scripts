@@ -55,8 +55,8 @@ clear
    # GPG key (last 8 characters)
    ENC_KEY=A2133DA2
    SGN_KEY=A2133DA2
-   export PASSPHRASE=xxxxxxxxxxxxxxxxx
-   export SIGN_PASSPHRASE=xxxxxxxxxxxxxxxxxxxxx
+   export PASSPHRASE="'xxxxxxxxxxxxxxxxx'"
+   export SIGN_PASSPHRASE="'xxxxxxxxxxxxxxxxx'"
 
    # Remove files older than 90 days
    duplicity \
@@ -73,7 +73,7 @@ clear
    # Cleanup failures
    duplicity \
    cleanup --force \
-   --sign-key  --encrypt-key  \
+   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \
    cf+hubic://${REMOTE_DIR}
 
    # Show collection-status
