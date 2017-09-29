@@ -68,24 +68,24 @@ if [[ $(whoami) == ahlr ]]; then
    duplicity \
    --sign-key $SGN_KEY --encrypt-key $ENC_KEY \
    remove-older-than 90D --force \
-   b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}
+   b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET} > $log
 
    # Perform the backup, make a full backup if it's been over 30 days
    duplicity \
    --sign-key $SGN_KEY --encrypt-key $ENC_KEY \
    --full-if-older-than 30D \
-   ${LOCAL_DIR} b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}
+   ${LOCAL_DIR} b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET} >> $log
 
    # Cleanup failures
    duplicity \
    cleanup --force \
    --sign-key  --encrypt-key  \
-   b2://${B2_ACCOUNT}:@${B2_BUCKET}
+   b2://${B2_ACCOUNT}:@${B2_BUCKET} >> $log
 
    # Show collection-status
    duplicity collection-status \
    --sign-key $SGN_KEY --encrypt-key $ENC_KEY \
-   b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}
+   b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET} >> $log
 
    # Unset variables
    unset B2_ACCOUNT

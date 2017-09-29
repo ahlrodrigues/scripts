@@ -20,16 +20,6 @@ msm4="Tente mais tarde!"
 
 clear
 
-
-if [[ $(whoami) == "root" ]]; then
-   
-    echo
-    echo
-    echo -e "\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode acessar o BNB\e[0m"
-    echo
-    echo
-      exit 0
-  else
     
 	echo
 	echo
@@ -109,7 +99,7 @@ if [[ $(whoami) == "root" ]]; then
 	    echo
 	    echo
 	    echo
-	    echo -e "\e[ \t$CYAN `$msm1` $NC" #Recebido
+	    echo -e "\e[ \t$CYAN $msm1 $NC" #Recebido
 	    echo
 	    echo
 	    echo
@@ -117,6 +107,3 @@ if [[ $(whoami) == "root" ]]; then
 	    sleep 10
 	    exit 1
  	fi
-
-fi
-

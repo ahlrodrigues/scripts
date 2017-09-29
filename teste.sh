@@ -621,86 +621,87 @@ spotifytxt="\e[ \t$GREEN spotify.sh => Instala o Spotify $NC"
 
 
 # --------- Início das configurações --------- #	
-	if [ $bbazenet4you == yes ]; then
-	echo -e "$bbazenet4youtxt"
-	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
-	echo
-	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
-	sleep 5
-	    
-	vim $crondaily/backblaze_NET4YOU.sh
-	
-	echo -e "\e[ \t$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
+# 	if [ $bbazenet4you == yes ]; then
+# 	echo -e "$bbazenet4youtxt"
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
+# 	echo
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
+# 	sleep 5
+# 	    
+# 	vim $crondaily/backblaze_NET4YOU.sh
+# 	
+# 	echo -e "\e[ \t$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
+# 
+# echo
+# echo	
+# echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+# echo
+# echo
+# 	fi
+# 	
+# 	if [ $bbazetonico == yes ]; then
+# 	echo -e "$bbazetonicotxt"
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
+# 	echo
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
+# 	sleep 5
+# 	    
+# 	vim $crondaily/backblaze_TONICO.sh
+# 	
+# 	echo -e "\e[ \t$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
+# echo
+# echo	
+# echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+# echo
+# echo
+# 	fi
+# 	
+# 	if [ $credhubiCTONICO == yes ]; then
+# 	echo -e "$credhubiCTONICOTXT"
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubiC_credentials $YELLOW no konsole....  $NC"
+# 	echo
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE 2014$GREEN" $NC"
+# 	sleep 5
+# 	    
+# 	vim /home/ahlr/.hubiC_credentials
+# 	
+# 	echo -e "\e[ \t$BLUE hubiC_credentials $YELLOW configurado!  $NC"
+# echo
+# echo	
+# echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+# echo
+# echo
+# 	fi
+# 	
+# 	
+# 	if [ $credhubiCNET4YOU == yes ]; then
+# 	echo -e "$credhubiCNET4YOUtxt"
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubiC_credentials $YELLOW no konsole....  $NC"
+# 	echo
+# 	echo
+# 	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE @$GREEN +$WHITE 2014" $NC"
+# 	sleep 5
+# 	    
+# 	vim /home/ahlr/.hubiC_credentials
+# 	
+# 	echo -e "\e[ \t$BLUE hubiC_credentials $YELLOW configurado!  $NC"
+# echo
+# echo	
+# echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+# echo
+# echo
+# 	fi
+# 
+# echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
+# echo
+# echo
 
-echo
-echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
-echo
-echo
-	fi
-	
-	if [ $bbazetonico == yes ]; then
-	echo -e "$bbazetonicotxt"
-	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
-	echo
-	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
-	sleep 5
-	    
-	vim $crondaily/backblaze_TONICO.sh
-	
-	echo -e "\e[ \t$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
-echo
-echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
-echo
-echo
-	fi
-	
-	if [ $credhubiCTONICO == yes ]; then
-	echo -e "$credhubiCTONICOTXT"
-	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubiC_credentials $YELLOW no konsole....  $NC"
-	echo
-	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE 2014$GREEN" $NC"
-	sleep 5
-	    
-	vim /home/ahlr/.hubiC_credentials
-	
-	echo -e "\e[ \t$BLUE hubiC_credentials $YELLOW configurado!  $NC"
-echo
-echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
-echo
-echo
-	fi
-	
-	
-	if [ $credhubiCNET4YOU == yes ]; then
-	echo -e "$credhubiCNET4YOUtxt"
-	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubiC_credentials $YELLOW no konsole....  $NC"
-	echo
-	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE @$GREEN +$WHITE 2014" $NC"
-	sleep 5
-	    
-	vim /home/ahlr/.hubiC_credentials
-	
-	echo -e "\e[ \t$BLUE hubiC_credentials $YELLOW configurado!  $NC"
-echo
-echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
-echo
-echo
-	fi
-
-echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
-echo
-echo
 
 

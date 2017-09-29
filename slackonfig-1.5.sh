@@ -113,9 +113,7 @@ skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE
 numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
 slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 pkgstxt="\e[ \t$CYAN Instalacao lista de pacotes \e$NC"
-hubiCTONICOtxt="\e[ \t$CYAN hubiC_TONICO => Faz backup no hubic \e$NC"
 hubiCNET4YOUtxt="\e[ \t$CYAN hubiC_NET4YOU => Faz backup no hubic \e$NC"
-credhubiCTONICOtxt="\e[ \t$CYAN Cria as credenciais da conta hubiC_TONICO \e$NC"
 credhubiCNET4YOUtxt="\e[ \t$CYAN Cria as credenciais da conta hubiC_NET4YOU \e$NC"
 
 # --------- Caminhos mais usados  --------- #
@@ -298,10 +296,6 @@ echo
 
 	if [ $pkgs == yes ]; then
 	  echo -e "$pkgstxt"
-	fi
-
-	if [ $hubiCTONICO == yes ]; then
-	  echo -e "$hubiCTONICOtxt"
 	fi
 
 	if [ $hubiCNET4YOU == yes ]; then
@@ -923,7 +917,7 @@ if [ $hubiCTONICO == yes ]; then
     echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
     echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
     echo "   remove-older-than 90D --force \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_TONICO.sh
+    echo "   cf+hubic://\${REMOTE_DIR} > \$log" >> $crondaily/hubiC_TONICO.sh
     echo "" >> $crondaily/hubiC_TONICO.sh
     echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/hubiC_TONICO.sh
     echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
@@ -955,88 +949,6 @@ if [ $hubiCTONICO == yes ]; then
     sleep 3
 fi
 
-
-if [ $hubiCNET4YOU == yes ]; then
-    echo -e "$hubiCNET4YOUtxt"
-    echo "#!"$SHELL > $crondaily/hubiC_NET4YOU.sh
-    cat $minilicense >> $crondaily/hubiC_NET4YOU.sh
-    echo "clear" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   #Ajustando permissões" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo -e "'"\e[ \t\e[1;31;40m Ajustando as permissões dos dados... aguarde...\e[0m"'"" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   echo" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   find /home/ahlr/Dropbox/NET4YOU/ -type f -exec chmod 644 {} \;" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   find /home/ahlr/Dropbox/NET4YOU/ -type d -exec chmod 755 {} \;" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   #hubiC configuration variables" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   LOCAL_DIR=/home/ahlr/Dropbox/NET4YOU/" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   REMOTE_DIR=default" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   log=/var/log/duplicity/backup_hubiC_NET4YOU.log" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   # GPG key (last 8 characters)" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   ENC_KEY="A2133DA2"" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   SGN_KEY="A2133DA2"" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   export PASSPHRASE="'xxxxxxxxx'"" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   export SIGN_PASSPHRASE="'xxxxxxxxx'" " >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   # Remove files older than 90 days" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   remove-older-than 90D --force \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   --full-if-older-than 30D \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   \${LOCAL_DIR} cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   # Cleanup failures" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   duplicity \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   cleanup --force \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   # Show collection-status" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   duplicity collection-status \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_NET4YOU.sh
-    echo "" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   # Unset variables" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   unset REMOTE_DIR" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   unset LOCAL_DIR" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   unset ENC_KEY" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   unset SGN_KEY" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   unset PASSPHRASE" >> $crondaily/hubiC_NET4YOU.sh
-    echo "   unset SIGN_PASSPHRASE" >> $crondaily/hubiC_NET4YOU.sh 
-    echo "   unset log" >> $crondaily/hubiC_NET4YOU.sh
-    chmod + $crondaily/hubiC_NET4YOU.sh
-    chmod 755 $crondaily/hubiC_NET4YOU.sh
-    sleep 3
-fi
-
-
-#Criação do arquivo de credenciais do hubiC
-if [ $hubiCTONICO == yes ]; then
-    echo -e "$credhubiCTONICOtxt"
-    cat $minilicense > /home/ahlr/.hubic_credentials
-    echo "[hubic]" >> /home/ahlr/.hubic_credentials
-    echo "" >> /home/ahlr/.hubic_credentials
-    echo "#Backup da pasta /home/ahlr/Dropbox/TONICO/" >> /home/ahlr/.hubic_credentials
-    echo "email = ahlr_2000@yahoo.com" >> /home/ahlr/.hubic_credentials
-    echo "password = xxxxxxxxx" >> /home/ahlr/.hubic_credentials
-    echo "client_id = api_hubic_LTIbEJKF9XFjOt1eGCAbMDlLUFImY4vg" >> /home/ahlr/.hubic_credentials
-    echo "client_secret = 6WXtVMrG2zKJVBCD1ApzzH1sb1P5AFl1NQZpcHV506VHfAUTsOhwURURoIZWLMN0" >> /home/ahlr/.hubic_credentials
-    echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubic_credentials
-    chown 600 /home/ahlr/.hubic_credentials
-    sleep 3
-fi
-
 #Criação do arquivo de credenciais do hubiC
 if [ $hubiCNET4YOU == yes ]; then
     echo -e "$credhubiCNET4YOUtxt"
@@ -1051,8 +963,6 @@ if [ $hubiCNET4YOU == yes ]; then
     chown 600 /home/ahlr/.hubic_credentials
     sleep 3
 fi
-
-
 
 # --------- Início das configurações --------- #	
 	if [ $bbazenet4you == yes ]; then
@@ -1094,26 +1004,6 @@ echo
 echo
 	fi
 	
-	if [ $credhubiCTONICO == yes ]; then
-	echo -e "$credhubiCTONICOTXT"
-	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubic_credentials $YELLOW no konsole....  $NC"
-	echo
-	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE 2014$GREEN" $NC"
-	sleep 5
-	    
-	vim /home/ahlr/.hubic_credentials
-	
-	echo -e "\e[ \t$BLUE hubic_credentials $YELLOW configurado!  $NC"
-echo
-echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
-echo
-echo
-	fi
-	
-	
 	if [ $credhubiCNET4YOU == yes ]; then
 	echo -e "$credhubiCNET4YOUtxt"
 	echo
@@ -1142,8 +1032,6 @@ echo
     if [ ! -f "$minilicense" ]; then
 	rm /tmp/minilicense.txt
     fi
-	  
-	  
 	  
 # --------- Início do fim --------- # 
     ;;
@@ -1175,4 +1063,3 @@ echo
 echo
 
 fi
-
