@@ -54,7 +54,7 @@ cleansai=no
 cleancache=no
 ntp=no
 samba=no
-sanba2=no
+samba2=no
 cups=no
 shutdown=no
 teamviewerd=no
@@ -64,12 +64,12 @@ inittab=no
 networkmanager=no
 konsole=no
 reccx=no
-brother=no
+brother=yes
 lang=no
 thunderbird=no
 thunderbackup=no
-bbazetonico=no
-bbazenet4you=no
+bblazetonico=no
+bblazenet4you=no
 data=no
 winbox=no
 skyline=no
@@ -105,8 +105,8 @@ brothertxt="\e[ \t$GREEN instalacao do driver da impressora $NC"
 langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
 thunderbirdtxt="\e[ \t$GREEN thunderbirdbackup.sh => Restauracao do Thunderbird $NC"
 thunderbackuptxt="\e[ \t$GREEN thunderbackup.sh => Faz backup do Thunderbird $NC"
-bbazetonicotxt="\e[ \t$GREEN backblaze_TONICO.sh => Faz backup no Backblaze $NC"
-bbazenet4you="\e[ \t$GREEN backblaze_NET4YOU.sh => Faz backup no Backblaze $NC"
+bblazetonicotxt="\e[ \t$GREEN backblaze_TONICO.sh => Faz backup no Backblaze $NC"
+bblazenet4you="\e[ \t$GREEN backblaze_NET4YOU.sh => Faz backup no Backblaze $NC"
 datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
 winboxtxt="\e[ \t$GREEN winbox.sh => Cria a entrada do Winbox no mennu do KDE $NC"
 skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE $NC"
@@ -131,6 +131,16 @@ rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/conf
 
 # --------- Limpa tudo --------- #
 clear
+
+# --------- Utilização de Cores  --------- #
+BLACK='\e[1;30m'
+RED='\e[1;31m'
+GREEN='\e[1;32m'
+NC='\033[0m' # reset/no color
+BLUE='\e[1;34m'
+PINK='\e[1;35m'
+CYAN='\e[1;36m'
+WHITE='\e[1;37m'
 
 # --------- Teste se está logado como root --------- #
 if [[ $(whoami) == "root" ]]; then
@@ -266,12 +276,12 @@ echo
 	  echo -e "$thunderbirdtxt"
 	fi
 	
-	if [ $bbazetonico == yes ]; then
-	  echo -e "$bbazetonicotxt"
+	if [ $bblazetonico == yes ]; then
+	  echo -e "$bblazetonicotxt"
 	fi
 	
-	if [ $bbazenet4you == yes ]; then
-	  echo -e "$bbazenet4youtxt"
+	if [ $bblazenet4you == yes ]; then
+	  echo -e "$bblazenet4youtxt"
 	fi
 
 	if [ $data == yes ]; then
@@ -578,6 +588,8 @@ if [ $brother == yes ]; then
     echo -e "$brothertxt"
     wget -cP /tmp http://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.1.1-1.gz
     gunzip /tmp/linux-brprinter-installer*
+    cd /tmp
+    chmod +x linux-brprinter-installer*
     ./linux-brprinter-installer*
     rm /tmp/linux-brprinter-installer*
     rm /tmp/uninstaller_*
@@ -630,8 +642,8 @@ if [ $thunderbird == yes ]; then
 fi
 
 #Criação do arquivo backblaze_TONICO.sh
-if [ $bbazetonico == yes ]; then
-    echo -e "$bbazetonicotxt"
+if [ $bblazetonico == yes ]; then
+    echo -e "$bblazetonicotxt"
     echo "#!"$SHELL > $crondaily/backblaze_TONICO.sh
     cat $minilicense >> $crondaily/backblaze_TONICO.sh
     echo "clear" >> $crondaily/backblaze_TONICO.sh
@@ -710,8 +722,8 @@ if [ $bbazetonico == yes ]; then
 fi
 
 #Criação do arquivo backblaze_NET4YOU.sh
-if [ $bbazenet4you == yes ]; then
-    echo -e "$bbazenet4youtxt"
+if [ $bblazenet4you == yes ]; then
+    echo -e "$bblazenet4youtxt"
     echo "#!"$SHELL > $crondaily/backblaze_NET4YOU.sh
     cat $minilicense >> $crondaily/backblaze_NET4YOU.sh
     echo "clear" >> $crondaily/backblaze_NET4YOU.sh
@@ -965,8 +977,8 @@ if [ $hubiCNET4YOU == yes ]; then
 fi
 
 # --------- Início das configurações --------- #	
-	if [ $bbazenet4you == yes ]; then
-	echo -e "$bbazenet4youtxt"
+	if [ $bblazenet4you == yes ]; then
+	echo -e "$bblazenet4youtxt"
 	echo
 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
 	echo
@@ -985,8 +997,8 @@ echo
 echo
 	fi
 	
-	if [ $bbazetonico == yes ]; then
-	echo -e "$bbazetonicotxt"
+	if [ $bblazetonico == yes ]; then
+	echo -e "$bblazetonicotxt"
 	echo
 	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
 	echo
