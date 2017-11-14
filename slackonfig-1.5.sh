@@ -76,9 +76,7 @@ skyline=no
 numLock=no
 slackpkg=no
 pkgs=no
-hubiCTONICO=no
 hubiCNET4YOU=no
-credhubiCTONICO=no
 credhubiCNET4YOU=no
 # --------- Mensagens --------- #
 aminilicensetxt="\e[ \t$GREEN minilicense.txt => Arquivo de licença a ser incluído nos spripts $NC"
@@ -106,7 +104,7 @@ langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
 thunderbirdtxt="\e[ \t$GREEN thunderbirdbackup.sh => Restauracao do Thunderbird $NC"
 thunderbackuptxt="\e[ \t$GREEN thunderbackup.sh => Faz backup do Thunderbird $NC"
 bblazetonicotxt="\e[ \t$GREEN backblaze_TONICO.sh => Faz backup no Backblaze $NC"
-bblazenet4you="\e[ \t$GREEN backblaze_NET4YOU.sh => Faz backup no Backblaze $NC"
+bblazenet4youtxt="\e[ \t$GREEN backblaze_NET4YOU.sh => Faz backup no Backblaze $NC"
 datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
 winboxtxt="\e[ \t$GREEN winbox.sh => Cria a entrada do Winbox no mennu do KDE $NC"
 skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE $NC"
