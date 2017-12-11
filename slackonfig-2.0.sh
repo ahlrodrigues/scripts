@@ -57,14 +57,14 @@ samba=no
 samba2=no
 cups=no
 shutdown=no
-teamviewerd=no
-plex=no
+teamviewerd=yes
+plex=yes
 mirrors=no
 inittab=no
 networkmanager=no
 konsole=no
 reccx=no
-brother=yes
+brother=no
 lang=no
 thunderbird=no
 thunderbackup=no
@@ -79,6 +79,7 @@ pkgs=no
 hubiCNET4YOU=no
 credhubiCNET4YOU=no
 # --------- Mensagens --------- #
+mlocaltxt="\e[ \t$GREEN mlocaltxt => Configurando mirror local $NC"
 aminilicensetxt="\e[ \t$GREEN minilicense.txt => Arquivo de licença a ser incluído nos spripts $NC"
 apkgstxt="\e[ \t$GREEN pkgs.txt => Arquivo com lista de pacotes a serem instalados automaticamente $NC"
 cleanrettxt="\e[ \t$GREEN cleanret.sh => Move os arquivos de retorno da caixa; $NC"
@@ -179,8 +180,18 @@ if [[ $(whoami) == "root" ]]; then
        
 clear
 
+	sleep 5
+
 # --------- Testando configurações --------- #
 	if [ $slackonfig == on ]; then
+	
+
+
+# --------- Configurando slackpkg mirror local --------- #
+        echo -e "$mlocaltxt"
+	echo "Qual o caminho para o mirror local?"
+	read caminho
+	sed -i "s|# file://path/to/some/directory/|file://$caminho|g" /etc/slackpkg/mirrors
 	
 # --------- Checando funções --------- #
 echo -e "\e $WHITE Vamos executar as seguintes funções do script:$NC\n"  
@@ -849,7 +860,7 @@ if [ $skyline == yes ]; then
     echo "[Desktop Entry]" > $usa/bnb.desktop
     echo "Exec=/usr/local/bin/bnb.sh" >> $usa/bnb.desktop
     echo "GenericName=BNB" >> $usa/bnb.desktop
-    echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/skyline.jpg" >> $usa/bnb.desktop
+    echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/skyline.png" >> $usa/bnb.desktop
     echo "Name=Comunicação da cobrança BNB" >> $usa/bnb.desktop
     echo "Categories=Network;" >> $usa/bnb.desktop
     echo "NoDisplay=false" >> $usa/bnb.desktop
@@ -867,7 +878,8 @@ if [ $numLock == yes ]; then
     sed -i "s/#NumLock=Off/NumLock=On/" /etc/kde/kdm/kdmrc
     sleep 3
 fi
-#Instalação do slackpkgplus
+
+	#Instalação do slackpkgplus
 if [ $slackpkg == yes ]; then
     echo -e "$slackpkgtxt"
     echo "Baixando slackpkg+"
@@ -876,10 +888,11 @@ if [ $slackpkg == yes ]; then
     sleep 3
     installpkg /tmp/slackpkg+*
     rm /tmp/slackpkg+*
+    
     sleep 3
 fi
 
-#Instalação dos programas listados no arquivo okg.txt
+#Instalação dos programas listados no arquivo pkg.txt
 if [ $pkgs == yes ]; then
     if [ ! -f "$pkgs" ]; then
 	echo -e "$apkgstxt"
@@ -892,70 +905,6 @@ if [ $pkgs == yes ]; then
     echo -e "$pkgstxt"
     slackpkg install $(cat /tmp/pkgs.txt)
     rm /tmp/pkgs.txt
-    sleep 3
-fi
-
-if [ $hubiCTONICO == yes ]; then
-    echo -e "$hubiCTONICOtxt"
-    echo "#!"$SHELL > $crondaily/hubiC_TONICO.sh
-    cat $minilicense >> $crondaily/hubiC_TONICO.sh
-    echo "clear" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   #Ajustando permissões" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo -e "'"\e[ \t\e[1;31;40m Ajustando as permissões dos dados... aguarde...\e[0m"'"" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo" >> $crondaily/hubiC_TONICO.sh
-    echo "   echo" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   find /home/ahlr/Dropbox/TONICO/ -type f -exec chmod 644 {} \;" >> $crondaily/hubiC_TONICO.sh
-    echo "   find /home/ahlr/Dropbox/TONICO/ -type d -exec chmod 755 {} \;" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   #hubiC configuration variables" >> $crondaily/hubiC_TONICO.sh
-    echo "   LOCAL_DIR=/home/ahlr/Dropbox/TONICO/" >> $crondaily/hubiC_TONICO.sh
-    echo "   REMOTE_DIR=default" >> $crondaily/hubiC_TONICO.sh
-    echo "   log=/var/log/duplicity/hubiC_TONICO.sh.log" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   # GPG key (last 8 characters)" >> $crondaily/hubiC_TONICO.sh
-    echo "   ENC_KEY="A2133DA2"" >> $crondaily/hubiC_TONICO.sh
-    echo "   SGN_KEY="A2133DA2"" >> $crondaily/hubiC_TONICO.sh
-    echo "   export PASSPHRASE="'xxxxxxxxx'"" >> $crondaily/hubiC_TONICO.sh
-    echo "   export SIGN_PASSPHRASE="'xxxxxxxxx'" " >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   # Remove files older than 90 days" >> $crondaily/hubiC_TONICO.sh
-    echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   remove-older-than 90D --force \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   cf+hubic://\${REMOTE_DIR} > \$log" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/hubiC_TONICO.sh
-    echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   --full-if-older-than 30D \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   \${LOCAL_DIR} cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   # Cleanup failures" >> $crondaily/hubiC_TONICO.sh
-    echo "   duplicity \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   cleanup --force \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   # Show collection-status" >> $crondaily/hubiC_TONICO.sh
-    echo "   duplicity collection-status \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/hubiC_TONICO.sh
-    echo "   cf+hubic://\${REMOTE_DIR} >> \$log" >> $crondaily/hubiC_TONICO.sh
-    echo "" >> $crondaily/hubiC_TONICO.sh
-    echo "   # Unset variables" >> $crondaily/hubiC_TONICO.sh
-    echo "   unset REMOTE_DIR" >> $crondaily/hubiC_TONICO.sh
-    echo "   unset LOCAL_DIR" >> $crondaily/hubiC_TONICO.sh
-    echo "   unset ENC_KEY" >> $crondaily/hubiC_TONICO.sh
-    echo "   unset SGN_KEY" >> $crondaily/hubiC_TONICO.sh
-    echo "   unset PASSPHRASE" >> $crondaily/hubiC_TONICO.sh
-    echo "   unset SIGN_PASSPHRASE" >> $crondaily/hubiC_TONICO.sh 
-    echo "   log" >> $crondaily/hubiC_TONICO.sh 
-    chmod +x $crondaily/hubiC_TONICO.sh
-    chmod 755 $crondaily/hubiC_TONICO.sh
     sleep 3
 fi
 
