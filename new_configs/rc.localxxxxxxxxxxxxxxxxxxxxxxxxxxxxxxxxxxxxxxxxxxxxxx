@@ -1,0 +1,12 @@
+#Inicializando o deamon rc.teamviewerd
+if [ -x /home/ahlr/rc.teamviewerd ]; then
+/home/ahlr/rc.teamviewerd start
+fi
+#Inicializando o deamon rc.plexmediaserver
+if [ -x /home/ahlr/rc.plexmediaserver ]; then
+/home/ahlr/rc.plexmediaserver start
+fi
+#Inicializando o deamon rc.samba
+if [ -x /home/ahlr/rc.samba ]; then
+/home/ahlr/rc.samba start
+fi

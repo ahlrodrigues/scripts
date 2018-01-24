@@ -1,0 +1,10 @@
+[Desktop Entry]
+Exec=wine /home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/winbox.exe
+GenericName=Winbox
+Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Imagens/winbox.png
+Name=Permite acesso ao Servidor
+Categories=Network;
+NoDisplay=false
+StartupNotify=true
+Terminal=0
+X-KDE-SubstituteUID=false

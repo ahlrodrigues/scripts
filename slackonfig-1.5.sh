@@ -32,9 +32,9 @@
 #                                                                                #
 # Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux    #
 #                                                                                #
-# V0.1.5                                                                       #
+# V0.2.0                                                                       #
 #                                                                                #
-# Last update: 22/08/2017                                                        #
+# Last update: 11/12/2017                                                        #
 #                                                                                #
 ##################################################################################
 ###
@@ -45,7 +45,7 @@ slackonfig=on
 
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
 # Veja as funcões de cada script na página inicial do projeto slackonfig: https://github.com/ahlrodrigues/slackonfig
-mlocal=no
+
 cleanret=no
 mvrejsgr=no
 cleansici=no
@@ -79,40 +79,39 @@ pkgs=no
 hubiCNET4YOU=no
 credhubiCNET4YOU=no
 # --------- Mensagens --------- #
-mlocaltxt="\e[ \t$GREEN Configurando mirror local $NC"
-aminilicensetxt="\e[ \t$GREEN Arquivo de licença a ser incluído nos spripts $NC"
-apkgstxt="\e[ \t$GREEN Arquivo com lista de pacotes a serem instalados automaticamente $NC"
-cleanrettxt="\e[ \t$GREEN Move os arquivos de retorno da caixa; $NC"
-mvrejsgrtxt="\e[ \t$GREEN Move os arquivos de rejeitados e francesinha do BNB; $NC"
-cleansicitxt="\e[ \t$GREEN Move os recibo de declaração do SICI para o Dropbox; $NC"
-backupprojetostxt="\e[ \t$GREEN Mover os arquivos de backup das configuraões; $NC"
-cleansaitxt="\e[ \t$GREEN Move os arquivos de retorno do bnb; $NC"
-cleancachetxt="\e[ \t$GREEN Limpa o cache; $NC"
-ntptxt="\e[ \t$GREEN Habilita o NTP pool server brasileiro; $NC"
+aminilicensetxt="\e[ \t$GREEN minilicense.txt => Arquivo de licença a ser incluído nos spripts $NC"
+apkgstxt="\e[ \t$GREEN pkgs.txt => Arquivo com lista de pacotes a serem instalados automaticamente $NC"
+cleanrettxt="\e[ \t$GREEN cleanret.sh => Move os arquivos de retorno da caixa; $NC"
+mvrejsgrtxt="\e[ \t$GREEN mvrejsgr.sh => Move os arquivos de rejeitados e francesinha do BNB; $NC"
+cleansicitxt="\e[ \t$GREEN cleansici.sh => Move os recibo de declaração do SICI para o Dropbox; $NC"
+backupprojetostxt="\e[ \t$GREEN backupprojetos.sh => Mover os arquivos de backup das configuraões; $NC"
+cleansaitxt="\e[ \t$GREEN cleansai.sh => Move os arquivos de retorno do bnb; $NC"
+cleancachetxt="\e[ \t$GREEN cleancache.sh => Limpa o cache; $NC"
+ntptxt="\e[ \t$GREEN ntp.sh => Habilita o NTP pool server brasileiro; $NC"
 sambatxt="\e[ \t$GREEN Configura o grupo de trabalho do Samba; $NC"
 samba2txt="\e[ \t$GREEN Incluindo inicialização do deamon do Samba no rc.local; $NC"
 cupstxt="\e[ \t$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
 shutdowntxt="\e[ \t$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
 teamviewerdtxt="\e[ \t$GREEN Incluindo inicialização do daemon do teamviewer no rc.local $NC"
 plextxt="\e[ \t$GREEN Incluindo inicialização do daemon do Plex no rc.local $NC"
-mirrorstxt="\e[ \t$GREEN Administracao dos mirros locais $NC"
+mirrorstxt="\e[ \t$GREEN mirror-slackware => Administracao dos mirros locais $NC"
 inittabtxt="\e[ \t$GREEN Habilitando o init 4 $NC"
-networkmanagertxt="\e[ \t$GREEN Inicialzando networkmanager $NC"
+networkmanagertxt="\e[ \t$GREEN rc.4 => Inicialzando networkmanager $NC"
 konsoletxt="\e[ \t$GREEN Configura o profile do Konsole $NC"
 reccxtxt="\e[ \t$GREEN Cria pasta para os arquivos da CEF e dá permissão de usuário $NC"
 brothertxt="\e[ \t$GREEN instalacao do driver da impressora $NC"
 langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
-thunderbirdtxt="\e[ \t$GREEN Restauracao do Thunderbird $NC"
-thunderbackuptxt="\e[ \t$GREEN Faz backup do Thunderbird $NC"
-bblazetonicotxt="\e[ \t$GREEN Faz backup no Backblaze $NC"
-bblazenet4youtxt="\e[ \t$GREEN Faz backup no Backblaze $NC"
-datatxt="\e[ \t$GREEN Script de calculo data $NC"
-winboxtxt="\e[ \t$GREEN Cria a entrada do Winbox no mennu do KDE $NC"
-skylinetxt="\e[ \t$GREEN Cria a entrada do Skyline no mennu do KDE $NC"
+thunderbirdtxt="\e[ \t$GREEN thunderbirdbackup.sh => Restauracao do Thunderbird $NC"
+thunderbackuptxt="\e[ \t$GREEN thunderbackup.sh => Faz backup do Thunderbird $NC"
+bblazetonicotxt="\e[ \t$GREEN backblaze_TONICO.sh => Faz backup no Backblaze $NC"
+bblazenet4youtxt="\e[ \t$GREEN backblaze_NET4YOU.sh => Faz backup no Backblaze $NC"
+datatxt="\e[ \t$GREEN data.sh => Script de calculo data $NC"
+winboxtxt="\e[ \t$GREEN winbox.sh => Cria a entrada do Winbox no mennu do KDE $NC"
+skylinetxt="\e[ \t$GREEN skyline.sh => Cria a entrada do Skyline no mennu do KDE $NC"
 numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
-slackpkgtxt="\e[ \t$GREEN Configuracao do slackpkg e slackpkgplus $NC"
+slackpkgtxt="\e[ \t$GREEN slackpkg => Configuracao do slackpkg e slackpkgplus $NC"
 pkgstxt="\e[ \t$CYAN Instalacao lista de pacotes \e$NC"
-hubiCNET4YOUtxt="\e[ \t$CYAN Faz backup no hubic \e$NC"
+hubiCNET4YOUtxt="\e[ \t$CYAN hubiC_NET4YOU => Faz backup no hubic \e$NC"
 credhubiCNET4YOUtxt="\e[ \t$CYAN Cria as credenciais da conta hubiC_NET4YOU \e$NC"
 
 # --------- Caminhos mais usados  --------- #
@@ -180,17 +179,12 @@ if [[ $(whoami) == "root" ]]; then
        
 clear
 
-	sleep 5
-
 # --------- Testando configurações --------- #
 	if [ $slackonfig == on ]; then
 	
 # --------- Checando funções --------- #
 echo -e "\e $WHITE Vamos executar as seguintes funções do script:$NC\n"  
 echo
-	if [ $mlocal == yes ]; then
-	  echo -e "$mlocaltxt"
-	fi	
 	
 	if [ $cleanret == yes ]; then
 	  echo -e "$cleanrettxt"
@@ -198,7 +192,7 @@ echo
 	
 	if [ $mvrejsgr == yes ]; then
 	  echo -e "$mvrejsgrtxt"
-	fi
+	fi	
 	
 	if [ $cleansici == yes ]; then
 	  echo -e "$cleansicitxt"
@@ -342,15 +336,8 @@ echo
 #                                        #      
 #   Não editar a partir deste ponto      #      
 #                                        #      
-##########################################
+##########################################  	
 
-# --------- Configurando slackpkg mirror local --------- #
-        if [ $mlocal == yes ]; then
-	echo -e "$mlocaltxt"
-	echo "Qual o caminho para o mirror local? Comece e termine com um "/""
-	read caminho
-	sed "/file:/{p;s/.*/file:/$caminho/;}" /etc/slackpkg/mirrors
-	fi 
 
 # Criar script que move os arquivos de retorno da CEF
 # para uma pasta de backup no diretório /opt/caixa/Recebidos.
@@ -554,7 +541,7 @@ if [ $mirrors == yes ]; then
     sed -i "s|ISO:-\"CDROM\"}|ISO:-\"DVD\"}|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|EXCLUDES:-\"--exclude pasture\"|EXCLUDES:-\"--exclude pasture --exclude source\"|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|DVD_EXCLUDES:-\"-x ./testing  -x ./source -x ./extra/source\"|DVD_EXCLUDES:-\"-x ./source -x ./extra/source\"|g" $crondaily/mirror-slackware-current.sh
-    cp $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware32-current.sh
+    #cp $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware32-current.sh
     sed -i "s|ARCH:-\"x86\"|ARCH:-\"x86_64\"|g" $crondaily/mirror-slackware-current.sh
     mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware64-current.sh
     chmod +x $crondaily/mirror-slackware*
@@ -633,7 +620,6 @@ if [ $thunderbackup == yes ]; then
     echo "#Faz cópia incremental do diretório de configurações" >> $crondaily/thunderbirdbackup.sh
     echo "#do tunderbird para a pasta /mnt/sda3/Thunderbird" >> $crondaily/thunderbirdbackup.sh
     echo "rsync -azhv /home/ahlr/.thunderbird/ /mnt/sda3/Thunderbird/" >> $crondaily/thunderbirdbackup.sh
-    echo "rsync -azhv /mnt/sda3/Thunderbird/ /home/ahlr/Dropbox/TONICO/Thunderbird" >> $crondaily/thunderbirdbackup.sh
     chmod +x $crondaily/thunderbirdbackup.sh
     chmod 755 $crondaily/thunderbirdbackup.sh
 fi
@@ -881,8 +867,7 @@ if [ $numLock == yes ]; then
     sed -i "s/#NumLock=Off/NumLock=On/" /etc/kde/kdm/kdmrc
     sleep 3
 fi
-
-	#Instalação do slackpkgplus
+#Instalação do slackpkgplus
 if [ $slackpkg == yes ]; then
     echo -e "$slackpkgtxt"
     echo "Baixando slackpkg+"
@@ -891,7 +876,6 @@ if [ $slackpkg == yes ]; then
     sleep 3
     installpkg /tmp/slackpkg+*
     rm /tmp/slackpkg+*
-    
     sleep 3
 fi
 
@@ -988,6 +972,11 @@ echo
 echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
 echo
 echo
+
+# --------- Instalação de Packages --------- #
+
+#XXXXXXXXXXXXXXXXXXXXXXXXXXXXx
+
 	  
 # --------- Apagando arquivos auxiliares no diretório /tmp --------- #
  

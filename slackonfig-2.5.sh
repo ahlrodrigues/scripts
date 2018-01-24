@@ -32,9 +32,9 @@
 #                                                                                #
 # Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux    #
 #                                                                                #
-# V0.1.5                                                                       #
+# V0.2.5                                                                       #
 #                                                                                #
-# Last update: 22/08/2017                                                        #
+# Last update: 13/12/2017                                                        #
 #                                                                                #
 ##################################################################################
 ###
@@ -66,12 +66,12 @@ konsole=no
 reccx=no
 brother=no
 lang=no
-thunderbird=no
 thunderbackup=no
 bblazetonico=no
 bblazenet4you=no
 data=no
 winbox=no
+cashflow=yes
 skyline=no
 numLock=no
 slackpkg=no
@@ -79,84 +79,100 @@ pkgs=no
 hubiCNET4YOU=no
 credhubiCNET4YOU=no
 # --------- Mensagens --------- #
-mlocaltxt="\e[ \t$GREEN Configurando mirror local $NC"
-aminilicensetxt="\e[ \t$GREEN Arquivo de licença a ser incluído nos spripts $NC"
-apkgstxt="\e[ \t$GREEN Arquivo com lista de pacotes a serem instalados automaticamente $NC"
-cleanrettxt="\e[ \t$GREEN Move os arquivos de retorno da caixa; $NC"
-mvrejsgrtxt="\e[ \t$GREEN Move os arquivos de rejeitados e francesinha do BNB; $NC"
-cleansicitxt="\e[ \t$GREEN Move os recibo de declaração do SICI para o Dropbox; $NC"
-backupprojetostxt="\e[ \t$GREEN Mover os arquivos de backup das configuraões; $NC"
-cleansaitxt="\e[ \t$GREEN Move os arquivos de retorno do bnb; $NC"
-cleancachetxt="\e[ \t$GREEN Limpa o cache; $NC"
-ntptxt="\e[ \t$GREEN Habilita o NTP pool server brasileiro; $NC"
-sambatxt="\e[ \t$GREEN Configura o grupo de trabalho do Samba; $NC"
-samba2txt="\e[ \t$GREEN Incluindo inicialização do deamon do Samba no rc.local; $NC"
-cupstxt="\e[ \t$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
-shutdowntxt="\e[ \t$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
-teamviewerdtxt="\e[ \t$GREEN Incluindo inicialização do daemon do teamviewer no rc.local $NC"
-plextxt="\e[ \t$GREEN Incluindo inicialização do daemon do Plex no rc.local $NC"
-mirrorstxt="\e[ \t$GREEN Administracao dos mirros locais $NC"
-inittabtxt="\e[ \t$GREEN Habilitando o init 4 $NC"
-networkmanagertxt="\e[ \t$GREEN Inicialzando networkmanager $NC"
-konsoletxt="\e[ \t$GREEN Configura o profile do Konsole $NC"
-reccxtxt="\e[ \t$GREEN Cria pasta para os arquivos da CEF e dá permissão de usuário $NC"
-brothertxt="\e[ \t$GREEN instalacao do driver da impressora $NC"
-langtxt="\e[ \t$GREEN Configurando local pt-BR $NC"
-thunderbirdtxt="\e[ \t$GREEN Restauracao do Thunderbird $NC"
-thunderbackuptxt="\e[ \t$GREEN Faz backup do Thunderbird $NC"
-bblazetonicotxt="\e[ \t$GREEN Faz backup no Backblaze $NC"
-bblazenet4youtxt="\e[ \t$GREEN Faz backup no Backblaze $NC"
-datatxt="\e[ \t$GREEN Script de calculo data $NC"
-winboxtxt="\e[ \t$GREEN Cria a entrada do Winbox no mennu do KDE $NC"
-skylinetxt="\e[ \t$GREEN Cria a entrada do Skyline no mennu do KDE $NC"
-numLocktxt="\e[ \t$GREEN Ativando o NumLock $NC"
-slackpkgtxt="\e[ \t$GREEN Configuracao do slackpkg e slackpkgplus $NC"
-pkgstxt="\e[ \t$CYAN Instalacao lista de pacotes \e$NC"
-hubiCNET4YOUtxt="\e[ \t$CYAN Faz backup no hubic \e$NC"
-credhubiCNET4YOUtxt="\e[ \t$CYAN Cria as credenciais da conta hubiC_NET4YOU \e$NC"
+mlocaltxt="$GREEN Configurando mirror local $NC"
+aminilicensetxt="$GREEN Arquivo de licença a ser incluído nos spripts $NC"
+apkgstxt="$GREEN Arquivo com lista de pacotes a serem instalados automaticamente $NC"
+cleanrettxt="$GREEN Move os arquivos de retorno da caixa; $NC"
+mvrejsgrtxt="$GREEN Move os arquivos de rejeitados e francesinha do BNB; $NC"
+cleansicitxt="$GREEN Move os recibo de declaração do SICI para o Dropbox; $NC"
+backupprojetostxt="$GREEN Mover os arquivos de backup das configuraões; $NC"
+cleansaitxt="$GREEN Move os arquivos de retorno do bnb; $NC"
+cleancachetxt="$GREEN Limpa o cache; $NC"
+ntptxt="$GREEN Habilita o NTP pool server brasileiro; $NC"
+sambatxt="$GREEN Configura o grupo de trabalho do Samba; $NC"
+samba2txt="$GREEN Incluindo inicialização do deamon do Samba no rc.local; $NC"
+cupstxt="$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
+shutdowntxt="$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
+teamviewerdtxt="$GREEN Incluindo inicialização do daemon do teamviewer no rc.local; $NC"
+plextxt="$GREEN Incluindo inicialização do daemon do Plex no rc.local; $NC"
+mirrorstxt="$GREEN Administracao dos mirros locais; $NC"
+inittabtxt="$GREEN Habilitando o init 4; $NC"
+networkmanagertxt="$GREEN Inicialzando networkmanager; $NC"
+konsoletxt="$GREEN Configura o profile do Konsole; $NC"
+reccxtxt="$GREEN Cria pasta para os arquivos da CEF e dá permissão de usuário; $NC"
+brothertxt="$GREEN instalacao do driver da impressora; $NC"
+langtxt="$GREEN Configurando local pt-BR; $NC"
+thunderbackuptxt="$GREEN Faz backup do Thunderbird; $NC"
+bblazetonicotxt="$GREEN Faz backup no Backblaze; $NC"
+bblazenet4youtxt="$GREEN Faz backup no Backblaze; $NC"
+datatxt="$GREEN Script de calculo data; $NC"
+winboxtxt="$GREEN Cria a entrada do Winbox no menu do KDE; $NC"
+cashflowtxt="$GREEN Cria a entrada do CashFlow no menu do KDE; $NC"
+skylinetxt="$GREEN Cria a entrada do Skyline no menu do KDE; $NC"
+numLocktxt="$GREEN Ativando o NumLock; $NC"
+slackpkgtxt="$GREEN Configuracao do slackpkg e slackpkgplus; $NC"
+pkgstxt="$GREEN Instalacao da lista de pacotes; $NC"
+hubiCNET4YOUtxt="$GREEN Faz backup no hubic; $NC"
+credhubiCNET4YOUtxt="$GREEN Cria as credenciais da conta hubiC_NET4YOU; $NC"
 
 # --------- Caminhos mais usados  --------- #
 crondaily=/etc/cron.daily
 cronhourly=/etc/cron.hourly
 minilicense=/tmp/minilicense.txt
-pkgs=/tmp/pkgs.txt
+lpkgs=/tmp/pkgs.txt
 rcd=/etc/rc.d
 ulbin=/usr/local/bin
 usa=/usr/share/applications
 blacklist=">> /etc/slackpkg/blacklist"
-pkg=/tmp/pkg.txt
 rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
 rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
+imag="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/imgs"
 
 # --------- Limpa tudo --------- #
 clear
 
-# --------- Utilização de Cores  --------- #
+# --------- Efeito nas Cores  --------- #
+#0 Normal Characters
+#1 Bold Characters
+#4 Underlined Characters
+#5 Blinking Characters
+#7 Reverse video Characters
+
+# --------- Cores  --------- #
 BLACK='\e[1;30m'
+BBLACK='\e[5;30m'
 RED='\e[1;31m'
+BRED='\e[5;31m' # bink color
 GREEN='\e[1;32m'
-NC='\033[0m' # reset/no color
+BGREEN='\e[1;32m'
+Brown='\e[1;33m'
+BBrown='\e[5;33m'
 BLUE='\e[1;34m'
+BBLUE='\e[5;34m'
 PINK='\e[1;35m'
+BPINK='\e[5;35m'
 CYAN='\e[1;36m'
+BCYAN='\e[5;36m'
 WHITE='\e[1;37m'
+BWHITE='\e[5;37m'
+NC='\033[0m' # reset/no color
 
 # --------- Teste se está logado como root --------- #
 if [[ $(whoami) == "root" ]]; then
 
 # --------- Teste se está conectado na internet --------- #
-  echo
-  echo
-  echo -e "\e[ \t\e[1;31;40m Testando conexão, aguarde... $NC"
-  echo
-  echo
-  ping -q -c5 google.com > /dev/null
- 
+echo
+echo
+echo -e "$BRED $RED Testando conexão, aguarde... $NC"
+echo
+echo
+  ping -q -c2 8.8.8.8 > /dev/null
+  clear
     if [ $? -eq 0 ]; then
-    clear
+    
     echo
     echo
-    echo -e "\e[ \t $CYAN Você está conectado! $NC"
+    echo -e "$CYAN Você está conectado! $NC"
     echo
     echo
     sleep 3
@@ -166,7 +182,7 @@ if [[ $(whoami) == "root" ]]; then
 
     echo
     echo
-    echo -e "\e[ \t\e[$RED Verificando se é necessários baixar arquivos auxiliare...:$NC"
+    echo -e "$RED Verificando se é necessários baixar arquivos auxiliare...: $NC"
     echo
     echo
     if [ ! -f "$minilicense" ]; then
@@ -174,19 +190,20 @@ if [[ $(whoami) == "root" ]]; then
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	$rawdocs/minilicense.txt
     else
-	echo -e "\e[ \t\e[$RED Arquivo $GREEN minilicense.txt encontrado.$NC"
+	echo -e "$RED Arquivo $GREEN minilicense.txt $RED encontrado. $NC"
 	sleep 5
     fi
        
 clear
 
-	sleep 5
 
 # --------- Testando configurações --------- #
 	if [ $slackonfig == on ]; then
 	
 # --------- Checando funções --------- #
-echo -e "\e $WHITE Vamos executar as seguintes funções do script:$NC\n"  
+echo
+echo
+echo -e "$WHITE Vamos executar as seguintes funções do script: $NC"  
 echo
 	if [ $mlocal == yes ]; then
 	  echo -e "$mlocaltxt"
@@ -276,9 +293,9 @@ echo
 	  echo -e "$thunderbackuptxt"
 	fi
 	
-	if [ $thunderbird == yes ]; then
-	  echo -e "$thunderbirdtxt"
-	fi
+# 	if [ $thunderbird == yes ]; then
+# 	  echo -e "$thunderbirdtxt"
+# 	fi
 	
 	if [ $bblazetonico == yes ]; then
 	  echo -e "$bblazetonicotxt"
@@ -294,6 +311,10 @@ echo
 	
 	if [ $winbox == yes ]; then
 	  echo -e "$winboxtxt"
+	fi
+	
+	if [ $cashflow == yes ]; then
+	  echo -e "$cashflowtxt"
 	fi
 	
 	if [ $skyline == yes ]; then
@@ -318,11 +339,12 @@ echo
 # --------- Listando funções --------- #
 	echo
 	echo
-	echo -e "\e[ \t$CYAN Deseja executar as funções acima? Posso continuar? [Y|N] $NC"
+	echo -e "$CYAN Deseja executar as funções acima? Posso continuar? [Y|N] $NC"
 
 	 read RESPOSTA
 	 case $RESPOSTA in
-	 N|n) echo "Saindo!" 
+	 N|n) 
+	 echo -e "$Brown Saindo!!! $NC"
 	 echo
 	 echo
 	 exit;;
@@ -330,7 +352,7 @@ echo
 # --------- Texto 1 --------- #
 	Y|y)echo
 	echo
-	echo -e "\e[ \t\e[1;33;40m Criando todos os arquivos de configuração nas devidas pastas e executando processos de configuração $NC"
+	echo -e "$Brown Criando todos os arquivos de configuração nas devidas pastas e executando processos de configuração $NC"
 	echo
 	echo	
 	sleep 3
@@ -347,10 +369,61 @@ echo
 # --------- Configurando slackpkg mirror local --------- #
         if [ $mlocal == yes ]; then
 	echo -e "$mlocaltxt"
-	echo "Qual o caminho para o mirror local? Comece e termine com um "/""
+	echo -e "$BLUE Qual o caminho para o mirror local? Comece e termine com um "/" $NC"
 	read caminho
+	echo
+	echo 
+	echo -e "$BLUE file:/$caminho $NC"
 	sed "/file:/{p;s/.*/file:/$caminho/;}" /etc/slackpkg/mirrors
 	fi 
+	
+if [ $thunderbackup == yes ]; then
+
+clear
+echo
+echo
+echo -e "$BLUE Escolha o que deseja fazer: $NC"
+    echo
+    echo -e "$GREEN [ 1 ] Copiar as configuracoes do Thunderbird para o Dropbox; $NC" 
+    echo -e "$BLUE [ 2 ] Copiar as configuracoes do Thunderbird do Dropbox para o outra pasta; $NC" 
+      read copiathunderbird
+	case $copiathunderbird in
+	    1 )
+	    echo -e "$GREEN [ 1 ] Para copiar as configuracoes do Thunderbird para o Dropbox, preciso que você escreva o caminho da pasta de origem:  $NC"
+	    echo
+	    echo -e "$RED Não esqueça das barras $BCYAN $CYAN / $NC $RED no início e fim do daminho!!$NC"
+	    echo
+	    read origem
+	    echo
+	    echo
+	    echo -e "$YELLOW rsync -azhv $GREEN $origem /home/ahlr/Dropbox/TONICO/Thunderbird $NC"
+	   	;;
+	    2 )
+	    echo -e "$BLUE [ 2 ] Para copiar as configuracoes do Thunderbird para o outra pasta, preciso que você escreva o caminho da pasta de destino: $NC"
+	    echo
+	    echo -e "$RED Não esqueça das barras $BCYAN $CYAN / $NC $RED no início e fim do daminho!!$NC"
+	    echo
+	    read destino
+	    echo
+	    echo
+	    echo -e "$YELLOW rsync -azhv /home/ahlr/Dropbox/TONICO/Thunderbird $BLUE $destino $NC"
+		;;
+	    *) 
+	    echo
+	    echo
+	    echo -e "$BRED $RED Opção Inválida, saindo!!! $NC"
+	    echo
+	    echo
+	    sleep 3
+	    clear
+	    echo
+	    echo
+	    echo -e "$BLUE Tente novamente, observe as opções disponíveis $NC"
+	    echo
+	    echo
+		;;
+	esac
+fi
 
 # Criar script que move os arquivos de retorno da CEF
 # para uma pasta de backup no diretório /opt/caixa/Recebidos.
@@ -421,9 +494,9 @@ if [ $backupprojetos == yes ]; then
     echo -e "$backupprojetostxt"
     echo "#!"$SHELL > $cronhourly/backupprojetos.sh
     cat $minilicense >> $cronhourly/backupprojetos.sh
-    echo "#Faz backup incremental da pasta ../Projetos para o dropbox" >> $cronhourly/backupprojetos.sh
+    echo "#Faz backup incremental da pasta ../Projetos do dropbox para outra partição" >> $cronhourly/backupprojetos.sh
     echo "#" >> $cronhourly/backupprojetos.sh
-    echo "rsync -azhv /mnt/sda3/Projetos/ /home/ahlr/Dropbox/TONICO/Projetos/" >> $cronhourly/backupprojetos.sh
+    echo "rsync -azhv /home/ahlr/Dropbox/TONICO/Projetos/ /mnt/sda3/Projetos/" >> $cronhourly/backupprojetos.sh
     chmod +x $cronhourly/backupprojetos.sh
     chmod 755 $cronhourly/backupprojetos.sh
     sleep 3
@@ -627,30 +700,32 @@ fi
 
 #Criação do arquivo thunderbirdbackup.sh
 if [ $thunderbackup == yes ]; then
-    echo -e "$thunderbackuptxt"
+    if [ $copiathunderbird -eq 1 ]; then
     echo "#!"$SHELL > $crondaily/thunderbirdbackup.sh
     cat $minilicense >> $crondaily/thunderbirdbackup.sh
-    echo "#Faz cópia incremental do diretório de configurações" >> $crondaily/thunderbirdbackup.sh
-    echo "#do tunderbird para a pasta /mnt/sda3/Thunderbird" >> $crondaily/thunderbirdbackup.sh
-    echo "rsync -azhv /home/ahlr/.thunderbird/ /mnt/sda3/Thunderbird/" >> $crondaily/thunderbirdbackup.sh
-    echo "rsync -azhv /mnt/sda3/Thunderbird/ /home/ahlr/Dropbox/TONICO/Thunderbird" >> $crondaily/thunderbirdbackup.sh
-    chmod +x $crondaily/thunderbirdbackup.sh
-    chmod 755 $crondaily/thunderbirdbackup.sh
-fi
-
-#Criação do arquivo para restauração do thunderbird
-if [ $thunderbird == yes ]; then
-    mkdir /home/ahlr/.thunderbird
-    chown -R ahlr /home/ahlr/.thunderbird/
-    echo "[General]" >> /home/ahlr/.thunderbird/profiles.ini
-    echo "StartWithLastProfile=1" >> /home/ahlr/.thunderbird/profiles.ini
+    echo "#Faz cópia incremental do diretório de configurações do Thunderbird." >> $crondaily/thunderbirdbackup.sh
+    echo "rsync -azhv $origem /home/ahlr/Dropbox/TONICO/Thunderbird" >> $crondaily/thunderbirdbackup.sh
     echo
-    echo "[Profile0]" >> /home/ahlr/.thunderbird/profiles.ini
-    echo "Name=default" >> /home/ahlr/.thunderbird/profiles.ini
-    echo "IsRelative=0" >> /home/ahlr/.thunderbird/profiles.ini
-    echo "Path=/mnt/sda3/Thunderbird/fsz8qgw4.default" >> /home/ahlr/.thunderbird/profiles.ini
-    echo "Default=1" >> /home/ahlr/.thunderbird/profiles.ini
-    sleep 3
+    echo
+    echo -e "$GREEN Configuração realizada! $NC"
+    echo
+    echo
+    fi
+    if [ $copiathunderbird -eq 2 ]; then
+    echo "#!"$SHELL > $crondaily/thunderbirdbackup.sh
+    cat $minilicense >> $crondaily/thunderbirdbackup.sh
+    echo "#Faz cópia incremental do diretório de configurações do Thunderbird." >> $crondaily/thunderbirdbackup.sh
+    echo
+    echo
+    echo "rsync -azhv /home/ahlr/Dropbox/TONICO/Thunderbird $destino" >> $crondaily/thunderbirdbackup.sh
+    echo
+    echo
+    echo -e "$GREEN Configuração realizada! $NC"
+    echo
+    echo
+    chmod +x $crondaily/thunderbirdbackup.sh
+    chmod 755 $crondaily/thunderbirdbackup.sh   
+    fi
 fi
 
 #Criação do arquivo backblaze_TONICO.sh
@@ -664,7 +739,7 @@ if [ $bblazetonico == yes ]; then
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
-    echo "   echo -e "'"\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"'"" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo -e "'"$RED Troque de usuário, o ROOT não pode executar backups $NC"'"" >> $crondaily/backblaze_TONICO.sh
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
     echo "   exit 0" >> $crondaily/backblaze_TONICO.sh
@@ -673,7 +748,7 @@ if [ $bblazetonico == yes ]; then
     echo "   #Ajustando permissões" >> $crondaily/backblaze_TONICO.sh
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
-    echo "   echo -e "'"\e[ \t\e[1;31;40m Ajustando as permissões dos dados... aguarde...\e[0m"'"" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo -e "'"$RED Ajustando as permissões dos dados... aguarde... $NC"'"" >> $crondaily/backblaze_TONICO.sh
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
@@ -744,7 +819,7 @@ if [ $bblazenet4you == yes ]; then
     echo "" >> $crondaily/backblaze_NET4YOU.sh
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   echo -e "'"\e[ \t\e[1;31;40m Troque de usuário, o ROOT não pode executar backups\e[0m"'"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo -e "'"$RED Troque de usuário, o ROOT não pode executar backups $NC"'"" >> $crondaily/backblaze_NET4YOU.sh
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
     echo "   exit 0" >> $crondaily/backblaze_NET4YOU.sh
@@ -753,7 +828,7 @@ if [ $bblazenet4you == yes ]; then
     echo "   #Ajustando permissões" >> $crondaily/backblaze_NET4YOU.sh
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   echo -e "'"\e[ \t\e[1;31;40m Ajustando as permissões dos dados... aguarde...\e[0m"'"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   echo -e "'"$RED Ajustando as permissões dos dados... aguarde... $NC"'"" >> $crondaily/backblaze_NET4YOU.sh
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
     echo "" >> $crondaily/backblaze_NET4YOU.sh
@@ -857,13 +932,30 @@ if [ $winbox == yes ]; then
     sleep 3
 fi
 
+#Criação do arquivo cashflow.desktop
+if [ $cashflow == yes ]; then
+    echo -e "$cashflowtxt"
+    echo "[Desktop Entry]" > $usa/cashflow.desktop
+    echo "Exec=libreoffice /home/ahlr/Dropbox/NET4YOU/NET4YOU/Finanças/CASHFLOW.ods" >> $usa/cashflow.desktop
+    echo "GenericName=CashFlow" >> $usa/cashflow.desktop
+    echo "Icon=$imag/cashflow.jpg" >> $usa/cashflow.desktop
+    echo "Name=Planilha CashFlow" >> $usa/cashflow.desktop
+    echo "Categories=Office;" >> $usa/cashflow.desktop
+    echo "NoDisplay=false" >> $usa/cashflow.desktop
+    echo "StartupNotify=true" >> $usa/cashflow.desktop
+    echo "Terminal=0" >> $usa/cashflow.desktop
+    echo "X-KDE-SubstituteUID=false" >> $usa/cashflow.desktop
+    update-desktop-database -q
+    sleep 3
+fi
+
 #Criação do arquivo bnb.desktop
 if [ $skyline == yes ]; then
     echo -e "$skylinetxt"
     echo "[Desktop Entry]" > $usa/bnb.desktop
     echo "Exec=/usr/local/bin/bnb.sh" >> $usa/bnb.desktop
     echo "GenericName=BNB" >> $usa/bnb.desktop
-    echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/skyline.png" >> $usa/bnb.desktop
+    echo "Icon=$img/winbox.png" >> $usa/bnb.desktop
     echo "Name=Comunicação da cobrança BNB" >> $usa/bnb.desktop
     echo "Categories=Network;" >> $usa/bnb.desktop
     echo "NoDisplay=false" >> $usa/bnb.desktop
@@ -902,12 +994,11 @@ if [ $pkgs == yes ]; then
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	$rawconfigs/pkgs.txt
     else
-	echo -e "\e[ \t\e[$RED Arquivo $GREEN pkgs.txt encontrado.$NC"
+	echo -e "$RED Arquivo $GREEN $apkgstxt $RED encontrado. $NC"
 	sleep 5
     fi
     echo -e "$pkgstxt"
-    slackpkg install $(cat /tmp/pkgs.txt)
-    rm /tmp/pkgs.txt
+    slackpkg install $(cat $lpkgs)
     sleep 3
 fi
 
@@ -930,19 +1021,19 @@ fi
 	if [ $bblazenet4you == yes ]; then
 	echo -e "$bblazenet4youtxt"
 	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
+	echo -e "$YELLOW Abrindo $GREEN backblaze_NET4YOU $YELLOW no konsole....  $NC" 
 	echo
 	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
+	echo -e "$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
 	sleep 5
 	    
 	vim $crondaily/backblaze_NET4YOU.sh
 	
-	echo -e "\e[ \t$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
+	echo -e "$BLUE backblaze_NET4YOU $YELLOW configurado!  $NC"
 
 echo
 echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo -e "$CYAN # --------- # --------- #  $NC"
 echo
 echo
 	fi
@@ -950,18 +1041,18 @@ echo
 	if [ $bblazetonico == yes ]; then
 	echo -e "$bblazetonicotxt"
 	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
+	echo -e "$YELLOW Abrindo $GREEN backblaze_TONICO $YELLOW no konsole....  $NC"
 	echo
 	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
+	echo -e "$YELLOW Lembrete:....  $WHITE "deus$GREEN +$WHITE dentro$GREEN +$WHITE mim" $NC"
 	sleep 5
 	    
 	vim $crondaily/backblaze_TONICO.sh
 	
-	echo -e "\e[ \t$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
+	echo -e "$BLUE backblaze_TONICO $YELLOW configurado!  $NC"
 echo
 echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo -e "$CYAN # --------- # --------- #  $NC"
 echo
 echo
 	fi
@@ -969,23 +1060,24 @@ echo
 	if [ $credhubiCNET4YOU == yes ]; then
 	echo -e "$credhubiCNET4YOUtxt"
 	echo
-	echo -e "\e[ \t$YELLOW Abrindo $GREEN hubic_credentials $YELLOW no konsole....  $NC"
+	echo -e "$YELLOW Abrindo $GREEN hubic_credentials $YELLOW no konsole....  $NC"
 	echo
 	echo
-	echo -e "\e[ \t$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE @$GREEN +$WHITE 2014" $NC"
+	echo -e "$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE @$GREEN +$WHITE 2014" $NC"
 	sleep 5
 	    
 	vim /home/ahlr/.hubic_credentials
 	
-	echo -e "\e[ \t$BLUE hubic_credentials $YELLOW configurado!  $NC"
+	echo -e "$BLUE hubic_credentials $YELLOW configurado!  $NC"
 echo
 echo	
-echo -e "\e[ \t$CYAN # --------- # --------- #  $NC"
+echo -e "$CYAN # --------- # --------- #  $NC"
 echo
 echo
 	fi
-
-echo -e "\e[ \t$CYAN Pacotes instalados e Configurações realizadas!! $NC"
+echo
+echo
+echo -e "$CYAN Pacotes instalados e Configurações realizadas!! $NC"
 echo
 echo
 	  
@@ -1001,7 +1093,7 @@ echo
     * ) exit;; ## Add whatever other tests you need
   esac
 	else
-	echo -e "\e[ \t$CYAN Deseja rodar o script novamente? [yes/no] $NC"
+	echo -e "$CYAN Deseja rodar o script novamente? [yes/no] $NC"
 	read RESPOSTA2
 	test "$RESPOSTA2" = "no" && echo && echo && echo "OK Até mais!" && exit
 	 sh teste.sh
@@ -1011,7 +1103,7 @@ echo
       else
       echo
       echo
-      echo -e "\e[ \t\e[1;31;40m Voce nao esta Conectado! $NC"
+      echo -e "$RED Voce nao esta Conectado! $NC"
       echo
       echo
     fi
@@ -1020,7 +1112,7 @@ echo
 else
 echo
 echo
-echo -e "\e[ \t\e[1;31;40m Logue-se como ROOT! $NC"
+echo -e "$RED Logue-se como ROOT! $NC"
 echo
 echo
 

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Exec=/usr/local/bin/bnb.sh
+GenericName=BNB
+Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/skyline.png
+Name=Comunicação da cobrança BNB
+Categories=Network;
+NoDisplay=false
+StartupNotify=true
+Terminal=1
+X-KDE-SubstituteUID=false
