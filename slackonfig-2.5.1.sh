@@ -34,7 +34,7 @@
 #                                                                                #
 # V0.2.5                                                                       #
 #                                                                                #
-# Last update: 13/12/2017                                                        #
+# Last update: 2018/01/25                                                    #
 #                                                                                #
 ##################################################################################
 ###
@@ -1013,6 +1013,7 @@ fi
 if [ $multilib == yes ] && [ $slackpkgplus == yes ] && [ $slackpkg == yes ]; then
     echo -e "$multilibtxt"
     echo
+    sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf # --------- descomenta determinada linhas --------- #
     /usr/doc/slackpkg+-1.7.0/setupmultilib.sh
     sleep 3
 fi
@@ -1151,3 +1152,14 @@ echo
 echo
 
 fi
+
+#REFERÊNCIAS:
+
+#sed -i '/PKGS_PRIORITY=( multilib ktown )/s/^/#/g' /etc/slackpkg/slackpkgplus.conf # --------- comenta determinada linhas --------- #
+#sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf # --------- descomenta determinada linhas --------- #
+#sed -i "s/^#*/#/" /etc/profile.d/lang.sh # --------- comenta todas as linhas --------- #
+#
+#
+#
+#
+#
