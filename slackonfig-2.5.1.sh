@@ -32,9 +32,9 @@
 #                                                                                #
 # Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux    #
 #                                                                                #
-# V0.2.5                                                                       #
+# V0.2.5.1                                                                       #
 #                                                                                #
-# Last update: 2018/01/25                                                    #
+# Last update: 2018/01/26                                                    #
 #                                                                                #
 ##################################################################################
 ###
@@ -65,12 +65,12 @@ konsole=no
 reccx=no
 brother=no
 lang=no
-thunderbackup=yes
+thunderbackup=no
 bblazetonico=no
 bblazenet4you=no
 data=no
 winbox=no
-cashflow=yes
+cashflow=no
 skyline=no
 numLock=no
 slackpkg=no
@@ -80,6 +80,7 @@ hubiCNET4YOU=no
 credhubiCNET4YOU=no
 extetensionsff=no
 multilib=no
+sshbackup=yes
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
 aminilicensetxt="$GREEN Arquivo de licença a ser incluído nos spripts $NC"
@@ -119,6 +120,7 @@ hubiCNET4YOUtxt="$GREEN Faz backup no hubic; $NC"
 credhubiCNET4YOUtxt="$GREEN Cria as credenciais da conta hubiC_NET4YOU; $NC"
 #extetensionsfftxt="$GREEN Instalação de algumas extencoes do FF; $NC"
 multilibtxt="$GREEN Aplica layer multilib; $NC"
+sshbackuptxt="$GREEN Cria script de backup dos equipamentos mikrotik; $NC"
 
 # --------- Caminhos mais usados  --------- #
 crondaily=/etc/cron.daily
@@ -132,6 +134,7 @@ blacklist=">> /etc/slackpkg/blacklist"
 rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
 rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
 imag="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/imgs"
+drop=/home/ahlr/Dropbox
 
 # --------- Limpa tudo --------- #
 clear
@@ -349,6 +352,10 @@ echo
 	if [ $multilib == yes ]; then
 	  echo -e "$multilibtxt"
 	fi
+	
+	if [ $sshbackup == yes ]; then
+	  echo -e "$sshbackuptxt"
+	fi
 # --------- Listando funções --------- #
 	echo
 	echo
@@ -409,7 +416,7 @@ echo -e "$BLUE Escolha o que deseja fazer: $NC"
 	    read origem
 	    echo
 	    echo
-	    echo -e "$YELLOW rsync -azhv $GREEN $origem /home/ahlr/Dropbox/TONICO/Thunderbird $NC"
+	    echo -e "$YELLOW rsync -azhv $GREEN $origem $drop/TONICO/Thunderbird $NC"
 	   	;;
 	    2 )
 	    echo -e "$BLUE [ 2 ] Para copiar as configuracoes do Thunderbird para o outra pasta, preciso que você escreva o caminho da pasta de destino: $NC"
@@ -419,7 +426,7 @@ echo -e "$BLUE Escolha o que deseja fazer: $NC"
 	    read destino
 	    echo
 	    echo
-	    echo -e "$YELLOW rsync -azhv /home/ahlr/Dropbox/TONICO/Thunderbird $BLUE $destino $NC"
+	    echo -e "$YELLOW rsync -azhv $drop/TONICO/Thunderbird $BLUE $destino $NC"
 		;;
 	    *) 
 	    echo
@@ -469,7 +476,7 @@ if [ $mvrejsgr == yes ]; then
     echo "#" >> $crondaily/mvrejsgr.sh
     echo "# Cria variáveis" >> $crondaily/mvrejsgr.sh
     echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/mvrejsgr.sh
-    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/Arquivos" >> $crondaily/mvrejsgr.sh
+    echo "pasta_destino=$drop/NET4YOU/NET4YOU/Bancos/BNB/Arquivos" >> $crondaily/mvrejsgr.sh
     echo "#" >> $crondaily/mvrejsgr.sh
     echo "# Renomeia os arquivos" >> $crondaily/mvrejsgr.sh
     echo "mv \$pasta_origem/rel*.pdf  \$pasta_origem/Rejeitados-\`"date +\"%F\""\`.pdf 2> /dev/null" >> $crondaily/mvrejsgr.sh
@@ -489,11 +496,11 @@ if [ $cleansici == yes ]; then
     echo -e "$cleansicitxt"
     echo "#!"$SHELL > $crondaily//cleansici.sh
     cat $minilicense >> $crondaily/cleansici.sh
-    echo "#Mover os arquivos declaração do SICI para a pasta /home/ahlr/Dropbox/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
+    echo "#Mover os arquivos declaração do SICI para a pasta $drop/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
     echo "#" >> $crondaily/cleansici.sh
     echo "# Cria variáveis" >> $crondaily/cleansici.sh
     echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/cleansici.sh
-    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
+    echo "pasta_destino=$drop/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
     echo "#" >> $crondaily/cleansici.sh
     echo "# Move o recibo de entrehga do SICI para a pasta de backup ../SCM/SICI" >> $crondaily/cleansici.sh
     echo "mv \$pasta_origem/sici*.xml \$pasta_destino 2> /dev/null" >> $crondaily/cleansici.sh
@@ -719,7 +726,7 @@ if [ $thunderbackup == yes ]; then
     echo "#!"$SHELL > $crondaily/thunderbirdbackup.sh
     cat $minilicense >> $crondaily/thunderbirdbackup.sh
     echo "#Faz cópia incremental do diretório de configurações do Thunderbird." >> $crondaily/thunderbirdbackup.sh
-    echo "rsync -azhv $origem /home/ahlr/Dropbox/TONICO/Thunderbird" >> $crondaily/thunderbirdbackup.sh
+    echo "rsync -azhv $origem $drop/TONICO/Thunderbird" >> $crondaily/thunderbirdbackup.sh
     echo
     echo
     echo -e "$GREEN Configuração realizada! $NC"
@@ -732,7 +739,7 @@ if [ $thunderbackup == yes ]; then
     echo "#Faz cópia incremental do diretório de configurações do Thunderbird." >> $crondaily/thunderbirdbackup.sh
     echo
     echo
-    echo "rsync -azhv /home/ahlr/Dropbox/TONICO/Thunderbird $destino" >> $crondaily/thunderbirdbackup.sh
+    echo "rsync -azhv $drop/TONICO/Thunderbird $destino" >> $crondaily/thunderbirdbackup.sh
     echo
     echo
     echo -e "$GREEN Configuração realizada! $NC"
@@ -767,8 +774,8 @@ if [ $bblazetonico == yes ]; then
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
-    echo "   find /home/ahlr/Dropbox/TONICO/ -type f -exec chmod 644 {} \;" >> $crondaily/backblaze_TONICO.sh
-    echo "   find /home/ahlr/Dropbox/TONICO/ -type d -exec chmod 755 {} \;" >> $crondaily/backblaze_TONICO.sh
+    echo "   find $drop/TONICO/ -type f -exec chmod 644 {} \;" >> $crondaily/backblaze_TONICO.sh
+    echo "   find $drop/TONICO/ -type d -exec chmod 755 {} \;" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   #B2 configuration variables" >> $crondaily/backblaze_TONICO.sh
     echo "   B2_ACCOUNT="cd0c87d370b7"" >> $crondaily/backblaze_TONICO.sh
@@ -777,7 +784,7 @@ if [ $bblazetonico == yes ]; then
     echo "   B2_DIR=""" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   # Local directory to backup" >> $crondaily/backblaze_TONICO.sh
-    echo "   LOCAL_DIR="/home/ahlr/Dropbox/TONICO/"" >> $crondaily/backblaze_TONICO.sh
+    echo "   LOCAL_DIR="$drop/TONICO/"" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_TONICO.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
@@ -847,8 +854,8 @@ if [ $bblazenet4you == yes ]; then
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
     echo "" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   find /home/ahlr/Dropbox/NET4YOU/ -type f -exec chmod 644 {} \;" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   find /home/ahlr/Dropbox/NET4YOU/ -type d -exec chmod 755 {} \;" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   find $drop/NET4YOU/ -type f -exec chmod 644 {} \;" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   find $drop/NET4YOU/ -type d -exec chmod 755 {} \;" >> $crondaily/backblaze_NET4YOU.sh
     echo "" >> $crondaily/backblaze_NET4YOU.sh
     echo "   #B2 configuration variables" >> $crondaily/backblaze_NET4YOU.sh
     echo "   B2_ACCOUNT="d258ec9a83fb"" >> $crondaily/backblaze_NET4YOU.sh
@@ -857,7 +864,7 @@ if [ $bblazenet4you == yes ]; then
     echo "   B2_DIR=""" >> $crondaily/backblaze_NET4YOU.sh
     echo "" >> $crondaily/backblaze_NET4YOU.sh
     echo "   # Local directory to backup" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   LOCAL_DIR="/home/ahlr/Dropbox/NET4YOU/"" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   LOCAL_DIR="$drop/NET4YOU/"" >> $crondaily/backblaze_NET4YOU.sh
     echo "" >> $crondaily/backblaze_NET4YOU.sh
     echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_NET4YOU.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_NET4YOU.sh
@@ -934,9 +941,9 @@ fi
 if [ $winbox == yes ]; then
     echo -e "$winboxtxt"
     echo "[Desktop Entry]" > $usa/winbox.desktop
-    echo "Exec=wine /home/ahlr/Dropbox/NET4YOU/NET4YOU/Packages/winbox.exe" >> $usa/winbox.desktop
+    echo "Exec=wine $drop/NET4YOU/NET4YOU/Packages/winbox.exe" >> $usa/winbox.desktop
     echo "GenericName=Winbox" >> $usa/winbox.desktop
-    echo "Icon=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Imagens/winbox.png" >> $usa/winbox.desktop
+    echo "Icon=$drop/NET4YOU/NET4YOU/Imagens/winbox.png" >> $usa/winbox.desktop
     echo "Name=Permite acesso ao Servidor" >> $usa/winbox.desktop
     echo "Categories=Network;" >> $usa/winbox.desktop
     echo "NoDisplay=false" >> $usa/winbox.desktop
@@ -951,7 +958,7 @@ fi
 if [ $cashflow == yes ]; then
     echo -e "$cashflowtxt"
     echo "[Desktop Entry]" > $usa/cashflow.desktop
-    echo "Exec=libreoffice /home/ahlr/Dropbox/NET4YOU/NET4YOU/Finanças/CASHFLOW.ods" >> $usa/cashflow.desktop
+    echo "Exec=libreoffice $drop/NET4YOU/NET4YOU/Finanças/CASHFLOW.ods" >> $usa/cashflow.desktop
     echo "GenericName=CashFlow" >> $usa/cashflow.desktop
     echo "Icon=$imag/cashflow.jpg" >> $usa/cashflow.desktop
     echo "Name=Planilha CashFlow" >> $usa/cashflow.desktop
@@ -1048,6 +1055,183 @@ if [ $hubiCNET4YOU == yes ]; then
     sleep 3
 fi
 
+# Mikrotik SSH backup script
+if [ $sshbackup == yes ]; then
+    if [ ! -f $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh ]; then
+	echo -e "$sshbackuptxt"
+	echo "#!"$SHELL > $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	cat $minilicense >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "#" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "LOCAL_DIR=`dirname $0`" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "HOST=`hostname`" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "BACKUP_PATH=$drop/NET4YOU/NET4YOU/SERVIDOR/Backups" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "CONF=$LOCAL_DIR/sshbackup.conf" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "LOG=$LOCAL_DIR/sshbackup.log" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "SSH_PORT=2200 >>" $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "SSH_USER=net4you" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "SSH_PASS='XXXXXXXXXX'" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "DELETE_FILE=yes"
+	echo "MAIL_FROM=server@net4you.com.br" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "MAIL_TO=server@net4you.com.br" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e "\033[1mMikrotik SSH backup utility\033[0m"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo """ >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if [ ! -f "$CONF" ] 2>/dev/null ; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e "\e[31m!!!ERROR\e[0m, Configuration file not found!"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "exit 1" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if  [ ! -d "$BACKUP_PATH" ] ; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e "\e[31m!!!ERROR\e[0m, Backup path not found!"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "exit 1" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "LAST_CHAR=`tail -c 1 $CONF`" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if [ "$LAST_CHAR" != "" ] ; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e "" >> $CONF" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "INDEX=0" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "SCP_ERROR=no" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "while read -r line" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "do" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh 
+	echo "line=`echo $line | grep :`" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if [ -n "$line" ] ; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if [ "${line:0:1}" != "#" ] ; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "IP[$INDEX]=`echo $line | cut -d: -f1 | tr -d " "`" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "DESC[$INDEX]=`echo $line | cut -d: -f2 | tr -d " "`" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if  [ ! -d "${BACKUP_PATH}/${DESC[$INDEX]}" ] ; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "mkdir -p ${BACKUP_PATH}/${DESC[$INDEX]}" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "INDEX=$INDEX+1" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "done < $CONF" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "cmd="/export file=zaloha.rsc;"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo $cmd > $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo "--------------------------------------------------------------------------------" >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "for (( a=0 ; $a-INDEX ; a=$a+1 ))" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "do" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo ${IP[$a]} -  ${DESC[$a]}" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo ${IP[$a]} -  ${DESC[$a]} >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "#sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@${IP[$a]} $cmd >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "sshpass -p $SSH_PASS ssh -p $SSH_PORT -o StrictHostKeyChecking=no $SSH_USER@${IP[$a]} $cmd >/dev/null 2>&1" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if [[ $? != 0 ]]; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e " \e[31mErr\e[0m SSH failed!"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo "!!! SSH failed!"  >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "SCP_ERROR=yes" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "else" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "sleep 2" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "for SCPFILE in zaloha.rsc" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "do" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "sshpass -p $SSH_PASS scp -P $SSH_PORT -o StrictHostKeyChecking=no $SSH_USER@${IP[$a]}:/${SCPFILE} ${BACKUP_PATH}/${DESC[$a]}/ >/dev/null 2>&1" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if [[ $? != 0 ]]; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e " \e[31mErr\e[0m Transfer ${SCPFILE} failed!"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo "!!! Transfer ${SCPFILE} failed!"  >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "SCP_ERROR=yes" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "else" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e " \e[32mOK\e[0m  Transfer ${SCPFILE} complete."" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "#echo "Transfer ${SCPFILE} complete."  >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "mv ${BACKUP_PATH}/${DESC[$a]}/${SCPFILE} ${BACKUP_PATH}/${DESC[$a]}/${IP[$a]}-`date +%d_%m_%Y`".rsc"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if [ "$DELETE_FILE" == "yes" ] ; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "cmd2="/file remove ${SCPFILE};"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "sshpass -p $SSH_PASS ssh -p $SSH_PORT -o StrictHostKeyChecking=no $SSH_USER@${IP[$a]} $cmd2" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if [[ $? != 0 ]]; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e " \e[31mErr\e[0m Remove file ${SCPFILE} from Mikrotik failed!"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo "!!! Remove file ${SCPFILE} from Mikrotik failed!"  >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "else" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e " \e[32mOK\e[0m  Remove file ${SCPFILE} from Mikrotik."" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "done" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo """ >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo "--------------------------------------------------------------------------------" >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "done" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "if [ "$SCP_ERROR" == "yes" ] ; then" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e """ >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e "\e[31m Err\e[0m \033[1m When backing up the\033[0m \e[31mERROR\e[0m \033[1moccurred.\033[0m"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e "`date "+%Y-%m-%d %T"` \t  !!!ERROR - When backing up the ERROR occurred." >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo """ >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e "\033[1mCheck the log file: $LOG \033[0m"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo -e "!!!ERROR - When backing up the ERROR occurred.\nCheck the $HOST server log file: $LOG" # | mail -s "Server: $HOST - Backup Mikrotiks ended with ERRORS!" -r $MAIL_FROM $MAIL_TO" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "else" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e """ >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e " \e[32mOK\e[0m  \033[1mThe backup is complete.\033[0m"" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo -e "`date "+%Y-%m-%d %T"` \t  OK - The backup is complete." >> $LOG" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "fi" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "sleep 5" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "echo """ >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "chmod 777 -R ${BACKUP_PATH}" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "# APAGAR DEPOIS DE 3 SEMANAS" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	echo "find ${BACKUP_PATH} -mtime +15 -type f -delete" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+    else
+	sleep 5
+	echo -e "$RED Script $GREEN sshbackup.sh $RED encontrado. $NC"  
+    fi
+    
+    if [ ! -f $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf ]; then
+    #
+    # Configuration file sshbackup.conf
+    #
+	echo "# Configuration file sshbackup.conf" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "#" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "# Format:" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "# MIKROTIK_IP_ADDRESS:DESCRIPTION" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "#" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "# Example:" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "# 10.0.0.1:Main Router" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "# 10.0.2.1:Remote/Main Router" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "#" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo """" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "192.168.1.1:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.2:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.3:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.4:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.5:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.6:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.7:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.8:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.9:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.10:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.11:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.12:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.13:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.14:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.15:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.16:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.18:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.19:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.20:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.21:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.24:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.25:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.26:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.27:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.28:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.29:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.30:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.31:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.33:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.34:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+	echo "10.10.10.35:MK" >> $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf
+    else
+	sleep 5
+	echo -e "$RED Script $GREEN sshbackup.conf $RED encontrado. $NC"  
+    fi
+	sleep 3
+fi
+
 # --------- Início das configurações --------- #	
 	if [ $bblazenet4you == yes ]; then
 	echo -e "$bblazenet4youtxt"
@@ -1094,7 +1278,7 @@ echo
 	echo -e "$YELLOW Abrindo $GREEN hubic_credentials $YELLOW no konsole....  $NC"
 	echo
 	echo
-	echo -e "$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE dentro@$GREEN +$WHITE 2014" $NC"
+	echo -e "$YELLOW Lembrete:....  $WHITE "país$GREEN +$WHITE 2014" $NC"
 	sleep 5
 	    
 	vim /home/ahlr/.hubic_credentials
@@ -1102,6 +1286,26 @@ echo
 	echo -e "$BLUE hubic_credentials $YELLOW configurado!  $NC"
 
 	
+	
+echo
+echo	
+echo -e "$CYAN # --------- # --------- #  $NC"
+echo
+echo
+	fi
+	
+	if [ $sshbackup == yes ]; then
+	echo -e "$sshbackuptxt"
+	echo
+	echo -e "$YELLOW Abrindo $GREEN sshbackup $YELLOW no konsole....  $NC"
+	echo
+	echo
+	echo -e "$YELLOW Lembrete:....  $WHITE "Tos$GREEN +$WHITE bag" $NC"
+	sleep 5
+	    
+	vim $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+	
+	echo -e "$BLUE sshbackup.sh $YELLOW configurado!  $NC"
 	
 echo
 echo	
