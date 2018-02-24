@@ -46,7 +46,7 @@ slackonfig=on
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
 # Veja as funcões de cada script na página inicial do projeto slackonfig: https://github.com/ahlrodrigues/slackonfig
 mlocal=no
-cleanret=no       
+cleanret=yes       
 mvrejsgr=no
 cleansici=no
 cleansai=no
@@ -80,7 +80,8 @@ hubiCNET4YOU=no
 credhubiCNET4YOU=no
 extetensionsff=no
 multilib=no
-sshbackup=yes
+sshbackup=no
+gpg=no
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
 aminilicensetxt="$GREEN Arquivo de licença a ser incluído nos spripts $NC"
@@ -121,7 +122,7 @@ credhubiCNET4YOUtxt="$GREEN Cria as credenciais da conta hubiC_NET4YOU; $NC"
 #extetensionsfftxt="$GREEN Instalação de algumas extencoes do FF; $NC"
 multilibtxt="$GREEN Aplica layer multilib; $NC"
 sshbackuptxt="$GREEN Cria script de backup dos equipamentos mikrotik; $NC"
-
+gpgtxt="$GREEN Configura o gpg-agent; $NC"
 # --------- Caminhos mais usados  --------- #
 crondaily=/etc/cron.daily
 cronhourly=/etc/cron.hourly
@@ -356,6 +357,10 @@ echo
 	if [ $sshbackup == yes ]; then
 	  echo -e "$sshbackuptxt"
 	fi
+	
+	if [ $gpg == yes ]; then
+	  echo -e "$gpgtxt"
+	fi
 # --------- Listando funções --------- #
 	echo
 	echo
@@ -451,17 +456,22 @@ if [ $cleanret == yes ]; then
     echo -e "$cleanrettxt"
     echo "#!"$SHELL > $crondaily/cleanret.sh
     cat $minilicense >> $crondaily/cleanret.sh
-    echo "# Move arquivos de retorno da CAIXA da pasta ~/Downloads para a pasta /opt/caixa/Recebidos" >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
-    echo "# Cria as variáveis" >> $crondaily/cleanret.sh
     echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/cleanret.sh
-    echo "pasta_destino=/opt/caixa/Recebidos" >> $crondaily/cleanret.sh
+    echo "pasta_retorno=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos/" >> $crondaily/cleanret.sh
+    echo "pasta_remessa=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa" >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
-    echo "# Cria a pasta ../Recebidos" >> $crondaily/cleanret.sh
-    echo "mkdir /opt/caixa/Recebidos" >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
-    echo "# Move arquivos *.ret para a pasta de Recebidos" >> $crondaily/cleanret.sh
-    echo "mv \$pasta_origem/*.ret \$pasta_destino" >> $crondaily/cleanret.sh
+    pasta_retorno=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos
+    pasta_remessa=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa
+      if [ ! -d $pasta_retorno ]; then
+	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos/
+      fi
+      if [ ! -d $pasta_remessa ]; then
+	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa/
+      fi
+    echo "mv \$pasta_origem/*.ret \$pasta_retorno" >> $crondaily/cleanret.sh
+    echo "mv \$pasta_origem/*.rem \$pasta_remessa" >> $crondaily/cleanret.sh
     chmod +x $crondaily/cleanret.sh
     chmod 755 $crondaily/cleanret.sh
     sleep 3
@@ -578,8 +588,10 @@ fi
 # Inicia o servidor de impressão CUPS
 if [ $cups == yes ]; then
     echo -e "$cupstxt"
-    chmod +x $rcd/rc.cups
-    $rcd/rc.cups restart
+    if [ -x $rcd/rc.cups ]; then
+	chmod +x $rcd/rc.cups
+	$rcd/$rcd/rc.cups start
+    fi
     sleep 3
 fi
 
@@ -1232,6 +1244,14 @@ if [ $sshbackup == yes ]; then
 	sleep 3
 fi
 
+#Configura gpg-agent
+if [ $gpg == yes ]; then
+    echo -e "$gpgtxt"
+    echo
+    sed -i '/use-agent/s/^#//g' //home/ahlr/.gnupg/gpg.conf # --------- descomenta determinada linhas --------- #
+    sed -i '/--gpg-agent-info=<path>:<pid>:1/s/^#//g' //home/ahlr/.gnupg/gpg.conf # --------- descomenta determinada linhas --------- #
+    sleep 3
+fi
 # --------- Início das configurações --------- #	
 	if [ $bblazenet4you == yes ]; then
 	echo -e "$bblazenet4youtxt"
