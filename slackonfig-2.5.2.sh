@@ -34,7 +34,7 @@
 #                                                                                #
 # V0.2.5.1                                                                       #
 #                                                                                #
-# Last update: 2018/01/26                                                    #
+# Last update: 2018/02/26                                                    #
 #                                                                                #
 ##################################################################################
 ###
@@ -46,14 +46,13 @@ slackonfig=on
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
 # Veja as funcões de cada script na página inicial do projeto slackonfig: https://github.com/ahlrodrigues/slackonfig
 mlocal=no
-cleanret=yes       
+cleanret=no       
 mvrejsgr=no
 cleansici=no
 cleansai=no
 cleancache=no
 ntp=no
 samba=no
-samba2=no
 cups=no
 shutdown=no
 teamviewerd=no
@@ -246,11 +245,7 @@ echo
 	  echo -e "$sambatxt"
 	fi
 		
-	if [ $samba2 == yes ]; then
-	  echo -e "$samba2txt"
-	fi
-	
-	if [ $cups == yes ]; then
+		if [ $cups == yes ]; then
 	  echo -e "$cupstxt"
 	fi
 
@@ -450,8 +445,7 @@ echo -e "$BLUE Escolha o que deseja fazer: $NC"
 	esac
 fi
 
-# Criar script que move os arquivos de retorno da CEF
-# para uma pasta de backup no diretório /opt/caixa/Recebidos.
+# Criar script que move os arquivos da CEF
 if [ $cleanret == yes ]; then
     echo -e "$cleanrettxt"
     echo "#!"$SHELL > $crondaily/cleanret.sh
@@ -573,10 +567,6 @@ if [ $samba == yes ]; then
     sed -i "s/MYGROUP/workgroup/g" /etc/samba/smb.conf-sample
     mv /etc/samba/smb.conf-sample /etc/samba/smb.conf
     sleep 3
-fi
-
-# Iniciando do deamon Samba
-if [ $samba2 == yes ]; then
     echo -e "$samba2txt"
     if [ -x $rcd/rc.samba ]; then
 	chmod +x $rcd/rc.samba
@@ -1191,6 +1181,7 @@ if [ $sshbackup == yes ]; then
 	sleep 5
 	echo -e "$RED Script $GREEN sshbackup.sh $RED encontrado. $NC"  
     fi
+    chmod +x $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
     
     if [ ! -f $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf ]; then
     #
