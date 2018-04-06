@@ -58,7 +58,7 @@ shutdown=no
 teamviewerd=no
 plex=no
 mirrors=no
-inittab=no
+inittab=yes
 networkmanager=no
 konsole=no
 reccx=no
@@ -521,12 +521,13 @@ fi
     echo "#Move arquivos de retorno do BNB" >> $crondaily/cleansai.sh
     echo "#" >> $crondaily/cleansai.sh
     echo "#Cria as variáveis" >> $crondaily/cleansai.sh
-    echo "pasta_origem=/home/ahlr/.wine/drive_c/skyline/inbox" >> $crondaily/cleansai.sh
-    echo "pasta_destino=/home/ahlr/.wine/drive_c/skyline/recebidos" >> $crondaily/cleansai.sh
+    echo "pasta_origem=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/inbox/" >> $crondaily/cleansai.sh
+    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/recebidos/" >> $crondaily/cleansai.sh
     echo "#" >> $crondaily/cleansai.sh
     echo "#Cria a pasta ../skyline/recebidos para backup" >> $crondaily/cleansai.sh
     echo "#dos arquivos de retorno do BNB" >> $crondaily/cleansai.sh
-    echo "mkdir /home/ahlr/.wine/drive_c/skyline/recebidos" >> $crondaily/cleansai.sh
+#    if  [ ! -d "
+    echo "mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/recebidos/" >> $crondaily/cleansai.sh
     echo "#" >> $crondaily/cleansai.sh
     echo "#Copia os arquivos de retorno para a pasta de backup" >> $crondaily/cleansai.sh
     echo "mv \$pasta_origem/*.SAI \$pasta_destino" >> $crondaily/cleansai.sh
@@ -648,6 +649,25 @@ if [ $mirrors == yes ]; then
     sed -i "s|ARCH:-\"x86\"|ARCH:-\"x86_64\"|g" $crondaily/mirror-slackware-current.sh
     mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware64-current.sh
     chmod +x $crondaily/mirror-slackware*
+    sleep 3
+fi
+
+# Cria o script de rsync do port ARM
+if [ $mirrors == yes ]; then
+    echo -e "$mirrorstxt"
+    echo "#!"$SHELL > $crondaily/mirror-slackwarearm-current.sh
+    cat $minilicense >> $crondaily/mirror-slackwarearm-current.sh
+    echo "cd /mnt/sda3/Slackware/" > $crondaily/mirror-slackwarearm-current.sh
+    echo "rsync -Prv --delete ftp.slackware.uk::slackwarearm/slackwarearm-current ." > $crondaily/mirror-slackwarearm-current.sh
+    echo "#" > $crondaily/mirror-slackwarearm-current.sh
+    echo "mkisofs \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-udf \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-o /mnt/sda3/Slackware/Slackwarearm-current-iso/slackwarearm-DVD.iso \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-R -J -V "Slackware ARM current" \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-hide-rr-moved \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-v -d -N \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-A "Slackware ARM DVD" ." > $crondaily/mirror-slackwarearm-current.sh
+    chmod +x $crondaily/mirror-slackwarearm*
     sleep 3
 fi
 
