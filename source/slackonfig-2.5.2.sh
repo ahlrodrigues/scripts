@@ -1,59 +1,12 @@
-#!/bin/bash
-##
-###
-##################################################################################
-# Autor: Antonio Henrique (Fela)                                                 #
-# e-mail: ahlr_2000@yahoo.com                                                    #
-# repositório: github.com/ahlrodrigues/slackonfig                                #
-#                                                                                #
-# Bugs, Agradecimentos, Críticas "construtivas"!                                 #
-# Mande me um e-mail, que ficarei muito grato!                                   #
-#                                                                                #
-# Este scripts é disponibilizado na esperança que possa ser útil,                #
-# mas SEM NENHUMA GARANTIA DE FUNCIONAMENTO, SEM NENHUMA GARANTIA DE ADEQUAÇÃO A #
-# QUALQUER SISTEMA, SEM NENHUMA GARANTIA DE APLICAÇÃO EM PARTICULAR e NENHUM     #
-# SUPORTE TÉCNICO.                                                               #
-#                                                                                #
-# Estes scripts/programas são softwares livres, você pode redistribuí-los e/ou   #
-# modifica-los dentro dos termos da Licença Pública Geral GNU.                   #
-#                                                                                #
-# GNU General Public License:                                                    #
-# [GPL](https://pt.wikipedia.org/wiki/GNU_General_Public_License)                #
-# Fundação do Software Livre (FSF) Inc. 51 Franklin St, Fifth Floor,             #
-# Boston, MA 02110-1301 USA                                                      #
-##################################################################################
-###
-##
-#
-#
-##
-###
-##################################################################################
-#                                                                                #
-# Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux    #
-#                                                                                #
-# V0.2.5.1                                                                       #
-#                                                                                #
-# Last update: 2018/01/26                                                    #
-#                                                                                #
-##################################################################################
-###
-##
-#
-# PARA QUE O SCRIPT FUNCIONE TROCUE A VARIÁVEL slackonfig=off PARA slackonfig=on. Utilizado para aplicar funções pré configuradas.
-slackonfig=on 
 
-# Para ativar as funções deste script, troque as variábeis abaixo para "yes".
-# Veja as funcões de cada script na página inicial do projeto slackonfig: https://github.com/ahlrodrigues/slackonfig
 mlocal=no
-cleanret=yes       
+cleanret=no       
 mvrejsgr=no
 cleansici=no
 cleansai=no
 cleancache=no
 ntp=no
 samba=no
-samba2=no
 cups=no
 shutdown=no
 teamviewerd=no
@@ -63,7 +16,7 @@ inittab=no
 networkmanager=no
 konsole=no
 reccx=no
-brother=no
+brother=yes
 lang=no
 thunderbackup=no
 bblazetonico=no
@@ -140,31 +93,7 @@ drop=/home/ahlr/Dropbox
 # --------- Limpa tudo --------- #
 clear
 
-# --------- Efeito nas Cores  --------- #
-#0 Normal Characters
-#1 Bold Characters
-#4 Underlined Characters
-#5 Blinking Characters
-#7 Reverse video Characters
 
-# --------- Cores  --------- #
-BLACK='\e[1;30m'
-BBLACK='\e[5;30m'
-RED='\e[1;31m'
-BRED='\e[5;31m' # bink color
-GREEN='\e[1;32m'
-BGREEN='\e[1;32m'
-Brown='\e[1;33m'
-BBrown='\e[5;33m'
-BLUE='\e[1;34m'
-BBLUE='\e[5;34m'
-PINK='\e[1;35m'
-BPINK='\e[5;35m'
-CYAN='\e[1;36m'
-BCYAN='\e[5;36m'
-WHITE='\e[1;37m'
-BWHITE='\e[5;37m'
-NC='\033[0m' # reset/no color
 
 # --------- Teste se está logado como root --------- #
 if [[ $(whoami) == "root" ]]; then
@@ -196,8 +125,7 @@ echo
     echo
     if [ ! -f "$minilicense" ]; then
 	echo -e "$aminilicensetxt"
-	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
-	$rawdocs/minilicense.txt
+	wget -q  -nv -e robots=0 -r -nd -cP /tmp https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs/minilicense.txt
     else
 	echo -e "$RED Arquivo $GREEN minilicense.txt $RED encontrado. $NC"
 	sleep 5
@@ -246,11 +174,7 @@ echo
 	  echo -e "$sambatxt"
 	fi
 		
-	if [ $samba2 == yes ]; then
-	  echo -e "$samba2txt"
-	fi
-	
-	if [ $cups == yes ]; then
+		if [ $cups == yes ]; then
 	  echo -e "$cupstxt"
 	fi
 
@@ -450,8 +374,7 @@ echo -e "$BLUE Escolha o que deseja fazer: $NC"
 	esac
 fi
 
-# Criar script que move os arquivos de retorno da CEF
-# para uma pasta de backup no diretório /opt/caixa/Recebidos.
+# Criar script que move os arquivos da CEF
 if [ $cleanret == yes ]; then
     echo -e "$cleanrettxt"
     echo "#!"$SHELL > $crondaily/cleanret.sh
@@ -527,12 +450,13 @@ fi
     echo "#Move arquivos de retorno do BNB" >> $crondaily/cleansai.sh
     echo "#" >> $crondaily/cleansai.sh
     echo "#Cria as variáveis" >> $crondaily/cleansai.sh
-    echo "pasta_origem=/home/ahlr/.wine/drive_c/skyline/inbox" >> $crondaily/cleansai.sh
-    echo "pasta_destino=/home/ahlr/.wine/drive_c/skyline/recebidos" >> $crondaily/cleansai.sh
+    echo "pasta_origem=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/inbox/" >> $crondaily/cleansai.sh
+    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/recebidos/" >> $crondaily/cleansai.sh
     echo "#" >> $crondaily/cleansai.sh
     echo "#Cria a pasta ../skyline/recebidos para backup" >> $crondaily/cleansai.sh
     echo "#dos arquivos de retorno do BNB" >> $crondaily/cleansai.sh
-    echo "mkdir /home/ahlr/.wine/drive_c/skyline/recebidos" >> $crondaily/cleansai.sh
+#    if  [ ! -d "
+    echo "mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/recebidos/" >> $crondaily/cleansai.sh
     echo "#" >> $crondaily/cleansai.sh
     echo "#Copia os arquivos de retorno para a pasta de backup" >> $crondaily/cleansai.sh
     echo "mv \$pasta_origem/*.SAI \$pasta_destino" >> $crondaily/cleansai.sh
@@ -573,10 +497,6 @@ if [ $samba == yes ]; then
     sed -i "s/MYGROUP/workgroup/g" /etc/samba/smb.conf-sample
     mv /etc/samba/smb.conf-sample /etc/samba/smb.conf
     sleep 3
-fi
-
-# Iniciando do deamon Samba
-if [ $samba2 == yes ]; then
     echo -e "$samba2txt"
     if [ -x $rcd/rc.samba ]; then
 	chmod +x $rcd/rc.samba
@@ -661,6 +581,25 @@ if [ $mirrors == yes ]; then
     sleep 3
 fi
 
+# Cria o script de rsync do port ARM
+if [ $mirrors == yes ]; then
+    echo -e "$mirrorstxt"
+    echo "#!"$SHELL > $crondaily/mirror-slackwarearm-current.sh
+    cat $minilicense >> $crondaily/mirror-slackwarearm-current.sh
+    echo "cd /mnt/sda3/Slackware/" > $crondaily/mirror-slackwarearm-current.sh
+    echo "rsync -Prv --delete ftp.slackware.uk::slackwarearm/slackwarearm-current ." > $crondaily/mirror-slackwarearm-current.sh
+    echo "#" > $crondaily/mirror-slackwarearm-current.sh
+    echo "mkisofs \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-udf \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-o /mnt/sda3/Slackware/Slackwarearm-current-iso/slackwarearm-DVD.iso \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-R -J -V "Slackware ARM current" \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-hide-rr-moved \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-v -d -N \\" > $crondaily/mirror-slackwarearm-current.sh
+    echo "-A "Slackware ARM DVD" ." > $crondaily/mirror-slackwarearm-current.sh
+    chmod +x $crondaily/mirror-slackwarearm*
+    sleep 3
+fi
+
 # Configura a inicialização do sistema em init 4
 if [ $inittab == yes ]; then
     echo -e "$inittabtxt"
@@ -704,7 +643,7 @@ fi
 # Instalação do driver da impressora
 if [ $brother == yes ]; then
     echo -e "$brothertxt"
-    wget -cP /tmp http://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.1.1-1.gz
+    wget -cP /tmp http://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.2.0-1.gz
     gunzip /tmp/linux-brprinter-installer*
     cd /tmp
     chmod +x linux-brprinter-installer*
@@ -1191,6 +1130,7 @@ if [ $sshbackup == yes ]; then
 	sleep 5
 	echo -e "$RED Script $GREEN sshbackup.sh $RED encontrado. $NC"  
     fi
+    chmod +x $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
     
     if [ ! -f $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf ]; then
     #
