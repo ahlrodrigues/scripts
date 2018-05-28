@@ -1,4 +1,50 @@
+#!/bin/bash
+##
+###
+##################################################################################
+# Autor: Antonio Henrique (Fela)                                                 #
+# e-mail: ahlr_2000@yahoo.com                                                    #
+# repositório: github.com/ahlrodrigues/slackonfig                                #
+#                                                                                #
+# Bugs, Agradecimentos, Críticas "construtivas"!                                 #
+# Mande me um e-mail, que ficarei muito grato!                                   #
+#                                                                                #
+# Este scripts é disponibilizado na esperança que possa ser útil,                #
+# mas SEM NENHUMA GARANTIA DE FUNCIONAMENTO, SEM NENHUMA GARANTIA DE ADEQUAÇÃO A #
+# QUALQUER SISTEMA, SEM NENHUMA GARANTIA DE APLICAÇÃO EM PARTICULAR e NENHUM     #
+# SUPORTE TÉCNICO.                                                               #
+#                                                                                #
+# Estes scripts/programas são softwares livres, você pode redistribuí-los e/ou   #
+# modifica-los dentro dos termos da Licença Pública Geral GNU.                   #
+#                                                                                #
+# GNU General Public License:                                                    #
+# [GPL](https://pt.wikipedia.org/wiki/GNU_General_Public_License)                #
+# Fundação do Software Livre (FSF) Inc. 51 Franklin St, Fifth Floor,             #
+# Boston, MA 02110-1301 USA                                                      #
+##################################################################################
+###
+##
+#
+#
+##
+###
+##################################################################################
+#                                                                                #
+# Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux    #
+#                                                                                #
+# V0.2.5.1                                                                       #
+#                                                                                #
+# Last update: 2018/02/26                                                    #
+#                                                                                #
+##################################################################################
+###
+##
+#
+# PARA QUE O SCRIPT FUNCIONE TROCUE A VARIÁVEL slackonfig=off PARA slackonfig=on. Utilizado para aplicar funções pré configuradas.
+slackonfig=on 
 
+# Para ativar as funções deste script, troque as variábeis abaixo para "yes".
+# Veja as funcões de cada script na página inicial do projeto slackonfig: https://github.com/ahlrodrigues/slackonfig
 mlocal=no
 cleanret=no       
 mvrejsgr=no
@@ -93,7 +139,31 @@ drop=/home/ahlr/Dropbox
 # --------- Limpa tudo --------- #
 clear
 
+# --------- Efeito nas Cores  --------- #
+#0 Normal Characters
+#1 Bold Characters
+#4 Underlined Characters
+#5 Blinking Characters
+#7 Reverse video Characters
 
+# --------- Cores  --------- #
+BLACK='\e[1;30m'
+BBLACK='\e[5;30m'
+RED='\e[1;31m'
+BRED='\e[5;31m' # bink color
+GREEN='\e[1;32m'
+BGREEN='\e[1;32m'
+Brown='\e[1;33m'
+BBrown='\e[5;33m'
+BLUE='\e[1;34m'
+BBLUE='\e[5;34m'
+PINK='\e[1;35m'
+BPINK='\e[5;35m'
+CYAN='\e[1;36m'
+BCYAN='\e[5;36m'
+WHITE='\e[1;37m'
+BWHITE='\e[5;37m'
+NC='\033[0m' # reset/no color
 
 # --------- Teste se está logado como root --------- #
 if [[ $(whoami) == "root" ]]; then
@@ -125,7 +195,8 @@ echo
     echo
     if [ ! -f "$minilicense" ]; then
 	echo -e "$aminilicensetxt"
-	wget -q  -nv -e robots=0 -r -nd -cP /tmp https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs/minilicense.txt
+	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
+	$rawdocs/minilicense.txt
     else
 	echo -e "$RED Arquivo $GREEN minilicense.txt $RED encontrado. $NC"
 	sleep 5
