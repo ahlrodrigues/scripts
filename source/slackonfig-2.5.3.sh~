@@ -58,7 +58,7 @@ shutdown=no
 teamviewerd=no
 plex=no
 mirrors=no
-inittab=no
+inittab=yes
 networkmanager=no
 konsole=no
 reccx=no
@@ -83,7 +83,6 @@ sshbackup=no
 gpg=no
 ktown=no
 clamav=no
-projetos=yes
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
 aminilicensetxt="$GREEN Arquivo de licença a ser incluído nos spripts $NC"
@@ -127,7 +126,7 @@ gpgtxt="$GREEN Configura o gpg-agent; $NC"
 ktowntxt="$GREEN Cria o script rsync para o ktown do AlienBob; $NC"
 clamavtxt="$GREEN Inicialzando do clamav; $NC"
 notdepstxt="$GREEN Não existem pacotes que exijam instalação de dependências!; $NC"
-projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
+
 # --------- Lista de dependências  --------- #
 sshbackupdep="$PINK sshbackup=> sshpass; $NC"
 blazehubicdep="$PINK duplicity=> librsync, lockfile, pipi; $NC"
@@ -369,10 +368,6 @@ echo
 	
     if [ $clamav == yes ]; then
 	  echo -e "$clamavtxt"
-	fi
-	
-    if [ $projetos == yes ]; then
-	  echo -e "$projetostxt"
 	fi
 # --------- Listando funções --------- #
 	echo
@@ -1299,19 +1294,6 @@ if [ $clamav == yes ]; then
     sleep 3
 fi
 
-#Sync pastas Projetos do dropbox/local
-if [ $projetos == yes ]; then
-    echo -e "$projetostxt"
-    echo "#!"$SHELL > $crondaily/projetos.sh
-    cat $minilicense >> $crondaily/projetos.sh
-    echo "#Sync pastas Projetos do dropbox/local" >> $crondaily/projetos.sh
-    echo "pasta_origem=/home/ahlr/Dropbox/TONICO/Projetos/" >> $crondaily/projetos.sh
-    echo "pasta_destino=/mnt/sda3/Projetos/" >> $crondaily/projetos.sh
-    echo "#"
-    echo "rsync -HavP \$pasta_origem \$pasta_destino" >> $crondaily/projetos.sh
-    chmod +x $crondaily/projetos.sh
-    sleep 3
-fi
 # --------- Início das configurações --------- #	
 	if [ $bblazenet4you == yes ]; then
 	echo -e "$bblazenet4youtxt"

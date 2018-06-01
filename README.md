@@ -16,7 +16,7 @@ Autor: Antonio Henrique (Fela)
 E-mail: ahlr_2000@yahoo.com
 
 
-Bugs, Agradecimentos, Críticas "construtivas", mande me um e-mail, ficarei Grato!
+Bugs, Agradecimentos, Críticasconstrutivas", mande me um e-mail, ficarei Grato!
 ```
 
 
@@ -35,48 +35,56 @@ EM PARTICULAR e NENHUM SUPORTE TÉCNICO.
 Neste diretório, constam alguns scripts para configurações básicas, que 
 normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/Linux:
 
-- cleanret.sh => Move os arquivos de retorno da caixa;
-- mvrejsgr.sh => Move os arquivos de rejeitados e francesinha do BNB;
-- cleansici.sh => Move os recibo de declaração do SICI para o Dropbox;
-- backupprojetos.sh => Mover os arquivos de backup das configurações;
-- cleansai.sh => Move os arquivos de retorno do bnb;
-- cleancache.sh => Limpa o cache;
-- ntp.sh => Habilita o NTP pool server brasileiro;
-- Configura o grupo de trabalho do Samba;
-- Incluindo inicialização do daemon do Samba no rc.local;
-- Inicializa o deamon do servidor de impressão CUPS;
-- rc.local_shutdown => para limpeza dos /tmp's no shutdown;
-- Acrescenta inicialização do "daemon" do TeamViewer no ../rc.local;
-- Acrescenta inicialização do "daemon" do Plex no ../rc.local;
-- mirror-slackware => Administracao dos mirros locais;
-- Habilita o "init:4" para inicialização do KDM;
-- Inicializa o servidor de rede Networkmanager;
-- Configura o profile do Konsole para mostrar os diretórios;
-- Cria a pasta /opt/caixa/Recebidos;
-- Instalação do driver da impressora Brother-DCP7065;
-- Configura o locale pt-BR nos arquivos lang.sh e lang.csh;
-- thunderbirdbackup.sh => Restaur o Thunderbird;
-- thunderbackup.sh => Faz backup do Thunderbird;
-- backblaze_TONICO.sh => Faz backup no Backblaze;
-- backblaze_NET4YOU.sh => Faz backup no Backblaze;
-- data.sh => Cria script de calculo data;
-- winbox.sh => Cria a entrada do Winbox no mennu do KDE;
-- skyline.sh => Cria a entrada do Skyline no menu do KDE;
-- numlockon.sh => Ativando o NumLock na inicialização;
-- Instalação e configuração do Slackpkg+;
-- Instalando lista de pacotes do arquivo pkgs.txt;
-- hubiC_TONICO => Faz backup no hubic;
-- hubiC_NET4YOU => Faz backup no hubic;
-- Cria o arquivo de credenciais do TONICO para backup no hubiC;
-- Cria o arquivo de credenciais do NET4YOU para backup no hubiC;
+mlocaltxt= Configurando mirror local
+aminilicensetxt= Arquivo de licença a ser incluído nos spripts
+apkgstxt= Arquivo com lista de pacotes a serem instalados automaticamente
+cleanrettxt= Move os arquivos de retorno da caixa;
+mvrejsgrtxt= Move os arquivos de rejeitados e francesinha do BNB;
+cleansicitxt= Move os recibo de declaração do SICI para o Dropbox;
+cleansaitxt= Move os arquivos de retorno do bnb;
+cleancachetxt= Limpa o cache;
+ntptxt= Habilita o NTP pool server brasileiro;
+sambatxt= Configura o grupo de trabalho do Samba;
+samba2txt= Incluindo inicialização do deamon do Samba no rc.local;
+cupstxt= Inicializa o deamon do servidor de impressão CUPS;
+shutdowntxt= Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown;
+teamviewerdtxt= Incluindo inicialização do daemon do teamviewer no rc.local;
+plextxt= Incluindo inicialização do daemon do Plex no rc.local;
+mirrorstxt= Administracao dos mirros locais;
+inittabtxt= Habilitando o init 4;
+networkmanagertxt= Inicialzando networkmanager;
+konsoletxt= Configura o profile do Konsole;
+reccxtxt= Cria pasta para os arquivos da CEF e dá permissão de usuário;
+brothertxt= Instalacao do driver da impressora;
+langtxt= Configurando local pt-BR;
+thunderbackuptxt= Cria/Recupera backup do Thunderbird;
+thunderbirdtxt= Cria configurações do Thunderbird;
+bblazetonicotxt= Faz backup no Backblaze;
+bblazenet4youtxt= Faz backup no Backblaze;
+datatxt= Script de calculo data;
+winboxtxt= Cria a entrada do Winbox no menu do KDE;
+cashflowtxt= Cria a entrada do CashFlow no menu do KDE;
+skylinetxt= Cria a entrada do Skyline no menu do KDE;
+numLocktxt= Ativando o NumLock;
+slackpkgtxt= Instala e configura o slackpkg;
+slackpkgplustxt= Instala e configura slackpkgplus;
+pkgstxt= Instalacao da lista de pacotes;
+hubiCNET4YOUtxt= Faz backup no hubic;
+credhubiCNET4YOUtxt= Cria as credenciais da conta hubiC_NET4YOU;
+multilibtxt= Aplica layer multilib;
+sshbackuptxt= Cria script de backup dos equipamentos mikrotik;
+gpgtxt= Configura o gpg-agent;
+ktowntxt= Cria o script rsync para o ktown do AlienBob;
+clamavtxt= Inicialzando do clamav;
+notdepstxt= Não existem pacotes que exijam instalação de dependências!;
+projetostxt= Atualiza pasta Projetos local;
 ```
 
 
 Usage:
 ------
 ```
-Baixe o SLACKONFIG e rode-o como root para realizar todas as funções programadas por padrão
-ou escolha no diretório /Configs o script que mais lhe agradar.
+Baixe o SLACKONFIG, habilite a função desejada e rode-o como root.
 ```
 
 
