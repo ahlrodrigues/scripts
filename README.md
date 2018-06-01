@@ -6,7 +6,7 @@
 
 
 
-**SLACKONFIG** - o Scripts para configuração do Slackware GNU/Linux
+**SLACKONFIG** - um scripts para configuração do Slackware GNU/Linux
 --------------
 
 
@@ -16,7 +16,7 @@ Autor: Antonio Henrique (Fela)
 E-mail: ahlr_2000@yahoo.com
 
 
-Bugs, Agradecimentos, Críticasconstrutivas", mande me um e-mail, ficarei Grato!
+Bugs, Agradecimentos, Críticas construtivas", mande um e-mail, ficarei Grato!
 ```
 
 
