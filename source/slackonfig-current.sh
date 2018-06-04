@@ -32,9 +32,9 @@
 #                                                                                #
 # Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux    #
 #                                                                                #
-# V0.2.5.1                                                                       #
+# V0.current                                                                     #
 #                                                                                #
-# Last update: 2018/02/26                                                    #
+# Last update: 2018/06/04                                                        #
 #                                                                                #
 ##################################################################################
 ###
@@ -58,7 +58,7 @@ shutdown=no
 teamviewerd=no
 plex=no
 mirrors=no
-inittab=yes
+inittab=no
 networkmanager=no
 konsole=no
 reccx=no
@@ -72,7 +72,7 @@ data=no
 winbox=no
 cashflow=no
 skyline=no
-numLock=no
+cobranca=no
 slackpkg=no
 slackpkgplus=no
 pkgs=no
@@ -83,6 +83,8 @@ sshbackup=no
 gpg=no
 ktown=no
 clamav=no
+projetos=no
+
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
 aminilicensetxt="$GREEN Arquivo de licença a ser incluído nos spripts $NC"
@@ -114,7 +116,7 @@ datatxt="$GREEN Script de calculo data; $NC"
 winboxtxt="$GREEN Cria a entrada do Winbox no menu do KDE; $NC"
 cashflowtxt="$GREEN Cria a entrada do CashFlow no menu do KDE; $NC"
 skylinetxt="$GREEN Cria a entrada do Skyline no menu do KDE; $NC"
-numLocktxt="$GREEN Ativando o NumLock; $NC"
+cobrancatxt="$GREEN Cria script de administração da cobramça do BN; $NC"
 slackpkgtxt="$GREEN Instala e configura o slackpkg; $NC"
 slackpkgplustxt="$GREEN Instala e configura slackpkgplus; $NC"
 pkgstxt="$GREEN Instalacao da lista de pacotes; $NC"
@@ -126,10 +128,15 @@ gpgtxt="$GREEN Configura o gpg-agent; $NC"
 ktowntxt="$GREEN Cria o script rsync para o ktown do AlienBob; $NC"
 clamavtxt="$GREEN Inicialzando do clamav; $NC"
 notdepstxt="$GREEN Não existem pacotes que exijam instalação de dependências!; $NC"
+projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
+
+
 
 # --------- Lista de dependências  --------- #
 sshbackupdep="$PINK sshbackup=> sshpass; $NC"
 blazehubicdep="$PINK duplicity=> librsync, lockfile, pipi; $NC"
+
+
 
 # --------- Caminhos mais usados  --------- #
 crondaily=/etc/cron.daily
@@ -144,6 +151,9 @@ rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
 rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
 imag="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/imgs"
 drop=/home/ahlr/Dropbox
+permi= chown root:root && chmod +x && chmod 770
+
+ 
 
 # --------- Limpa tudo --------- #
 clear
@@ -329,11 +339,11 @@ echo
 	if [ $skyline == yes ]; then
 	  echo -e "$skylinetxt"
 	fi
-
-	if [ $numLock == yes ]; then
-	  echo -e "$numLocktxt"
+	
+	if [ $cobranca == yes ]; then
+	  echo -e "$cobrancatxt"
 	fi
-
+	
 	if [ $slackpkg == yes ]; then
 	  echo -e "$slackpkgtxt"
 	fi
@@ -369,6 +379,10 @@ echo
     if [ $clamav == yes ]; then
 	  echo -e "$clamavtxt"
 	fi
+	
+    if [ $projetos == yes ]; then
+	  echo -e "$projetostxt"
+	fi
 # --------- Listando funções --------- #
 	echo
 	echo
@@ -395,7 +409,7 @@ echo
 #                                        #      
 # --------- Início das Funções --------- #      
 #                                        #      
-#   Não editar a partir deste ponto      #      
+#   NÃO EDITAR A PARTIR DESTE PONTO!     #      
 #                                        #      
 ##########################################
 
@@ -479,8 +493,8 @@ if [ $cleanret == yes ]; then
       fi
     echo "mv \$pasta_origem/*.ret \$pasta_retorno" >> $crondaily/cleanret.sh
     echo "mv \$pasta_origem/*.rem \$pasta_remessa" >> $crondaily/cleanret.sh
-    chmod +x $crondaily/cleanret.sh
-    chmod 755 $crondaily/cleanret.sh
+    $crondaily/cleanret.sh
+    $permi $crondaily/cleanret.sh
     sleep 3
 fi
 
@@ -502,8 +516,8 @@ if [ $mvrejsgr == yes ]; then
     echo "# Move os arquivos da pasta ../Downloads para a pasta ../BNB/Arquivos" >> $crondaily/mvrejsgr.sh
     echo "mv \$pasta_origem/Francesinha*.pdf \$pasta_destino 2> /dev/null" >> $crondaily/mvrejsgr.sh
     echo "mv \$pasta_origem/Rejeitados*.pdf \$pasta_destino 2> /dev/null" >> $crondaily/mvrejsgr.sh
-    chmod +x $crondaily/mvrejsgr.sh
-    chmod 755 $crondaily/mvrejsgr.sh
+    $permi $crondaily/mvrejsgr.sh
+    ln $crondaily/mvrejsgr.sh $ulbin/mvrejsgr.sh
     sleep 3
 fi
 
@@ -521,8 +535,7 @@ if [ $cleansici == yes ]; then
     echo "#" >> $crondaily/cleansici.sh
     echo "# Move o recibo de entrehga do SICI para a pasta de backup ../SCM/SICI" >> $crondaily/cleansici.sh
     echo "mv \$pasta_origem/sici*.xml \$pasta_destino 2> /dev/null" >> $crondaily/cleansici.sh
-    chmod +x $crondaily/cleansici.sh
-    chmod 755 $crondaily/cleansici.sh
+    $permi $crondaily/cleansici.sh
     sleep 3
 fi
 
@@ -539,13 +552,14 @@ fi
     echo "#" >> $crondaily/cleansai.sh
     echo "#Cria a pasta ../skyline/recebidos para backup" >> $crondaily/cleansai.sh
     echo "#dos arquivos de retorno do BNB" >> $crondaily/cleansai.sh
-#    if  [ ! -d "
+    echo "if  [ ! -d /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/recebidos ]; then" >> $crondaily/cleansai.sh
     echo "mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/recebidos/" >> $crondaily/cleansai.sh
+    echo "else" >> $crondaily/cleansai.sh
     echo "#" >> $crondaily/cleansai.sh
     echo "#Copia os arquivos de retorno para a pasta de backup" >> $crondaily/cleansai.sh
     echo "mv \$pasta_origem/*.SAI \$pasta_destino" >> $crondaily/cleansai.sh
-    chmod +x $crondaily/cleansai.sh
-    chmod 755 $crondaily/cleansai.sh
+    echo "fi" >> $crondaily/cleansai.sh
+    $permi $crondaily/cleansai.sh
     sleep 3
 fi
 
@@ -558,8 +572,7 @@ if [ $cleancache == yes ]; then
     echo "#" >> $crondaily/cleancache.sh
     echo "#Move tudo para o lixo" >> $crondaily/cleancache.sh
     echo "echo 3 > /proc/sys/vm/drop_caches" >> $crondaily/cleancache.sh
-    chmod +x $crondaily/cleancache.sh
-    chmod 755 $crondaily/cleancache.sh
+    $permi $crondaily/cleancache.sh
     sleep 3
 fi
 
@@ -569,7 +582,7 @@ if [ $ntp == yes ]; then
     sed -i "s/^#*/#/" /etc/ntp.conf # --------- comenta todas as linhas --------- #	
     sed -i "s/#server 3.pool.ntp.org/a server pool.ntp.br/g" /etc/ntp.conf
     	if [ -x $rcd/rc.ntpd ]; then
-	  chmod +x $rcd/rc.ntpd
+	  $permi $rcd/rc.ntpd
 	  $rcd/rc.ntpd start
 	fi
     sleep 3
@@ -583,7 +596,7 @@ if [ $samba == yes ]; then
     sleep 3
     echo -e "$samba2txt"
     if [ -x $rcd/rc.samba ]; then
-	chmod +x $rcd/rc.samba
+	&permi $rcd/rc.samba
 	$rcd/rc.samba start
     fi
     sleep 3
@@ -593,8 +606,8 @@ fi
 if [ $cups == yes ]; then
     echo -e "$cupstxt"
     if [ -x $rcd/rc.cups ]; then
-	chmod +x $rcd/rc.cups
-	$rcd/$rcd/rc.cups start
+    $permi $rcd/rc.cups
+    $rcd/rc.cups start
     fi
     sleep 3
 fi
@@ -612,7 +625,7 @@ if [ $shutdown == yes ]; then
     echo "find /tmp -type s -exec  /bin/touch {} \;" >> $rcd/rc.local_shutdown
     echo "find /tmp -type d -empty -mtime +37 -exec /bin/rmdir {} \;" >> $rcd/rc.local_shutdown
     echo "find /tmp -type f -mtime +37 -exec rm -rf {} \; " >> $rcd/rc.local_shutdown
-    chmod +x $rcd/rc.local_shutdown
+    $permi $rcd/rc.local_shutdown
     sleep 3
 fi
 
@@ -631,7 +644,7 @@ if [ $teamviewerd == yes ]; then
     echo "if [ -x $rcd/rc.teamviewerd ]; then" >> $rcd/rc.local
     echo "$rcd/rc.teamviewerd start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
-    chmod +x $rcd/rc.teamviewerd
+    $permi $rcd/rc.teamviewerd
     $rcd/rc.teamviewerd start
     sleep 3
     fi
@@ -644,7 +657,7 @@ if [ $plex == yes ]; then
     echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
     echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
-    chmod +x $rcd/rc.plexmediaserver
+    $permi $rcd/rc.plexmediaserver
     $rcd/rc.plexmediaserver start
     sleep 3
 fi
@@ -661,7 +674,8 @@ if [ $mirrors == yes ]; then
     sed -i "s|DVD_EXCLUDES:-\"-x ./testing  -x ./source -x ./extra/source\"|DVD_EXCLUDES:-\"-x ./source -x ./extra/source\"|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|ARCH:-\"x86\"|ARCH:-\"x86_64\"|g" $crondaily/mirror-slackware-current.sh
     mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware64-current.sh
-    chmod +x $crondaily/mirror-slackware*
+    ln $crondaily/mirror-slackware64-current.sh $ulbin/mirror-slackware64-current.sh
+    $permi $crondaily/mirror-slackware*
     sleep 3
 fi
 
@@ -680,7 +694,8 @@ if [ $mirrors == yes ]; then
     echo "-hide-rr-moved \\" > $crondaily/mirror-slackwarearm-current.sh
     echo "-v -d -N \\" > $crondaily/mirror-slackwarearm-current.sh
     echo "-A "Slackware ARM DVD" ." > $crondaily/mirror-slackwarearm-current.sh
-    chmod +x $crondaily/mirror-slackwarearm*
+    ln $crondaily/mirror-slackwarearm-current.sh $ulbin/mirror-slackwarearm-current.sh
+    $permi $crondaily/mirror-slackwarearm*
     sleep 3
 fi
 
@@ -699,7 +714,7 @@ if [ $networkmanager == yes ]; then
     echo "$rcd/rc.networkmanager start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
     echo "#" >> $rcd/rc.local
-    chmod +x $rcd/rc.networkmanager >> $rcd/rc.local
+    $permi $rcd/rc.networkmanager >> $rcd/rc.local
     sleep 3
 fi
 
@@ -730,7 +745,7 @@ if [ $brother == yes ]; then
     wget -cP /tmp http://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.2.0-1.gz
     gunzip /tmp/linux-brprinter-installer*
     cd /tmp
-    chmod +x linux-brprinter-installer*
+    $permi linux-brprinter-installer*
     ./linux-brprinter-installer*
     rm /tmp/linux-brprinter-installer*
     rm /tmp/uninstaller_*
@@ -780,8 +795,7 @@ if [ $thunderbackup == yes ]; then
     echo -e "$GREEN Configuração realizada! $NC"
     echo
     echo
-    chmod +x $crondaily/thunderbirdbackup.sh
-    chmod 755 $crondaily/thunderbirdbackup.sh   
+    $permi $crondaily/thunderbirdbackup.sh   
     fi
 fi
 
@@ -810,7 +824,7 @@ if [ $bblazetonico == yes ]; then
     echo "   echo" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   find $drop/TONICO/ -type f -exec chmod 644 {} \;" >> $crondaily/backblaze_TONICO.sh
-    echo "   find $drop/TONICO/ -type d -exec chmod 755 {} \;" >> $crondaily/backblaze_TONICO.sh
+    echo "   find $drop/TONICO/ -type d -exec chmod 770 {} \;" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   #B2 configuration variables" >> $crondaily/backblaze_TONICO.sh
     echo "   B2_ACCOUNT="cd0c87d370b7"" >> $crondaily/backblaze_TONICO.sh
@@ -861,8 +875,7 @@ if [ $bblazetonico == yes ]; then
     echo "   unset PASSPHRASE" >> $crondaily/backblaze_TONICO.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_TONICO.sh 
     echo "fi" >> $crondaily/backblaze_TONICO.sh
-    chmod +x $crondaily/backblaze_TONICO.sh
-    chmod 755 $crondaily/backblaze_TONICO.sh
+    $permi $crondaily/backblaze_TONICO.sh
 fi
 
 #Criação do arquivo backblaze_NET4YOU.sh
@@ -890,7 +903,7 @@ if [ $bblazenet4you == yes ]; then
     echo "   echo" >> $crondaily/backblaze_NET4YOU.sh
     echo "" >> $crondaily/backblaze_NET4YOU.sh
     echo "   find $drop/NET4YOU/ -type f -exec chmod 644 {} \;" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   find $drop/NET4YOU/ -type d -exec chmod 755 {} \;" >> $crondaily/backblaze_NET4YOU.sh
+    echo "   find $drop/NET4YOU/ -type d -exec chmod 770 {} \;" >> $crondaily/backblaze_NET4YOU.sh
     echo "" >> $crondaily/backblaze_NET4YOU.sh
     echo "   #B2 configuration variables" >> $crondaily/backblaze_NET4YOU.sh
     echo "   B2_ACCOUNT="d258ec9a83fb"" >> $crondaily/backblaze_NET4YOU.sh
@@ -941,8 +954,7 @@ if [ $bblazenet4you == yes ]; then
     echo "   unset PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh 
     echo "fi" >> $crondaily/backblaze_NET4YOU.sh
-    chmod +x $crondaily/backblaze_NET4YOU.sh
-    chmod 755 $crondaily/backblaze_NET4YOU.sh
+    $permi $crondaily/backblaze_NET4YOU.sh
 fi
 
 # Cria script que calcula valor do boleto entre duas datas
@@ -967,8 +979,7 @@ if [ $data == yes ]; then
     echo "echo \"scale = 4; \$valor_mensalidade / 30 * \$dias_corridos\" | bc" >> $ulbin/data.sh
     echo "#" >> $ulbin/data.sh
     echo "exit 1" >> $ulbin/data.sh
-    chmod +x $ulbin/data.sh
-    chmod 755 $ulbin/data.sh
+    $permi $ulbin/data.sh
     sleep 3
 fi  
 
@@ -1010,7 +1021,7 @@ fi
 if [ $skyline == yes ]; then
     echo -e "$skylinetxt"
     echo "[Desktop Entry]" > $usa/bnb.desktop
-    echo "Exec=/usr/local/bin/bnb.sh" >> $usa/bnb.desktop
+    echo "Exec=$ulbin/cobrancabnb.sh" >> $usa/bnb.desktop
     echo "GenericName=BNB" >> $usa/bnb.desktop
     echo "Icon=$img/winbox.png" >> $usa/bnb.desktop
     echo "Name=Comunicação da cobrança BNB" >> $usa/bnb.desktop
@@ -1021,14 +1032,23 @@ if [ $skyline == yes ]; then
     echo "X-KDE-SubstituteUID=false" >> $usa/bnb.desktop
     update-desktop-database -q
     sleep 3
-fi     
-      
-# Ativa tecla NumLock antes do login
-if [ $numLock == yes ]; then
-    echo -e "$numLocktxt"
-    echo "Ativa o NumLock"
-    sed -i "s/#NumLock=Off/NumLock=On/" /etc/kde/kdm/kdmrc
-    sleep 3
+fi
+
+#Cria script que administra cobrança BNB
+if [ cobranca == yes ] && [ skyline == yes ]; then
+    echo -e "$cobrancatxt"
+    echo "#!"$SHELL > $ulbin/cobrancabnb.sh
+    cat $minilicense >> $ulbin/cobrancabnb.sh
+    echo "arquivos=`ls /home/ahlr/Downloads/ | awk '/CB/ { print $0 }'` # REMESSAS" >> $ulbin/cobrancabnb.sh
+    echo "pasta_origem=/home/ahlr/Downloads/" >> $ulbin/cobrancabnb.sh
+    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/outbox/" >> $ulbin/cobrancabnb.sh
+    echo "if [ "$arquivos" != "" ]; then #Se existe arquivo de remessa" >> $ulbin/cobrancabnb.sh
+    echo "mv $pasta_origem/$arquivos $pasta_destino" >> $ulbin/cobrancabnb.sh
+    echo "wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null"  >> $ulbin/cobrancabnb.sh
+    echo "else" >> $ulbin/cobrancabnb.sh
+    echo "wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null" >> $ulbin/cobrancabnb.sh
+    echo "exit 1" >> $ulbin/cobrancabnb.sh
+    echo "fi" >> $ulbin/cobrancabnb.sh
 fi
 
 #Instalação do slackpkgplus
@@ -1206,7 +1226,7 @@ if [ $sshbackup == yes ]; then
 	sleep 5
 	echo -e "$RED Script $GREEN sshbackup.sh $RED encontrado. $NC"  
     fi
-    chmod +x $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+    $permi $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
     
     if [ ! -f $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf ]; then
     #
@@ -1275,7 +1295,8 @@ if [ $ktown == yes ]; then
     echo "#!"$SHELL > $crondaily/mirror-ktown.sh
     cat $minilicense >> $crondaily/mirror-ktown.sh
     echo "rsync -HavP --exclude=x86 rsync://slackware.nl/mirrors/alien-kde/current/5/ /mnt/sda3/Slackware/Ktown/" > $crondaily/mirror-ktown.sh
-    chmod +x $crondaily/mirror-ktown.sh
+    $permi $crondaily/mirror-ktown.sh
+    ln $crondaily/mirror-ktown.sh $ulbin/mirror-ktown.sh
     sleep 3
 fi
 
@@ -1286,7 +1307,7 @@ if [ $clamav == yes ]; then
     echo "if [ -x $rcd/rc.clamav ]; then" >> $rcd/rc.local
     echo "$rcd/rc.clamav start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
-    chmod +x $rcd/rc.clamav
+    $permi $rcd/rc.clamav
     groupadd -g 210 clamav
     useradd -u 210 -d /dev/null -s /bin/false -g clamav clamav
     freshclam
@@ -1294,6 +1315,19 @@ if [ $clamav == yes ]; then
     sleep 3
 fi
 
+#Sync pastas Projetos do dropbox/local
+if [ $projetos == yes ]; then
+    echo -e "$projetostxt"
+    echo "#!"$SHELL > $crondaily/projetos.sh
+    cat $minilicense >> $crondaily/projetos.sh
+    echo "#Sync pastas Projetos do dropbox/local" >> $crondaily/projetos.sh
+    echo "pasta_origem=/home/ahlr/Dropbox/TONICO/Projetos/" >> $crondaily/projetos.sh
+    echo "pasta_destino=/mnt/sda3/Projetos/" >> $crondaily/projetos.sh
+    echo "#"
+    echo "rsync -HavP \$pasta_origem \$pasta_destino" >> $crondaily/projetos.sh
+    $permi $crondaily/projetos.sh
+    sleep 3
+fi
 # --------- Início das configurações --------- #	
 	if [ $bblazenet4you == yes ]; then
 	echo -e "$bblazenet4youtxt"

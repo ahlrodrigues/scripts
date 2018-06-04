@@ -65,7 +65,7 @@ datatxt= Script de calculo data;
 winboxtxt= Cria a entrada do Winbox no menu do KDE;
 cashflowtxt= Cria a entrada do CashFlow no menu do KDE;
 skylinetxt= Cria a entrada do Skyline no menu do KDE;
-numLocktxt= Ativando o NumLock;
+cobrancatxt= Cria script de administração da cobramça do BN;
 slackpkgtxt= Instala e configura o slackpkg;
 slackpkgplustxt= Instala e configura slackpkgplus;
 pkgstxt= Instalacao da lista de pacotes;
@@ -92,7 +92,6 @@ Feature:
 --------
 ```
 - Instalação do Skyline administrador dos arquivos de remessa (.REM) e de  retorno (.SAI) do BNB;
-- bnb.sh => Cria script de inicialização do Skyline; 
 - Cria o arquivo de inicialização do BOIC;
 - Configuração do Slackpkg;
 - Aplicação do layer para transformar Slackware => Slackware Multilib;
