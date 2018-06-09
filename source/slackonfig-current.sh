@@ -57,7 +57,8 @@ cups=no
 shutdown=no
 teamviewerd=no
 plex=no
-mirrors=no
+mirrorx86_64=no
+mirrorarm=yes
 inittab=no
 networkmanager=no
 konsole=no
@@ -101,7 +102,8 @@ cupstxt="$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
 shutdowntxt="$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
 teamviewerdtxt="$GREEN Incluindo inicialização do daemon do teamviewer no rc.local; $NC"
 plextxt="$GREEN Incluindo inicialização do daemon do Plex no rc.local; $NC"
-mirrorstxt="$GREEN Administracao dos mirros locais; $NC"
+mirrorx86_64txt="$GREEN Administracao dos mirros locais; $NC"
+mirrorarmtxt="$GREEN Administracao dos mirros locais; $NC"
 inittabtxt="$GREEN Habilitando o init 4; $NC"
 networkmanagertxt="$GREEN Inicialzando networkmanager; $NC"
 konsoletxt="$GREEN Configura o profile do Konsole; $NC"
@@ -127,7 +129,6 @@ sshbackuptxt="$GREEN Cria script de backup dos equipamentos mikrotik; $NC"
 gpgtxt="$GREEN Configura o gpg-agent; $NC"
 ktowntxt="$GREEN Cria o script rsync para o ktown do AlienBob; $NC"
 clamavtxt="$GREEN Inicialzando do clamav; $NC"
-notdepstxt="$GREEN Não existem pacotes que exijam instalação de dependências!; $NC"
 projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
 
 
@@ -151,7 +152,9 @@ rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
 rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
 imag="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/imgs"
 drop=/home/ahlr/Dropbox
-permi= chown root:root && chmod +x && chmod 770
+permix="chmod +x"
+permi0="chmod 770"
+caminho=/mnt/sda3/Slackware
 
  
 
@@ -263,8 +266,8 @@ echo
 	if [ $samba == yes ]; then
 	  echo -e "$sambatxt"
 	fi
-		
-		if [ $cups == yes ]; then
+    
+    if [ $cups == yes ]; then
 	  echo -e "$cupstxt"
 	fi
 
@@ -280,8 +283,12 @@ echo
 	  echo -e "$plextxt"
 	fi
 
-	if [ $mirrors == yes ]; then
-	  echo -e "$mirrorstxt"
+	if [ $mirrorx86_64 == yes ]; then
+	  echo -e "$mirrorx86_64txt"
+	fi
+		
+    if [ $mirrorarm == yes ]; then
+	  echo -e "$mirrorarmtxt"
 	fi
 
 	if [ $inittab == yes ]; then
@@ -516,7 +523,8 @@ if [ $mvrejsgr == yes ]; then
     echo "# Move os arquivos da pasta ../Downloads para a pasta ../BNB/Arquivos" >> $crondaily/mvrejsgr.sh
     echo "mv \$pasta_origem/Francesinha*.pdf \$pasta_destino 2> /dev/null" >> $crondaily/mvrejsgr.sh
     echo "mv \$pasta_origem/Rejeitados*.pdf \$pasta_destino 2> /dev/null" >> $crondaily/mvrejsgr.sh
-    $permi $crondaily/mvrejsgr.sh
+    $permix $crondaily/mvrejsgr.sh
+    $permi0 $crondaily/mvrejsgr.sh
     ln $crondaily/mvrejsgr.sh $ulbin/mvrejsgr.sh
     sleep 3
 fi
@@ -535,7 +543,8 @@ if [ $cleansici == yes ]; then
     echo "#" >> $crondaily/cleansici.sh
     echo "# Move o recibo de entrehga do SICI para a pasta de backup ../SCM/SICI" >> $crondaily/cleansici.sh
     echo "mv \$pasta_origem/sici*.xml \$pasta_destino 2> /dev/null" >> $crondaily/cleansici.sh
-    $permi $crondaily/cleansici.sh
+    $permix $crondaily/cleansici.sh
+    $permi0 $crondaily/cleansici.sh
     sleep 3
 fi
 
@@ -559,7 +568,8 @@ fi
     echo "#Copia os arquivos de retorno para a pasta de backup" >> $crondaily/cleansai.sh
     echo "mv \$pasta_origem/*.SAI \$pasta_destino" >> $crondaily/cleansai.sh
     echo "fi" >> $crondaily/cleansai.sh
-    $permi $crondaily/cleansai.sh
+    $permix $crondaily/cleansai.sh
+    $permi0 $crondaily/cleansai.sh
     sleep 3
 fi
 
@@ -572,7 +582,8 @@ if [ $cleancache == yes ]; then
     echo "#" >> $crondaily/cleancache.sh
     echo "#Move tudo para o lixo" >> $crondaily/cleancache.sh
     echo "echo 3 > /proc/sys/vm/drop_caches" >> $crondaily/cleancache.sh
-    $permi $crondaily/cleancache.sh
+    $permix $crondaily/cleancache.sh
+    $permi0 $crondaily/cleancache.sh
     sleep 3
 fi
 
@@ -582,7 +593,8 @@ if [ $ntp == yes ]; then
     sed -i "s/^#*/#/" /etc/ntp.conf # --------- comenta todas as linhas --------- #	
     sed -i "s/#server 3.pool.ntp.org/a server pool.ntp.br/g" /etc/ntp.conf
     	if [ -x $rcd/rc.ntpd ]; then
-	  $permi $rcd/rc.ntpd
+	  $permix $rcd/rc.ntpd
+	  $permi0 $rcd/rc.ntpd
 	  $rcd/rc.ntpd start
 	fi
     sleep 3
@@ -596,7 +608,8 @@ if [ $samba == yes ]; then
     sleep 3
     echo -e "$samba2txt"
     if [ -x $rcd/rc.samba ]; then
-	&permi $rcd/rc.samba
+	$permix $rcd/rc.samba
+	$permi0 $rcd/rc.samba
 	$rcd/rc.samba start
     fi
     sleep 3
@@ -606,7 +619,7 @@ fi
 if [ $cups == yes ]; then
     echo -e "$cupstxt"
     if [ -x $rcd/rc.cups ]; then
-    $permi $rcd/rc.cups
+    $permix $rcd/rc.cups
     $rcd/rc.cups start
     fi
     sleep 3
@@ -625,7 +638,8 @@ if [ $shutdown == yes ]; then
     echo "find /tmp -type s -exec  /bin/touch {} \;" >> $rcd/rc.local_shutdown
     echo "find /tmp -type d -empty -mtime +37 -exec /bin/rmdir {} \;" >> $rcd/rc.local_shutdown
     echo "find /tmp -type f -mtime +37 -exec rm -rf {} \; " >> $rcd/rc.local_shutdown
-    $permi $rcd/rc.local_shutdown
+    $permix $rcd/rc.local_shutdown
+    $permi0 $rcd/rc.local_shutdown
     sleep 3
 fi
 
@@ -644,7 +658,8 @@ if [ $teamviewerd == yes ]; then
     echo "if [ -x $rcd/rc.teamviewerd ]; then" >> $rcd/rc.local
     echo "$rcd/rc.teamviewerd start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
-    $permi $rcd/rc.teamviewerd
+    $permix $rcd/rc.teamviewerd
+    $permi0 $rcd/rc.teamviewerd
     $rcd/rc.teamviewerd start
     sleep 3
     fi
@@ -657,13 +672,14 @@ if [ $plex == yes ]; then
     echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
     echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
-    $permi $rcd/rc.plexmediaserver
+    $permix $rcd/rc.plexmediaserver
+    $permi0 $rcd/rc.plexmediaserver
     $rcd/rc.plexmediaserver start
     sleep 3
 fi
 
-# Baixa o script do AlienBob e configura para mirrors locais x86 e x86_64 
-if [ $mirrors == yes ]; then
+# Baixa o script do AlienBob e configura para mirrors locais x86_64 
+if [ $mirrorx86_64 == yes ]; then
     echo -e "$mirrorstxt"
     wget -q  -nv -e robots=0 -r -nd -cP $crondaily http://www.slackware.com/~alien/tools/mirror-slackware-current.sh
     sed -i "s|BUILDER:-\"Eric Hameleers <alien@slackware.com>\"|BUILDER:-\"Fela  <ahlr_2000@yahoo.com>\"|g" $crondaily/mirror-slackware-current.sh
@@ -674,28 +690,33 @@ if [ $mirrors == yes ]; then
     sed -i "s|DVD_EXCLUDES:-\"-x ./testing  -x ./source -x ./extra/source\"|DVD_EXCLUDES:-\"-x ./source -x ./extra/source\"|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|ARCH:-\"x86\"|ARCH:-\"x86_64\"|g" $crondaily/mirror-slackware-current.sh
     mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware64-current.sh
+    if [ -f $ulbin/mirror-slackware64-current.sh ]; then
+    $permix $crondaily/mirror-slackware64*
+    $permi0 $crondaily/mirror-slackware64*
     ln $crondaily/mirror-slackware64-current.sh $ulbin/mirror-slackware64-current.sh
-    $permi $crondaily/mirror-slackware*
+    fi
     sleep 3
 fi
 
-# Cria o script de rsync do port ARM
-if [ $mirrors == yes ]; then
-    echo -e "$mirrorstxt"
-    echo "#!"$SHELL > $crondaily/mirror-slackwarearm-current.sh
-    cat $minilicense >> $crondaily/mirror-slackwarearm-current.sh
-    echo "cd /mnt/sda3/Slackware/" > $crondaily/mirror-slackwarearm-current.sh
-    echo "rsync -Prv --delete ftp.slackware.uk::slackwarearm/slackwarearm-current ." > $crondaily/mirror-slackwarearm-current.sh
-    echo "#" > $crondaily/mirror-slackwarearm-current.sh
-    echo "mkisofs \\" > $crondaily/mirror-slackwarearm-current.sh
-    echo "-udf \\" > $crondaily/mirror-slackwarearm-current.sh
-    echo "-o /mnt/sda3/Slackware/Slackwarearm-current-iso/slackwarearm-DVD.iso \\" > $crondaily/mirror-slackwarearm-current.sh
-    echo "-R -J -V "Slackware ARM current" \\" > $crondaily/mirror-slackwarearm-current.sh
-    echo "-hide-rr-moved \\" > $crondaily/mirror-slackwarearm-current.sh
-    echo "-v -d -N \\" > $crondaily/mirror-slackwarearm-current.sh
-    echo "-A "Slackware ARM DVD" ." > $crondaily/mirror-slackwarearm-current.sh
+# Baixa o script do AlienBob e configura para mirrors locais ARM
+if [ $mirrorarm == yes ]; then
+    echo -e "$mirrorarmtxt"
+    wget -q  -nv -e robots=0 -r -nd -cP $crondaily http://www.slackware.com/~alien/tools/mirror-slackware-current.sh
+    sed -i "s|BUILDER:-\"Eric Hameleers <alien@slackware.com>\"|BUILDER:-\"Fela  <ahlr_2000@yahoo.com>\"|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|/home/ftp/pub/Linux/Slackware|$caminho|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|VERBOSE:-\"-q\"|VERBOSE:-\"-v --progress\"|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|ISO:-\"CDROM\"}|ISO:-\"DVD\"}|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|EXCLUDES:-\"--exclude pasture\"|EXCLUDES:-\"--exclude pasture --exclude source\"|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|DVD_EXCLUDES:-\"-x ./testing  -x ./source -x ./extra/source\"|DVD_EXCLUDES:-\"-x ./source -x ./extra/source\"|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|ARCH:-\"x86\"|ARCH:-\"arm\"|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|RSYNCURLROOT:-\"rsync.osuosl.org::slackware/\"|RSYNCURLROOT:-\"rsync.slackware.pl::slackwarearm/\"|g" $crondaily/mirror-slackware-current.sh
+    mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackwarearm-current.sh
+    if [ -f $ulbin/mirror-slackwarearm-current.sh ]; then
+    rm $ulbin/mirror-slackwarearm-current.sh
+    fi
+    $permix $crondaily/mirror-slackwarearm*
+    $permi0 $crondaily/mirror-slackwarearm*
     ln $crondaily/mirror-slackwarearm-current.sh $ulbin/mirror-slackwarearm-current.sh
-    $permi $crondaily/mirror-slackwarearm*
     sleep 3
 fi
 
@@ -714,7 +735,8 @@ if [ $networkmanager == yes ]; then
     echo "$rcd/rc.networkmanager start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
     echo "#" >> $rcd/rc.local
-    $permi $rcd/rc.networkmanager >> $rcd/rc.local
+    $permix $rcd/rc.networkmanager
+    $permi0 $rcd/rc.networkmanager
     sleep 3
 fi
 
@@ -745,7 +767,7 @@ if [ $brother == yes ]; then
     wget -cP /tmp http://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.2.0-1.gz
     gunzip /tmp/linux-brprinter-installer*
     cd /tmp
-    $permi linux-brprinter-installer*
+    $permix linux-brprinter-installer*
     ./linux-brprinter-installer*
     rm /tmp/linux-brprinter-installer*
     rm /tmp/uninstaller_*
@@ -795,7 +817,8 @@ if [ $thunderbackup == yes ]; then
     echo -e "$GREEN Configuração realizada! $NC"
     echo
     echo
-    $permi $crondaily/thunderbirdbackup.sh   
+    $permix $crondaily/thunderbirdbackup.sh
+    $permi0 $crondaily/thunderbirdbackup.sh
     fi
 fi
 
@@ -875,7 +898,8 @@ if [ $bblazetonico == yes ]; then
     echo "   unset PASSPHRASE" >> $crondaily/backblaze_TONICO.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_TONICO.sh 
     echo "fi" >> $crondaily/backblaze_TONICO.sh
-    $permi $crondaily/backblaze_TONICO.sh
+    $permix $crondaily/backblaze_TONICO.sh
+    $permi0 $crondaily/backblaze_TONICO.sh
 fi
 
 #Criação do arquivo backblaze_NET4YOU.sh
@@ -954,7 +978,8 @@ if [ $bblazenet4you == yes ]; then
     echo "   unset PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh 
     echo "fi" >> $crondaily/backblaze_NET4YOU.sh
-    $permi $crondaily/backblaze_NET4YOU.sh
+    $permix $crondaily/backblaze_NET4YOU.sh
+    $permi0 $crondaily/backblaze_NET4YOU.sh
 fi
 
 # Cria script que calcula valor do boleto entre duas datas
@@ -979,7 +1004,7 @@ if [ $data == yes ]; then
     echo "echo \"scale = 4; \$valor_mensalidade / 30 * \$dias_corridos\" | bc" >> $ulbin/data.sh
     echo "#" >> $ulbin/data.sh
     echo "exit 1" >> $ulbin/data.sh
-    $permi $ulbin/data.sh
+    $permix $ulbin/data.sh
     sleep 3
 fi  
 
@@ -1226,7 +1251,7 @@ if [ $sshbackup == yes ]; then
 	sleep 5
 	echo -e "$RED Script $GREEN sshbackup.sh $RED encontrado. $NC"  
     fi
-    $permi $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
+    $permix $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.sh
     
     if [ ! -f $drop/NET4YOU/NET4YOU/SERVIDOR/SHELL/sshbackup.conf ]; then
     #
@@ -1295,7 +1320,7 @@ if [ $ktown == yes ]; then
     echo "#!"$SHELL > $crondaily/mirror-ktown.sh
     cat $minilicense >> $crondaily/mirror-ktown.sh
     echo "rsync -HavP --exclude=x86 rsync://slackware.nl/mirrors/alien-kde/current/5/ /mnt/sda3/Slackware/Ktown/" > $crondaily/mirror-ktown.sh
-    $permi $crondaily/mirror-ktown.sh
+    $permix $crondaily/mirror-ktown.sh
     ln $crondaily/mirror-ktown.sh $ulbin/mirror-ktown.sh
     sleep 3
 fi
@@ -1307,7 +1332,7 @@ if [ $clamav == yes ]; then
     echo "if [ -x $rcd/rc.clamav ]; then" >> $rcd/rc.local
     echo "$rcd/rc.clamav start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
-    $permi $rcd/rc.clamav
+    $permix $rcd/rc.clamav
     groupadd -g 210 clamav
     useradd -u 210 -d /dev/null -s /bin/false -g clamav clamav
     freshclam
@@ -1325,7 +1350,7 @@ if [ $projetos == yes ]; then
     echo "pasta_destino=/mnt/sda3/Projetos/" >> $crondaily/projetos.sh
     echo "#"
     echo "rsync -HavP \$pasta_origem \$pasta_destino" >> $crondaily/projetos.sh
-    $permi $crondaily/projetos.sh
+    $permix $crondaily/projetos.sh
     sleep 3
 fi
 # --------- Início das configurações --------- #	
@@ -1416,21 +1441,22 @@ echo -e "$CYAN Pacotes instalados e Configurações realizadas!! $NC"
 echo
 echo
 # --------- Lista de dependências --------- #
+    if [ 
+   
+   $bblazenet4you == yes \
+   -o $bblazetonico == yes \
+   -o $hubiCNET4YOU == yes \
+   -o $sshbackup == yes
+   
+      ]; then
+      
 echo -e "$RED Não esqueça de instalar as dependências! $NC"
 echo
 echo
-    if [ $sshbackup == yes ]; then
-	echo -e "$sshbackupdep"
-	else
-	echo -e "$notdepstxt"
-	sleep 3
-    fi
-    
-    if [ $bblazenet4you == yes -o $bblazetonico == yes -o $hubiCNET4YOU == yes ]; then
-    echo -e "$blazehubicdep"
-	else
-	echo -e "$notdeps"
-	sleep 3
+echo -e $blazehubicdep
+echo -e $sshbackupdep
+sleep 3
+
     fi
     
 # --------- Lista de pacotes importantes  --------- #
