@@ -54,7 +54,7 @@ mvrejsgr=no
 cleansici=no
 cleansai=no
 cleancache=no
-ntp=no
+ntp=yes
 samba=no
 cups=no
 shutdown=no
@@ -92,7 +92,6 @@ projetos=no
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
 aminilicensetxt="$GREEN Arquivo de licença a ser incluído nos spripts $NC"
-acolorstxt="$GREEN Arquivo de cores a ser incluído nos spripts $NC"
 apkgstxt="$GREEN Arquivo com lista de pacotes a serem instalados automaticamente $NC"
 cleanrettxt="$GREEN Move os arquivos de retorno da caixa; $NC"
 mvrejsgrtxt="$GREEN Move os arquivos de rejeitados e francesinha do BNB; $NC"
@@ -147,7 +146,6 @@ blazehubicdep="$PINK duplicity=> librsync, lockfile, pip; $NC"
 crondaily=/etc/cron.daily
 cronhourly=/etc/cron.hourly
 minilicense=/tmp/minilicense.txt
-colors=/tmp/colors.txt
 lpkgs=/tmp/pkgs.txt
 rcd=/etc/rc.d
 ulbin=/usr/local/bin
@@ -223,24 +221,11 @@ echo
     echo
     echo
     if [ ! -f "$minilicense" ]; then
-    echo -e "$GREEN Baixando...: $NC"
-    echo
 	echo -e "$aminilicensetxt"
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	$rawdocs/minilicense.txt
     else
 	echo -e "$RED Arquivo $GREEN minilicense.txt $RED encontrado. $NC"
-	sleep 5
-    fi
-    
-    if [ ! -f "$colors" ]; then
-    echo -e "$GREEN Baixando...: $NC"
-    echo
-	echo -e "$acolorstxt"
-	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
-	$rawdocs/colors.txt
-    else
-	echo -e "$RED Arquivo $GREEN colors.txt $RED encontrado. $NC"
 	sleep 5
     fi
        
@@ -710,7 +695,6 @@ if [ $mirrorx86_64 == yes ]; then
     sed -i "s|ARCH:-\"x86\"|ARCH:-\"x86_64\"|g" $crondaily/mirror-slackware-current.sh
     mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackware64-current.sh
     if [ -f $ulbin/mirror-slackware64-current.sh ]; then
-    rm $ulbin/mirror-slackware64*
     $permix $crondaily/mirror-slackware64*
     $permi0 $crondaily/mirror-slackware64*
     ln $crondaily/mirror-slackware64-current.sh $ulbin/mirror-slackware64-current.sh
@@ -732,7 +716,7 @@ if [ $mirrorarm == yes ]; then
     sed -i "s|RSYNCURLROOT:-\"rsync.osuosl.org::slackware/\"|RSYNCURLROOT:-\"rsync.slackware.pl::slackwarearm/\"|g" $crondaily/mirror-slackware-current.sh
     mv $crondaily/mirror-slackware-current.sh $crondaily/mirror-slackwarearm-current.sh
     if [ -f $ulbin/mirror-slackwarearm-current.sh ]; then
-    rm $ulbin/mirror-slackwarearm*
+    rm $ulbin/mirror-slackwarearm-current.sh
     fi
     $permix $crondaily/mirror-slackwarearm*
     $permi0 $crondaily/mirror-slackwarearm*
