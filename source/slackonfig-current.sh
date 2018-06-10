@@ -54,14 +54,14 @@ mvrejsgr=no
 cleansici=no
 cleansai=no
 cleancache=no
-ntp=no
+ntp=yes
 samba=no
 cups=no
 shutdown=no
 teamviewerd=no
 plex=no
 mirrorx86_64=no
-mirrorarm=yes
+mirrorarm=no
 inittab=no
 networkmanager=no
 konsole=no
@@ -138,7 +138,7 @@ projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
 
 # --------- Lista de dependências  --------- #
 sshbackupdep="$PINK sshbackup=> sshpass; $NC"
-blazehubicdep="$PINK duplicity=> librsync, lockfile, pipi; $NC"
+blazehubicdep="$PINK duplicity=> librsync, lockfile, pip; $NC"
 
 
 
@@ -158,6 +158,8 @@ drop=/home/ahlr/Dropbox
 permix="chmod +x"
 permi0="chmod 770"
 caminho=/mnt/sda3/Slackware
+home=/home/ahlr
+null="/dev/null"
 
  
 
@@ -594,11 +596,10 @@ fi
 if [ $ntp == yes ]; then	
     echo -e "$ntptxt"
     sed -i "s/^#*/#/" /etc/ntp.conf # --------- comenta todas as linhas --------- #	
-    sed -i "s/#server 3.pool.ntp.org/a server pool.ntp.br/g" /etc/ntp.conf
-    	if [ -x $rcd/rc.ntpd ]; then
+    sed -i "/server 3/a server pool.ntp.br iburst" /etc/ntp.conf
+   	if [ -x $rcd/rc.ntpd ]; then
 	  $permix $rcd/rc.ntpd
-	  $permi0 $rcd/rc.ntpd
-	  $rcd/rc.ntpd start
+	  $rcd/rc.ntpd restart > $null
 	fi
     sleep 3
 fi
@@ -613,7 +614,7 @@ if [ $samba == yes ]; then
     if [ -x $rcd/rc.samba ]; then
 	$permix $rcd/rc.samba
 	$permi0 $rcd/rc.samba
-	$rcd/rc.samba start
+	$rcd/rc.samba start > $null
     fi
     sleep 3
 fi
@@ -623,7 +624,7 @@ if [ $cups == yes ]; then
     echo -e "$cupstxt"
     if [ -x $rcd/rc.cups ]; then
     $permix $rcd/rc.cups
-    $rcd/rc.cups start
+    $rcd/rc.cups start > $null
     fi
     sleep 3
 fi
@@ -663,7 +664,7 @@ if [ $teamviewerd == yes ]; then
     echo "fi" >> $rcd/rc.local
     $permix $rcd/rc.teamviewerd
     $permi0 $rcd/rc.teamviewerd
-    $rcd/rc.teamviewerd start
+    $rcd/rc.teamviewerd start > $null
     sleep 3
     fi
 fi
@@ -677,7 +678,7 @@ if [ $plex == yes ]; then
     echo "fi" >> $rcd/rc.local
     $permix $rcd/rc.plexmediaserver
     $permi0 $rcd/rc.plexmediaserver
-    $rcd/rc.plexmediaserver start
+    $rcd/rc.plexmediaserver start > $null
     sleep 3
 fi
 
@@ -1104,8 +1105,7 @@ fi
 if [ $pkgs == yes ]; then
     if [ ! -f "$pkgs" ]; then
 	echo -e "$apkgstxt"
-	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
-	$rawconfigs/pkgs.txt
+	wget -q  -nv -e robots=0 -r -nd -cP /tmp $rawconfigs/pkgs.txt
     else
 	echo -e "$RED Arquivo $GREEN $apkgstxt $RED encontrado. $NC"
 	sleep 5
@@ -1339,7 +1339,7 @@ if [ $clamav == yes ]; then
     groupadd -g 210 clamav
     useradd -u 210 -d /dev/null -s /bin/false -g clamav clamav
     freshclam
-    $rcd/rc.clamav start
+    $rcd/rc.clamav start > $null
     sleep 3
 fi
 
@@ -1444,14 +1444,10 @@ echo -e "$CYAN Pacotes instalados e Configurações realizadas!! $NC"
 echo
 echo
 # --------- Lista de dependências --------- #
-    if [ 
-   
-   $bblazenet4you == yes \
+    if [ $bblazenet4you == yes \
    -o $bblazetonico == yes \
    -o $hubiCNET4YOU == yes \
-   -o $sshbackup == yes
-   
-      ]; then
+   -o $sshbackup == yes ]; then
       
 echo -e "$RED Não esqueça de instalar as dependências! $NC"
 echo
@@ -1468,18 +1464,22 @@ echo
 echo -e "$CYAN PACOTES IMPORTANTES: $NC"
 echo
 echo -e "$GREEN - VPN => $BROWN NetworkManager-pptp; $NC"
-echo -e "$GREEN - Antispam => Bogofilter; $NC"
-echo -e "$GREEN - Antivírus => Clamav; $NC"
-echo -e "$GREEN - Conexão Remota => Teamviewer; $NC"
-echo -e "$GREEN - Rodar arquivos EXE => Wine, OpenAL, libva; $NC"
-echo
+echo -e "$GREEN - Antispam => $BROWN Bogofilter; $NC"
+echo -e "$GREEN - Antivírus => $BROWN Clamav; $NC"
+echo -e "$GREEN - Conexão Remota => $BROWN Teamviewer; $NC"
+echo -e "$GREEN - Rodar arquivos EXE => $BROWN Wine, OpenAL, libva; $NC"
+echo -e "$GREEN - pip install -U pip => $BROWN Duplicity e dependências; $NC"
 echo
 echo
 echo
 # --------- Apagando arquivos auxiliares no diretório /tmp --------- #
  
     if [ -f "$minilicense" ]; then
-	rm /tmp/minilicense.txt
+	rm $minilicense
+    fi
+    
+    if [ -f "$pkgs" ]; then
+	rm $lpkgs
     fi
 # --------- Início do fim --------- # 
     ;;
@@ -1518,8 +1518,8 @@ fi
 #sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf # --------- descomenta determinada linhas --------- #
 #sed -i "s/^#*/#/" /etc/profile.d/lang.sh # --------- comenta todas as linhas --------- #
 #sed -i '/[0-9]+/ a Oi. Sou novo aqui' # --------- acrescente linha após determinado argumento/linhas --------- #
-#
-#
+#sed -i "s/LocalZone=.*/LocalZone=America\/Fortaleza/g" /home/ahlr/.config/ktimezonedrc # --------- substitui parte de um linhas --------- #
+#$rcd/rc.ntpd restart > /dev/null # --------- Discard the output --------- #
 #
 #
 #
