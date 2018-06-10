@@ -4,7 +4,10 @@
 ##################################################################################
 # Autor: Antonio Henrique (Fela)                                                 #
 # e-mail: ahlr_2000@yahoo.com                                                    #
-# repositório: github.com/ahlrodrigues/slackonfig                                #
+#                                                                                #
+# repositórios:                                                                  #
+# github.com/ahlrodrigues/slackonfig                                             #
+# bitbucket.org/ahlrodrigues/slackonfig                                          #
 #                                                                                #
 # Bugs, Agradecimentos, Críticas "construtivas"!                                 #
 # Mande me um e-mail, que ficarei muito grato!                                   #
