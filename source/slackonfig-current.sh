@@ -60,8 +60,8 @@ cups=no
 shutdown=no
 teamviewerd=no
 plex=no
-mirrorx86_64=yes
-mirrorarm=yes
+mirrorx86_64=no
+mirrorarm=no
 inittab=no
 networkmanager=no
 konsole=no
@@ -88,6 +88,7 @@ gpg=no
 ktown=no
 clamav=no
 projetos=no
+dopackage=yes
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -134,6 +135,7 @@ gpgtxt="$GREEN Configura o gpg-agent; $NC"
 ktowntxt="$GREEN Cria o script rsync para o ktown do AlienBob; $NC"
 clamavtxt="$GREEN Inicialzando do clamav; $NC"
 projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
+dopackagetxt="$GREEN Automatiza o Slackbuild; $NC"
 
 
 
@@ -410,6 +412,10 @@ echo
     if [ $projetos == yes ]; then
 	  echo -e "$projetostxt"
 	fi
+	
+    if [ $dopackage == yes ]; then
+	  echo -e "$dopackagetxt"
+	fi
 # --------- Listando funções --------- #
 	echo
 	echo
@@ -442,14 +448,11 @@ echo
 
 # --------- Configurando slackpkg mirror local --------- #
         if [ $mlocal == yes ]; then
-	echo -e "$mlocaltxt"
-	echo -e "$BLUE Qual o caminho para o mirror local? Comece e termine com um "/" $NC"
-	read caminho
-	echo
-	echo 
-	echo -e "$BLUE file:/$caminho $NC"
-	sed "/file:/{p;s/.*/file:/$caminho;}" /etc/slackpkg/mirrors
-	fi 
+        echo -e "$mlocaltxt"
+        echo
+        echo 
+        sed "/file:/{p;s/.*/file:/$caminho;}" /etc/slackpkg/mirrors
+        fi 
 	
 if [ $thunderbackup == yes ]; then
 
@@ -725,7 +728,7 @@ if [ $mirrorarm == yes ]; then
     sed -i "s|BUILDER:-\"Eric Hameleers <alien@slackware.com>\"|BUILDER:-\"Fela  <ahlr_2000@yahoo.com>\"|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|/home/ftp/pub/Linux/Slackware|$caminho|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|VERBOSE:-\"-q\"|VERBOSE:-\"-v --progress\"|g" $crondaily/mirror-slackware-current.sh
-    sed -i "s|ISO:-\"CDROM\"}|ISO:-\"DVD\"}|g" $crondaily/mirror-slackware-current.sh
+    sed -i "s|ISO:-\"CDROM\"}|ISO:-\"NONE\"}|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|EXCLUDES:-\"--exclude pasture\"|EXCLUDES:-\"--exclude pasture --exclude source\"|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|DVD_EXCLUDES:-\"-x ./testing  -x ./source -x ./extra/source\"|DVD_EXCLUDES:-\"-x ./source -x ./extra/source\"|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|ARCH:-\"x86\"|ARCH:-\"arm\"|g" $crondaily/mirror-slackware-current.sh
@@ -1367,11 +1370,118 @@ if [ $projetos == yes ]; then
     echo "#Sync pastas Projetos do dropbox/local" >> $crondaily/projetos.sh
     echo "pasta_origem=/home/ahlr/Dropbox/TONICO/Projetos/" >> $crondaily/projetos.sh
     echo "pasta_destino=/mnt/sda3/Projetos/" >> $crondaily/projetos.sh
-    echo "#"
+    echo "#" >> $crondaily/projetos.sh
     echo "rsync -HavP \$pasta_origem \$pasta_destino" >> $crondaily/projetos.sh
     $permix $crondaily/projetos.sh
     sleep 3
 fi
+
+# Automatiza o SlackBuild
+if [ $dopackage == yes ]; then
+    echo -e "$dopackagetxt"
+    echo "#!"$SHELL > $ulbin/dopackage.sh
+    cat $minilicense >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
+    cat $colors >> $ulbin/dopackage.sh
+    echo "#Usage: ./dopackage [namepkg] [formatpkg]" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Limpa tudo" >> $ulbin/dopackage.sh
+    echo "clear" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Teste de permissão" >> $ulbin/dopackage.sh
+    echo "if [[ \$(whoami) == "root" ]]; then" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Nome do pacote" >> $ulbin/dopackage.sh
+    echo "nome=\$1" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Formato do pacote" >> $ulbin/dopackage.sh
+    echo "formato=\$2" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Descompactando e movendo os pacotes" >> $ulbin/dopackage.sh
+    echo "cd /home/ahlr/Downloads/" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "if [ -e \$nome*.tar.gz ] && [ -e \$nome*.\$formato ]; then" >> $ulbin/dopackage.sh
+    echo "tar zvxf \$nome*.tar.gz" >> $ulbin/dopackage.sh
+    echo "mv \$nome*.$formato $nome" >> $ulbin/dopackage.sh
+    echo "else" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo -e "\$PINK Ok, algo deu errado, o SlackBuild ou o Fonte não foi encontrado! \$NC"" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "exit" >> $ulbin/dopackage.sh
+    echo "fi" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Obtendo a versão do pacote" >> $ulbin/dopackage.sh
+    echo "versao=`ls \$nome/\$nome*.\$formato | awk -F '_' {'print $2'}`" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Editando o SlackBuilds" >> $ulbin/dopackage.sh
+    echo "sed -i "s/VERSION:-.*/VERSION:-\$versao}/g" \$nome/\$nome.SlackBuild" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Rodando o SlackBuilds" >> $ulbin/dopackage.sh
+    echo "cd \$nome" >> $ulbin/dopackage.sh
+    echo "./\$nome.SlackBuild" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Instalar programa" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo -e "\$GREEN Vamos instalar o programa  \$BBROWN \$nome? Y|N \$NC"" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "read install" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "if [ \$install == Y ]; then" >> $ulbin/dopackage.sh
+    echo "upgradepkg --install-new /tmp/\$nome*" >> $ulbin/dopackage.sh
+    echo "else" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo -e "\$BRED Ok, algo deu errado! \$NC"" >> $ulbin/dopackage.sh
+    echo "exit" >> $ulbin/dopackage.sh
+    echo "fi" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Apagando fontes" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo -e "\$PINK Posso apagar o arquivos utilizados? Y|N \$NC"" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "read lixo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "if [ \$lixo == Y ]; then" >> $ulbin/dopackage.sh
+    echo "rm -fr \$nome*" >> $ulbin/dopackage.sh
+    echo "else" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo -e "\$BRED Ok, algo deu errado! \$NC"" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "fi" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "#Logue-se como root" >> $ulbin/dopackage.sh
+    echo "else" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo -e "\$BRED Logue-se como ROOT! \$NC"" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "echo" >> $ulbin/dopackage.sh
+    echo "fi" >> $ulbin/dopackage.sh
+    $permix $ulbin/dopackage.sh
+    sleep 3
+fi
+
+
 # --------- Início das configurações --------- #	
 	if [ $bblazenet4you == yes ]; then
 	echo -e "$bblazenet4youtxt"
@@ -1494,8 +1604,12 @@ echo
 	rm $minilicense
     fi
     
-    if [ -f "$pkgs" ]; then
+    if [ -f "$lpkgs" ]; then
 	rm $lpkgs
+    fi
+    
+    if [ -f "$colors" ]; then
+	rm $colors
     fi
 # --------- Início do fim --------- # 
     ;;
