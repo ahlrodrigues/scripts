@@ -225,9 +225,9 @@ echo
     echo
     echo
     if [ ! -f "$minilicense" ]; then
-    echo -e "$GREEN Baixando...: $NC"
+    echo -e "$GREEN Baixando...: $NC $aminilicensetxt"
     echo
-	echo -e "$aminilicensetxt"
+	echo
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	$rawdocs/minilicense.txt
     else
@@ -236,9 +236,9 @@ echo
     fi
     
     if [ ! -f "$colors" ]; then
-    echo -e "$GREEN Baixando...: $NC"
+    echo -e "$GREEN Baixando...: $NC $acolorstxt"
     echo
-	echo -e "$acolorstxt"
+	echo
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	$rawdocs/colors.txt
     else
@@ -419,18 +419,22 @@ echo
 # --------- Listando funções --------- #
 	echo
 	echo
-	echo -e "$CYAN Deseja executar as funções acima? Posso continuar? [Y|N] $NC"
+	echo -e "$CYAN Deseja executar as funções acima? Posso continuar? [Y;y|N;n] $NC"
 
 	 read RESPOSTA
 	 case $RESPOSTA in
-	 N|n) 
+	 N|n)
+	 echo
+	 echo
 	 echo -e "$BROWN Saindo!!! $NC"
 	 echo
 	 echo
 	 exit;;
 	
 # --------- Texto 1 --------- #
-	Y|y)echo
+	Y|y)
+	clear
+	echo
 	echo
 	echo -e "$BROWN Criando todos os arquivos de configuração nas devidas pastas e executando processos de configuração $NC"
 	echo
@@ -1384,23 +1388,23 @@ if [ $dopackage == yes ]; then
     echo >> $ulbin/dopackage.sh
     cat $colors >> $ulbin/dopackage.sh
     echo "#Usage: ./dopackage [namepkg] [formatpkg]" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Limpa tudo" >> $ulbin/dopackage.sh
     echo "clear" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Teste de permissão" >> $ulbin/dopackage.sh
     echo "if [[ \$(whoami) == "root" ]]; then" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Nome do pacote" >> $ulbin/dopackage.sh
     echo "nome=\$1" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Formato do pacote" >> $ulbin/dopackage.sh
     echo "formato=\$2" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Descompactando e movendo os pacotes" >> $ulbin/dopackage.sh
     echo "cd /home/ahlr/Downloads/" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "if [ -e \$nome*.tar.gz ] && [ -e \$nome*.\$formato ]; then" >> $ulbin/dopackage.sh
     echo "tar zvxf \$nome*.tar.gz" >> $ulbin/dopackage.sh
     echo "mv \$nome*.$formato $nome" >> $ulbin/dopackage.sh
@@ -1408,34 +1412,35 @@ if [ $dopackage == yes ]; then
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
-    echo "echo -e "\$PINK Ok, algo deu errado, o SlackBuild ou o Fonte não foi encontrado! \$NC"" >> $ulbin/dopackage.sh
+    echo "echo -e "\$PINK Algo deu errado, o SlackBuild ou o Fonte não foi encontrado! \$NC"" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "exit" >> $ulbin/dopackage.sh
     echo "fi" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
+    echo  >> $ulbin/dopackage.sh
     echo "#Obtendo a versão do pacote" >> $ulbin/dopackage.sh
-    echo "versao=`ls \$nome/\$nome*.\$formato | awk -F '_' {'print $2'}`" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo "versao=\`ls \$nome/\$nome*.\$formato | awk -F '_' {'print $2'}\`" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Editando o SlackBuilds" >> $ulbin/dopackage.sh
     echo "sed -i "s/VERSION:-.*/VERSION:-\$versao}/g" \$nome/\$nome.SlackBuild" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Rodando o SlackBuilds" >> $ulbin/dopackage.sh
     echo "cd \$nome" >> $ulbin/dopackage.sh
     echo "./\$nome.SlackBuild" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Instalar programa" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
-    echo "echo -e "\$GREEN Vamos instalar o programa  \$BBROWN \$nome? Y|N \$NC"" >> $ulbin/dopackage.sh
+    echo "echo -e "\$GREEN Vamos instalar o programa  \$BBROWN \$nome? Y\|N \$NC"" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "read install" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "if [ \$install == Y ]; then" >> $ulbin/dopackage.sh
     echo "upgradepkg --install-new /tmp/\$nome*" >> $ulbin/dopackage.sh
     echo "else" >> $ulbin/dopackage.sh
@@ -1445,17 +1450,17 @@ if [ $dopackage == yes ]; then
     echo "echo -e "\$BRED Ok, algo deu errado! \$NC"" >> $ulbin/dopackage.sh
     echo "exit" >> $ulbin/dopackage.sh
     echo "fi" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Apagando fontes" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
-    echo "echo -e "\$PINK Posso apagar o arquivos utilizados? Y|N \$NC"" >> $ulbin/dopackage.sh
+    echo "echo -e "\$PINK Posso apagar o arquivos utilizados? Y\|N \$NC"" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "read lixo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "if [ \$lixo == Y ]; then" >> $ulbin/dopackage.sh
     echo "rm -fr \$nome*" >> $ulbin/dopackage.sh
     echo "else" >> $ulbin/dopackage.sh
@@ -1467,7 +1472,7 @@ if [ $dopackage == yes ]; then
     echo "echo" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
     echo "fi" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
+    echo >> $ulbin/dopackage.sh
     echo "#Logue-se como root" >> $ulbin/dopackage.sh
     echo "else" >> $ulbin/dopackage.sh
     echo "echo" >> $ulbin/dopackage.sh
