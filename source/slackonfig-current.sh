@@ -88,7 +88,7 @@ gpg=no
 ktown=no
 clamav=no
 projetos=no
-dopackage=yes
+doplexpkg=yes
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -135,7 +135,7 @@ gpgtxt="$GREEN Configura o gpg-agent; $NC"
 ktowntxt="$GREEN Cria o script rsync para o ktown do AlienBob; $NC"
 clamavtxt="$GREEN Inicialzando do clamav; $NC"
 projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
-dopackagetxt="$GREEN Automatiza o Slackbuild; $NC"
+doplexpkgtxt="$GREEN Automatiza o Slackbuild do Plexmediaserver; $NC"
 
 
 
@@ -214,7 +214,7 @@ echo
     echo -e "$CYAN Você está conectado! $NC"
     echo
     echo
-    sleep 3
+    sleep 5
     clear
 
 # --------- Baixando arquivos auxiliares no diretório /tmp --------- #
@@ -413,8 +413,8 @@ echo
 	  echo -e "$projetostxt"
 	fi
 	
-    if [ $dopackage == yes ]; then
-	  echo -e "$dopackagetxt"
+    if [ $doplexpkg == yes ]; then
+	  echo -e "$doplexpkgtxt"
 	fi
 # --------- Listando funções --------- #
 	echo
@@ -439,7 +439,7 @@ echo
 	echo -e "$BROWN Criando todos os arquivos de configuração nas devidas pastas e executando processos de configuração $NC"
 	echo
 	echo	
-	sleep 3
+	sleep 5
       
 
 ##########################################
@@ -495,7 +495,7 @@ echo -e "$BLUE Escolha o que deseja fazer: $NC"
 	    echo -e "$BRED $RED Opção Inválida, saindo!!! $NC"
 	    echo
 	    echo
-	    sleep 3
+	    sleep 5
 	    clear
 	    echo
 	    echo
@@ -529,7 +529,7 @@ if [ $cleanret == yes ]; then
     echo "mv \$pasta_origem/*.rem \$pasta_remessa" >> $crondaily/cleanret.sh
     $crondaily/cleanret.sh
     $permi $crondaily/cleanret.sh
-    sleep 3
+    sleep 5
 fi
 
 # Criar script que move os arquivos de Rejeitado e Francesinha do BNB
@@ -553,7 +553,7 @@ if [ $mvrejsgr == yes ]; then
     $permix $crondaily/mvrejsgr.sh
     $permi0 $crondaily/mvrejsgr.sh
     ln $crondaily/mvrejsgr.sh $ulbin/mvrejsgr.sh
-    sleep 3
+    sleep 5
 fi
 
 # Criar script que move o recibo de entrehga do SICI
@@ -572,7 +572,7 @@ if [ $cleansici == yes ]; then
     echo "mv \$pasta_origem/sici*.xml \$pasta_destino 2> /dev/null" >> $crondaily/cleansici.sh
     $permix $crondaily/cleansici.sh
     $permi0 $crondaily/cleansici.sh
-    sleep 3
+    sleep 5
 fi
 
 # Criar script que move o arquivo de retornodo BNB para a pasta ../skyline/recebidos
@@ -597,7 +597,7 @@ fi
     echo "fi" >> $crondaily/cleansai.sh
     $permix $crondaily/cleansai.sh
     $permi0 $crondaily/cleansai.sh
-    sleep 3
+    sleep 5
 fi
 
 # Criar script que limpa o cache todos os dias no horário do crontab
@@ -611,7 +611,7 @@ if [ $cleancache == yes ]; then
     echo "echo 3 > /proc/sys/vm/drop_caches" >> $crondaily/cleancache.sh
     $permix $crondaily/cleancache.sh
     $permi0 $crondaily/cleancache.sh
-    sleep 3
+    sleep 5
 fi
 
 # Configura o servidor NTP Brasileiro
@@ -623,7 +623,7 @@ if [ $ntp == yes ]; then
 	  $permix $rcd/rc.ntpd
 	  $rcd/rc.ntpd restart > $null
 	fi
-    sleep 3
+    sleep 5
 fi
 
 # Configura o servidor de compartilhamento de aquivos Samba
@@ -631,14 +631,14 @@ if [ $samba == yes ]; then
     echo -e "$sambatxt"
     sed -i "s/MYGROUP/workgroup/g" /etc/samba/smb.conf-sample
     mv /etc/samba/smb.conf-sample /etc/samba/smb.conf
-    sleep 3
+    sleep 5
     echo -e "$samba2txt"
     if [ -x $rcd/rc.samba ]; then
 	$permix $rcd/rc.samba
 	$permi0 $rcd/rc.samba
 	$rcd/rc.samba start > $null
     fi
-    sleep 3
+    sleep 5
 fi
 
 # Inicia o servidor de impressão CUPS
@@ -648,7 +648,7 @@ if [ $cups == yes ]; then
     $permix $rcd/rc.cups
     $rcd/rc.cups start > $null
     fi
-    sleep 3
+    sleep 5
 fi
 
 # Limpa os diretórios /tmp a cada shutdown
@@ -666,7 +666,7 @@ if [ $shutdown == yes ]; then
     echo "find /tmp -type f -mtime +37 -exec rm -rf {} \; " >> $rcd/rc.local_shutdown
     $permix $rcd/rc.local_shutdown
     $permi0 $rcd/rc.local_shutdown
-    sleep 3
+    sleep 5
 fi
 
 # Iniciando do deamon Teamviewer
@@ -687,7 +687,7 @@ if [ $teamviewerd == yes ]; then
     $permix $rcd/rc.teamviewerd
     $permi0 $rcd/rc.teamviewerd
     $rcd/rc.teamviewerd start > $null
-    sleep 3
+    sleep 5
     fi
 fi
 
@@ -701,7 +701,7 @@ if [ $plex == yes ]; then
     $permix $rcd/rc.plexmediaserver
     $permi0 $rcd/rc.plexmediaserver
     $rcd/rc.plexmediaserver start > $null
-    sleep 3
+    sleep 5
 fi
 
 # Baixa o script do AlienBob e configura para mirrors locais x86_64 
@@ -722,7 +722,7 @@ if [ $mirrorx86_64 == yes ]; then
     $permi0 $crondaily/mirror-slackware64*
     ln $crondaily/mirror-slackware64-current.sh $ulbin/mirror-slackware64-current.sh
     fi
-    sleep 3
+    sleep 5
 fi
 
 # Baixa o script do AlienBob e configura para mirrors locais ARM
@@ -744,14 +744,14 @@ if [ $mirrorarm == yes ]; then
     $permix $crondaily/mirror-slackwarearm*
     $permi0 $crondaily/mirror-slackwarearm*
     ln $crondaily/mirror-slackwarearm-current.sh $ulbin/mirror-slackwarearm-current.sh
-    sleep 3
+    sleep 5
 fi
 
 # Configura a inicialização do sistema em init 4
 if [ $inittab == yes ]; then
     echo -e "$inittabtxt"
     sed -i "s/id:3/id:4/g" /etc/inittab
-    sleep 3
+    sleep 5
 fi
 
 # Iniciando do deamon networkmanager  
@@ -764,7 +764,7 @@ if [ $networkmanager == yes ]; then
     echo "#" >> $rcd/rc.local
     $permix $rcd/rc.networkmanager
     $permi0 $rcd/rc.networkmanager
-    sleep 3
+    sleep 5
 fi
 
 # Configura o profile do Konsole
@@ -778,14 +778,14 @@ if [ $konsole == yes ]; then
     echo "Name=Shell" >> /home/ahlr/.kde/share/apps/konsole/Shell.profile
     echo "Parent=FALLBACK/" >> /home/ahlr/.kde/share/apps/konsole/Shell.profile
     fi
-    sleep 3
+    sleep 5
 fi
 
 if [ $reccx == yes ]; then
     echo -e "$reccxtxt"
     mkdir -p /opt/caixa/Recebidos
     chmod -R 777 /opt/caixa
-    sleep 3
+    sleep 5
 fi
 
 # Instalação do driver da impressora
@@ -801,7 +801,7 @@ if [ $brother == yes ]; then
     rm /tmp/brscan*
     rm /tmp/cupswr*
     rm /tmp/dcp7065*
-    sleep 3
+    sleep 5
 fi
 
 # Configura o idioma pt_BR no sistema 
@@ -816,7 +816,7 @@ if [ $lang == yes ]; then
     echo "export LESSCHARSET=latin1" >> /etc/profile.d/lang.sh
     sed -i "s/^/#/g" /etc/profile.d/lang.csh
     cat /etc/profile.d/lang.sh | grep ^export | sed -e "s/export/setenv/g" -e "s/\=/\ /g" >> /etc/profile.d/lang.csh
-    sleep 3
+    sleep 5
 fi
 
 #Criação do arquivo thunderbirdbackup.sh
@@ -1032,7 +1032,7 @@ if [ $data == yes ]; then
     echo "#" >> $ulbin/data.sh
     echo "exit 1" >> $ulbin/data.sh
     $permix $ulbin/data.sh
-    sleep 3
+    sleep 5
 fi  
 
 #Criação do arquivo winbox.desktop
@@ -1049,7 +1049,7 @@ if [ $winbox == yes ]; then
     echo "Terminal=0" >> $usa/winbox.desktop
     echo "X-KDE-SubstituteUID=false" >> $usa/winbox.desktop
     update-desktop-database -q
-    sleep 3
+    sleep 5
 fi
 
 #Criação do arquivo cashflow.desktop
@@ -1066,7 +1066,7 @@ if [ $cashflow == yes ]; then
     echo "Terminal=0" >> $usa/cashflow.desktop
     echo "X-KDE-SubstituteUID=false" >> $usa/cashflow.desktop
     update-desktop-database -q
-    sleep 3
+    sleep 5
 fi
 
 #Criação do arquivo bnb.desktop
@@ -1083,7 +1083,7 @@ if [ $skyline == yes ]; then
     echo "Terminal=1" >> $usa/bnb.desktop
     echo "X-KDE-SubstituteUID=false" >> $usa/bnb.desktop
     update-desktop-database -q
-    sleep 3
+    sleep 5
 fi
 
 #Cria script que administra cobrança BNB
@@ -1107,12 +1107,12 @@ fi
 if [ $slackpkg == yes ] && [ $slackpkgplus == yes ]; then
     echo -e "$slackpkgplustxt"
     echo "Baixando slackpkg+"
-    sleep 3
+    sleep 5
     wget -q  -nv -e robots=0 -A .txz -r -nd -cP /tmp http://www.slakfinder.org/slackpkg+/pkg/
-    sleep 3
+    sleep 5
     installpkg /tmp/slackpkg+*
     rm /tmp/slackpkg+*
-    sleep 3
+    sleep 5
 fi
 
 #Aplicando layer multilib
@@ -1121,7 +1121,7 @@ if [ $multilib == yes ] && [ $slackpkgplus == yes ] && [ $slackpkg == yes ]; the
     echo
     sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf # --------- descomenta determinada linhas --------- #
     /usr/doc/slackpkg+-1.7.0/setupmultilib.sh
-    sleep 3
+    sleep 5
 fi
 
 #Instalação dos programas listados no arquivo pkg.txt
@@ -1135,7 +1135,7 @@ if [ $pkgs == yes ]; then
     fi
     echo -e "$pkgstxt"
     slackpkg install $(cat $lpkgs)
-    sleep 3
+    sleep 5
 fi
 
 #Criação do arquivo de credenciais do hubiC
@@ -1150,7 +1150,7 @@ if [ $hubiCNET4YOU == yes ]; then
     echo "client_secret = mraqgIdiNnxdp6oPX2SrH0w0CDFsmviE822hKvba9OA5KFw9SFatkB6Gl0mQEou5" >> /home/ahlr/.hubic_credentials
     echo "redirect_uri = http://localhost/" >> /home/ahlr/.hubic_credentials
     chown 600 /home/ahlr/.hubic_credentials
-    sleep 3
+    sleep 5
 fi
 
 # Mikrotik SSH backup script
@@ -1328,7 +1328,7 @@ if [ $sshbackup == yes ]; then
 	sleep 5
 	echo -e "$RED Script $GREEN sshbackup.conf $RED encontrado. $NC"  
     fi
-	sleep 3
+	sleep 5
 fi
 
 #Configura gpg-agent
@@ -1337,7 +1337,7 @@ if [ $gpg == yes ]; then
     echo
     sed -i '/use-agent/s/^#//g' //home/ahlr/.gnupg/gpg.conf # --------- descomenta determinada linhas --------- #
     sed -i '/--gpg-agent-info=<path>:<pid>:1/s/^#//g' //home/ahlr/.gnupg/gpg.conf # --------- descomenta determinada linhas --------- #
-    sleep 3
+    sleep 5
 fi
 
 # Cria o script de rsync do ktown do AlienBob
@@ -1348,7 +1348,7 @@ if [ $ktown == yes ]; then
     echo "rsync -HavP --exclude=x86 rsync://slackware.nl/mirrors/alien-kde/current/5/ /mnt/sda3/Slackware/Ktown/" > $crondaily/mirror-ktown.sh
     $permix $crondaily/mirror-ktown.sh
     ln $crondaily/mirror-ktown.sh $ulbin/mirror-ktown.sh
-    sleep 3
+    sleep 5
 fi
 
 #Iniciando o Clamav
@@ -1363,7 +1363,7 @@ if [ $clamav == yes ]; then
     useradd -u 210 -d /dev/null -s /bin/false -g clamav clamav
     freshclam
     $rcd/rc.clamav start > $null
-    sleep 3
+    sleep 5
 fi
 
 #Sync pastas Projetos do dropbox/local
@@ -1377,113 +1377,113 @@ if [ $projetos == yes ]; then
     echo "#" >> $crondaily/projetos.sh
     echo "rsync -HavP \$pasta_origem \$pasta_destino" >> $crondaily/projetos.sh
     $permix $crondaily/projetos.sh
-    sleep 3
+    sleep 5
 fi
 
 # Automatiza o SlackBuild
-if [ $dopackage == yes ]; then
-    echo -e "$dopackagetxt"
-    echo "#!"$SHELL > $ulbin/dopackage.sh
-    cat $minilicense >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    cat $colors >> $ulbin/dopackage.sh
-    echo "#Usage: ./dopackage [namepkg] [formatpkg]" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Limpa tudo" >> $ulbin/dopackage.sh
-    echo "clear" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Teste de permissão" >> $ulbin/dopackage.sh
-    echo "if [[ \$(whoami) == "root" ]]; then" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Nome do pacote" >> $ulbin/dopackage.sh
-    echo "nome=\$1" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Formato do pacote" >> $ulbin/dopackage.sh
-    echo "formato=\$2" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Descompactando e movendo os pacotes" >> $ulbin/dopackage.sh
-    echo "cd /home/ahlr/Downloads/" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "if [ -e \$nome*.tar.gz ] && [ -e \$nome*.\$formato ]; then" >> $ulbin/dopackage.sh
-    echo "tar zvxf \$nome*.tar.gz" >> $ulbin/dopackage.sh
-    echo "mv \$nome*.$formato $nome" >> $ulbin/dopackage.sh
-    echo "else" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo -e "\$PINK Algo deu errado, o SlackBuild ou o Fonte não foi encontrado! \$NC"" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "exit" >> $ulbin/dopackage.sh
-    echo "fi" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo  >> $ulbin/dopackage.sh
-    echo "#Obtendo a versão do pacote" >> $ulbin/dopackage.sh
-    echo "versao=\`ls \$nome/\$nome*.\$formato | awk -F '_' {'print $2'}\`" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Editando o SlackBuilds" >> $ulbin/dopackage.sh
-    echo "sed -i "s/VERSION:-.*/VERSION:-\$versao}/g" \$nome/\$nome.SlackBuild" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Rodando o SlackBuilds" >> $ulbin/dopackage.sh
-    echo "cd \$nome" >> $ulbin/dopackage.sh
-    echo "./\$nome.SlackBuild" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Instalar programa" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo -e "\$GREEN Vamos instalar o programa  \$BBROWN \$nome? Y\|N \$NC"" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "read install" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "if [ \$install == Y ]; then" >> $ulbin/dopackage.sh
-    echo "upgradepkg --install-new /tmp/\$nome*" >> $ulbin/dopackage.sh
-    echo "else" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo -e "\$BRED Ok, algo deu errado! \$NC"" >> $ulbin/dopackage.sh
-    echo "exit" >> $ulbin/dopackage.sh
-    echo "fi" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Apagando fontes" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo -e "\$PINK Posso apagar o arquivos utilizados? Y\|N \$NC"" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "read lixo" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "if [ \$lixo == Y ]; then" >> $ulbin/dopackage.sh
-    echo "rm -fr \$nome*" >> $ulbin/dopackage.sh
-    echo "else" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo -e "\$BRED Ok, algo deu errado! \$NC"" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "fi" >> $ulbin/dopackage.sh
-    echo >> $ulbin/dopackage.sh
-    echo "#Logue-se como root" >> $ulbin/dopackage.sh
-    echo "else" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo -e "\$BRED Logue-se como ROOT! \$NC"" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "echo" >> $ulbin/dopackage.sh
-    echo "fi" >> $ulbin/dopackage.sh
-    $permix $ulbin/dopackage.sh
-    sleep 3
+if [ $doplexpkg == yes ]; then
+    echo -e "$doplexpkgtxt"
+    echo "#!"$SHELL > $ulbin/doplexpkg.sh
+    cat $minilicense >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    cat $colors >> $ulbin/doplexpkg.sh
+    echo "#Usage: ./doplexpkg [namepkg] [formatpkg]" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Limpa tudo" >> $ulbin/doplexpkg.sh
+    echo "clear" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Teste de permissão" >> $ulbin/doplexpkg.sh
+    echo "if [[ \$(whoami) == "root" ]]; then" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Nome do pacote" >> $ulbin/doplexpkg.sh
+    echo "nome=\$1" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Formato do pacote" >> $ulbin/doplexpkg.sh
+    echo "formato=\$2" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Descompactando e movendo os pacotes" >> $ulbin/doplexpkg.sh
+    echo "cd /home/ahlr/Downloads/" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "if [ -e \$nome*.tar.gz ] && [ -e \$nome*.\$formato ]; then" >> $ulbin/doplexpkg.sh
+    echo "tar zvxf \$nome*.tar.gz" >> $ulbin/doplexpkg.sh
+    echo "mv \$nome*.\$formato \$nome" >> $ulbin/doplexpkg.sh
+    echo "else" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo -e \"\$PINK Algo deu errado, o SlackBuild ou o Fonte não foi encontrado! \$NC\"" >> $ulbin/doplexpkg.sh
+    echo 
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "exit" >> $ulbin/doplexpkg.sh
+    echo "fi" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo  >> $ulbin/doplexpkg.sh
+    echo "#Obtendo a versão do pacote" >> $ulbin/doplexpkg.sh
+    echo "versao=\`ls \$nome/\$nome*.\$formato | awk -F '_' {'print \$2'}\`" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Editando o SlackBuilds" >> $ulbin/doplexpkg.sh
+    echo "sed -i "s/VERSION:-.*/VERSION:-\$versao}/g" \$nome/\$nome.SlackBuild" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Rodando o SlackBuilds" >> $ulbin/doplexpkg.sh
+    echo "cd \$nome" >> $ulbin/doplexpkg.sh
+    echo "./\$nome.SlackBuild" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Instalar programa" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo -e \"\$GREEN Vamos instalar o programa \$BBROWN \$nome? Y|N \$NC\"" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "read install" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "if [ \$install == Y ] || [ \$lixo == Y ]; then" >> $ulbin/doplexpkg.sh
+    echo "upgradepkg --install-new /tmp/\$nome*" >> $ulbin/doplexpkg.sh
+    echo "else" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo -e \"\$BRED Ok, algo deu errado! \$NC\"" >> $ulbin/doplexpkg.sh
+    echo "exit" >> $ulbin/doplexpkg.sh
+    echo "fi" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Apagando fontes" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo -e \"\$PINK Posso apagar o arquivos utilizados? Y\|N \$NC"\" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "read lixo" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "if [ \$lixo == Y ] || [ \$lixo == y ]; then" >> $ulbin/doplexpkg.sh
+    echo "rm -fr \$nome*" >> $ulbin/doplexpkg.sh
+    echo "else" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo -e \"\$BRED Ok, algo deu errado! \$NC\"" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "fi" >> $ulbin/doplexpkg.sh
+    echo >> $ulbin/doplexpkg.sh
+    echo "#Logue-se como root" >> $ulbin/doplexpkg.sh
+    echo "else" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo -e \"\$BRED Logue-se como ROOT! \$NC\"" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "echo" >> $ulbin/doplexpkg.sh
+    echo "fi" >> $ulbin/doplexpkg.sh
+    $permix $ulbin/doplexpkg.sh
+    sleep 5
 fi
 
 
@@ -1585,7 +1585,7 @@ echo
 echo
 echo -e $blazehubicdep
 echo -e $sshbackupdep
-sleep 3
+sleep 5
 
     fi
     
