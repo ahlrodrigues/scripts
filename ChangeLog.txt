@@ -1,0 +1,7 @@
+*----------------------- Qui jun 14 21:10:14 -03 2018 -----------------------*
+
+Brother - movida a instalação do driver da impressora para a sessão de configurações;
+Konsole - correção do caminho do Shell-profile para plasma5;
+GPG - removido script de configuração do gpg-agent, julgamos obsoleto;
+*----------------------------------------------------------------------------*
+

@@ -35,9 +35,9 @@ EM PARTICULAR e NENHUM SUPORTE TÉCNICO.
 Neste diretório, constam alguns scripts para configurações básicas, que 
 normalmente realizamos a cada instalação/reinstalação do O.S. Slackware GNU/Linux:
 
-mlocaltxt= Configurando mirror local
-aminilicensetxt= Arquivo de licença a ser incluído nos spripts
-apkgstxt= Arquivo com lista de pacotes a serem instalados automaticamente
+mlocaltxt= Configurando mirror local;
+aminilicensetxt= Arquivo de licença a ser incluído nos spripts;
+apkgstxt= Arquivo com lista de pacotes a serem instalados automaticamente;
 cleanrettxt= Move os arquivos de retorno da caixa;
 mvrejsgrtxt= Move os arquivos de rejeitados e francesinha do BNB;
 cleansicitxt= Move os recibo de declaração do SICI para o Dropbox;
@@ -78,6 +78,7 @@ ktowntxt= Cria o script rsync para o ktown do AlienBob;
 clamavtxt= Inicialzando do clamav;
 notdepstxt= Não existem pacotes que exijam instalação de dependências!;
 projetostxt= Atualiza pasta Projetos local;
+doplexpkgtxt="Automatiza o Slackbuild do Plexmediaserver;
 ```
 
 

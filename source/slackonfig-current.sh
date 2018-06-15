@@ -84,11 +84,10 @@ hubiCNET4YOU=no
 credhubiCNET4YOU=no
 multilib=no
 sshbackup=no
-gpg=no
 ktown=no
 clamav=no
 projetos=no
-doplexpkg=yes
+doplexpkg=no
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -107,8 +106,8 @@ cupstxt="$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
 shutdowntxt="$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
 teamviewerdtxt="$GREEN Incluindo inicialização do daemon do teamviewer no rc.local; $NC"
 plextxt="$GREEN Incluindo inicialização do daemon do Plex no rc.local; $NC"
-mirrorx86_64txt="$GREEN Administracao dos mirros locais; $NC"
-mirrorarmtxt="$GREEN Administracao dos mirros locais; $NC"
+mirrorx86_64txt="$GREEN Administracao do mirro X86_64 locai; $NC"
+mirrorarmtxt="$GREEN Administracao dos mirro ARM locai; $NC"
 inittabtxt="$GREEN Habilitando o init 4; $NC"
 networkmanagertxt="$GREEN Inicialzando networkmanager; $NC"
 konsoletxt="$GREEN Configura o profile do Konsole; $NC"
@@ -131,7 +130,6 @@ hubiCNET4YOUtxt="$GREEN Faz backup no hubic; $NC"
 credhubiCNET4YOUtxt="$GREEN Cria as credenciais da conta hubiC_NET4YOU; $NC"
 multilibtxt="$GREEN Aplica layer multilib; $NC"
 sshbackuptxt="$GREEN Cria script de backup dos equipamentos mikrotik; $NC"
-gpgtxt="$GREEN Configura o gpg-agent; $NC"
 ktowntxt="$GREEN Cria o script rsync para o ktown do AlienBob; $NC"
 clamavtxt="$GREEN Inicialzando do clamav; $NC"
 projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
@@ -395,10 +393,6 @@ echo
 	
 	if [ $sshbackup == yes ]; then
 	  echo -e "$sshbackuptxt"
-	fi
-	
-	if [ $gpg == yes ]; then
-	  echo -e "$gpgtxt"
 	fi
     
     if [ $ktown == yes ]; then
@@ -676,9 +670,12 @@ if [ $teamviewerd == yes ]; then
     echo "Testando se o Teamviewer esta instalado"
     if [ ! -f "$rcd/rc.teamviewerd" ]; then
     echo
-    echo "O Teamviewer nao esta instalado, reealizando Configurações"
+    echo "O Teamviewer nao esta instalado!"
     echo
-    exit
+    if grep teamviewerd /etc/rc.d/rc.local > $null
+    $permix $rcd/rc.teamviewerd
+    $permi0 $rcd/rc.teamviewerd
+    $rcd/rc.teamviewerd start > $null
     elso
     echo "#Inicializando o deamon rc.teamviewerd" >> $rcd/rc.local
     echo "if [ -x $rcd/rc.teamviewerd ]; then" >> $rcd/rc.local
@@ -694,13 +691,26 @@ fi
 #Iniciando do deamon Plex
 if [ $plex == yes ]; then
     echo -e "$plextxt"
-    echo "#Inicializando o deamon rc.teamviewerd" >> $rcd/rc.local
+    echo
+    echo "Testando se o Plex esta instalado"
+    if [ ! -f "$rcd/rc.plexmediaserver" ]; then
+    echo
+    echo "O Plex nao esta instalado!"
+    echo
+    if grep plexmediaserver /etc/rc.d/rc.local > $null
+    then
+    $permix $rcd/rc.plexmediaserver
+    $permi0 $rcd/rc.plexmediaserver
+    $rcd/rc.plexmediaserver start > $null
+    else 
+    echo "#Inicializando o deamon rc.plexmediaserver" >> $rcd/rc.local
     echo "if [ -x $rcd/rc.plexmediaserver ]; then" >> $rcd/rc.local
     echo "$rcd/rc.plexmediaserver start" >> $rcd/rc.local
     echo "fi" >> $rcd/rc.local
     $permix $rcd/rc.plexmediaserver
     $permi0 $rcd/rc.plexmediaserver
     $rcd/rc.plexmediaserver start > $null
+    fi
     sleep 5
 fi
 
@@ -770,13 +780,13 @@ fi
 # Configura o profile do Konsole
 if [ $konsole == yes ]; then
     echo -e "$konsoletxt"
-    if [ -f "/home/ahlr/.kde/share/apps/konsole/Shell.profile" ]; then
-    sed -i "s/bin\/bash/bin\/bash -l/g" /home/ahlr/.kde/share/apps/konsole/Shell.profile
+    if [ -f "/home/ahlr/.local/share/konsole/Shell.profile" ]; then
+    sed -i "s/bin\/bash.*/bin\/bash -l/g" /home/ahlr/.local/share/konsole/Shell.profile
     else
-    echo "[General]" > /home/ahlr/.kde/share/apps/konsole/Shell.profile
-    echo "Command=/bin/bash -l" >> /home/ahlr/.kde/share/apps/konsole/Shell.profile
-    echo "Name=Shell" >> /home/ahlr/.kde/share/apps/konsole/Shell.profile
-    echo "Parent=FALLBACK/" >> /home/ahlr/.kde/share/apps/konsole/Shell.profile
+    echo "[General]" > /home/ahlr/.local/share/konsole/Shell.profile
+    echo "Command=/bin/bash -l" >> /home/ahlr/.local/share/konsole/Shell.profile
+    echo "Name=Shell" >> /home/ahlr/.local/share/konsole/Shell.profile
+    echo "Parent=FALLBACK/" >> /home/ahlr/.local/share/konsole/Shell.profile
     fi
     sleep 5
 fi
@@ -793,14 +803,6 @@ if [ $brother == yes ]; then
     echo -e "$brothertxt"
     wget -cP /tmp http://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.2.0-1.gz
     gunzip /tmp/linux-brprinter-installer*
-    cd /tmp
-    $permix linux-brprinter-installer*
-    ./linux-brprinter-installer*
-    rm /tmp/linux-brprinter-installer*
-    rm /tmp/uninstaller_*
-    rm /tmp/brscan*
-    rm /tmp/cupswr*
-    rm /tmp/dcp7065*
     sleep 5
 fi
 
@@ -887,7 +889,7 @@ if [ $bblazetonico == yes ]; then
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_TONICO.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
-    echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
+    echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.shkto
     echo "   export PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
     echo "   export SIGN_PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
@@ -1331,15 +1333,6 @@ if [ $sshbackup == yes ]; then
 	sleep 5
 fi
 
-#Configura gpg-agent
-if [ $gpg == yes ]; then
-    echo -e "$gpgtxt"
-    echo
-    sed -i '/use-agent/s/^#//g' //home/ahlr/.gnupg/gpg.conf # --------- descomenta determinada linhas --------- #
-    sed -i '/--gpg-agent-info=<path>:<pid>:1/s/^#//g' //home/ahlr/.gnupg/gpg.conf # --------- descomenta determinada linhas --------- #
-    sleep 5
-fi
-
 # Cria o script de rsync do ktown do AlienBob
 if [ $ktown == yes ]; then
     echo -e "$mirrorstxt"
@@ -1568,7 +1561,29 @@ echo -e "$CYAN # --------- # --------- #  $NC"
 echo
 echo
 	fi
-clear	
+	
+echo
+echo	
+echo -e "$CYAN # --------- # --------- #  $NC"
+echo
+echo
+
+    if [ $brother == yes ]; then
+    cd /tmp
+    if [ -e linux-brprinter-installer* ]; then
+    $permix linux-brprinter-installer*
+    ./linux-brprinter-installer*
+    rm /tmp/linux-brprinter-installer*
+    rm /tmp/uninstaller_*
+    rm /tmp/brscan*
+    rm /tmp/cupswr*
+    rm /tmp/dcp7065*
+    else
+    echo -e "O driver da impressora não foi baixado"
+    fi
+    
+clear
+    
 echo
 echo
 echo -e "$CYAN Pacotes instalados e Configurações realizadas!! $NC"
