@@ -87,7 +87,7 @@ sshbackup=no
 ktown=no
 clamav=no
 projetos=no
-doplexpkg=no
+doplexpkg=yes
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -106,8 +106,8 @@ cupstxt="$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
 shutdowntxt="$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
 teamviewerdtxt="$GREEN Incluindo inicialização do daemon do teamviewer no rc.local; $NC"
 plextxt="$GREEN Incluindo inicialização do daemon do Plex no rc.local; $NC"
-mirrorx86_64txt="$GREEN Administracao do mirro X86_64 locai; $NC"
-mirrorarmtxt="$GREEN Administracao dos mirro ARM locai; $NC"
+mirrorx86_64txt="$GREEN Administracao dos mirros locais; $NC"
+mirrorarmtxt="$GREEN Administracao dos mirros locais; $NC"
 inittabtxt="$GREEN Habilitando o init 4; $NC"
 networkmanagertxt="$GREEN Inicialzando networkmanager; $NC"
 konsoletxt="$GREEN Configura o profile do Konsole; $NC"
@@ -157,6 +157,7 @@ rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
 rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
 imag="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/imgs"
 drop=/home/ahlr/Dropbox
+download=/home/ahlr/Downloads
 permix="chmod +x"
 permi0="chmod 770"
 caminho=/mnt/sda3/Slackware
@@ -200,7 +201,7 @@ if [[ $(whoami) == "root" ]]; then
 # --------- Teste se está conectado na internet --------- #
 echo
 echo
-echo -e "$BRED $RED Testando conexão, aguarde... $NC"
+echo -e "$BRED$RED Testando conexão, aguarde... $NC"
 echo
 echo
   ping -q -c2 8.8.8.8 > /dev/null
@@ -423,8 +424,9 @@ echo
 	 echo -e "$BROWN Saindo!!! $NC"
 	 echo
 	 echo
-	 exit;;
-	
+	 exit
+	 ;;
+
 # --------- Texto 1 --------- #
 	Y|y)
 	clear
@@ -672,11 +674,11 @@ if [ $teamviewerd == yes ]; then
     echo
     echo "O Teamviewer nao esta instalado!"
     echo
-    if grep teamviewerd /etc/rc.d/rc.local > $null
+    if [ grep teamviewerd /etc/rc.d/rc.local > $null ]; then
     $permix $rcd/rc.teamviewerd
     $permi0 $rcd/rc.teamviewerd
     $rcd/rc.teamviewerd start > $null
-    elso
+    else
     echo "#Inicializando o deamon rc.teamviewerd" >> $rcd/rc.local
     echo "if [ -x $rcd/rc.teamviewerd ]; then" >> $rcd/rc.local
     echo "$rcd/rc.teamviewerd start" >> $rcd/rc.local
@@ -686,6 +688,7 @@ if [ $teamviewerd == yes ]; then
     $rcd/rc.teamviewerd start > $null
     sleep 5
     fi
+fi
 fi
 
 #Iniciando do deamon Plex
@@ -697,8 +700,7 @@ if [ $plex == yes ]; then
     echo
     echo "O Plex nao esta instalado!"
     echo
-    if grep plexmediaserver /etc/rc.d/rc.local > $null
-    then
+    if [ grep plexmediaserver /etc/rc.d/rc.local > $null ]; then
     $permix $rcd/rc.plexmediaserver
     $permi0 $rcd/rc.plexmediaserver
     $rcd/rc.plexmediaserver start > $null
@@ -713,6 +715,8 @@ if [ $plex == yes ]; then
     fi
     sleep 5
 fi
+fi
+
 
 # Baixa o script do AlienBob e configura para mirrors locais x86_64 
 if [ $mirrorx86_64 == yes ]; then
@@ -780,10 +784,10 @@ fi
 # Configura o profile do Konsole
 if [ $konsole == yes ]; then
     echo -e "$konsoletxt"
-    if [ -f "/home/ahlr/.local/share/konsole/Shell.profile" ]; then
-    sed -i "s/bin\/bash.*/bin\/bash -l/g" /home/ahlr/.local/share/konsole/Shell.profile
+    if [ -f "/home/ahlr/.kde/share/apps/konsole/Shell.profile" ]; then
+    sed -i "s/bin\/bash/bin\/bash -l/g" /home/ahlr/.local/share/konsole//Shell.profile
     else
-    echo "[General]" > /home/ahlr/.local/share/konsole/Shell.profile
+    echo "[General]" > /home/ahlr/.local/share/konsole//Shell.profile
     echo "Command=/bin/bash -l" >> /home/ahlr/.local/share/konsole/Shell.profile
     echo "Name=Shell" >> /home/ahlr/.local/share/konsole/Shell.profile
     echo "Parent=FALLBACK/" >> /home/ahlr/.local/share/konsole/Shell.profile
@@ -797,6 +801,22 @@ if [ $reccx == yes ]; then
     chmod -R 777 /opt/caixa
     sleep 5
 fi
+
+# # Instalação do driver da impressora
+# if [ $brother == yes ]; then
+#     echo -e "$brothertxt"
+#     wget -cP /tmp http://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.2.0-1.gz
+#     gunzip /tmp/linux-brprinter-installer*
+#     cd /tmp
+#     $permix linux-brprinter-installer*
+#     ./linux-brprinter-installer*
+#     rm /tmp/linux-brprinter-installer*
+#     rm /tmp/uninstaller_*
+#     rm /tmp/brscan*
+#     rm /tmp/cupswr*
+#     rm /tmp/dcp7065*
+#     sleep 5
+# fi
 
 # Instalação do driver da impressora
 if [ $brother == yes ]; then
@@ -889,7 +909,7 @@ if [ $bblazetonico == yes ]; then
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_TONICO.sh
     echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
-    echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.shkto
+    echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
     echo "   export PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
     echo "   export SIGN_PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
@@ -1373,114 +1393,82 @@ if [ $projetos == yes ]; then
     sleep 5
 fi
 
-# Automatiza o SlackBuild
+# Automatiza o SlackBuild Plexmediaserver
 if [ $doplexpkg == yes ]; then
     echo -e "$doplexpkgtxt"
-    echo "#!"$SHELL > $ulbin/doplexpkg.sh
-    cat $minilicense >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    cat $colors >> $ulbin/doplexpkg.sh
-    echo "#Usage: ./doplexpkg [namepkg] [formatpkg]" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Limpa tudo" >> $ulbin/doplexpkg.sh
-    echo "clear" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Teste de permissão" >> $ulbin/doplexpkg.sh
-    echo "if [[ \$(whoami) == "root" ]]; then" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Nome do pacote" >> $ulbin/doplexpkg.sh
-    echo "nome=\$1" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Formato do pacote" >> $ulbin/doplexpkg.sh
-    echo "formato=\$2" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Descompactando e movendo os pacotes" >> $ulbin/doplexpkg.sh
-    echo "cd /home/ahlr/Downloads/" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "if [ -e \$nome*.tar.gz ] && [ -e \$nome*.\$formato ]; then" >> $ulbin/doplexpkg.sh
-    echo "tar zvxf \$nome*.tar.gz" >> $ulbin/doplexpkg.sh
-    echo "mv \$nome*.\$formato \$nome" >> $ulbin/doplexpkg.sh
-    echo "else" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo -e \"\$PINK Algo deu errado, o SlackBuild ou o Fonte não foi encontrado! \$NC\"" >> $ulbin/doplexpkg.sh
+    clear
+    nome=plexmediaserver
+    formato=deb
+    cd $Downloads
+    if [ -e $nome*.tar.gz ] && [ -e $nome*.$formato ]; then
+    tar zvxf $nome*.tar.gz
+    mv $nome*.$formato $nome
+    else
+    echo
+    echo
+    echo -e "$PINK Algo deu errado, o SlackBuild ou o Fonte não foi encontrado! $NC"
     echo 
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "exit" >> $ulbin/doplexpkg.sh
-    echo "fi" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo  >> $ulbin/doplexpkg.sh
-    echo "#Obtendo a versão do pacote" >> $ulbin/doplexpkg.sh
-    echo "versao=\`ls \$nome/\$nome*.\$formato | awk -F '_' {'print \$2'}\`" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Editando o SlackBuilds" >> $ulbin/doplexpkg.sh
-    echo "sed -i "s/VERSION:-.*/VERSION:-\$versao}/g" \$nome/\$nome.SlackBuild" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Rodando o SlackBuilds" >> $ulbin/doplexpkg.sh
-    echo "cd \$nome" >> $ulbin/doplexpkg.sh
-    echo "./\$nome.SlackBuild" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Instalar programa" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo -e \"\$GREEN Vamos instalar o programa \$BBROWN \$nome? Y|N \$NC\"" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "read install" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "if [ \$install == Y ] || [ \$lixo == Y ]; then" >> $ulbin/doplexpkg.sh
-    echo "upgradepkg --install-new /tmp/\$nome*" >> $ulbin/doplexpkg.sh
-    echo "else" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo -e \"\$BRED Ok, algo deu errado! \$NC\"" >> $ulbin/doplexpkg.sh
-    echo "exit" >> $ulbin/doplexpkg.sh
-    echo "fi" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Apagando fontes" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo -e \"\$PINK Posso apagar o arquivos utilizados? Y\|N \$NC"\" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "read lixo" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "if [ \$lixo == Y ] || [ \$lixo == y ]; then" >> $ulbin/doplexpkg.sh
-    echo "rm -fr \$nome*" >> $ulbin/doplexpkg.sh
-    echo "else" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo -e \"\$BRED Ok, algo deu errado! \$NC\"" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "fi" >> $ulbin/doplexpkg.sh
-    echo >> $ulbin/doplexpkg.sh
-    echo "#Logue-se como root" >> $ulbin/doplexpkg.sh
-    echo "else" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo -e \"\$BRED Logue-se como ROOT! \$NC\"" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "echo" >> $ulbin/doplexpkg.sh
-    echo "fi" >> $ulbin/doplexpkg.sh
-    $permix $ulbin/doplexpkg.sh
+    echo
+    echo
+    echo exit
+    fi
+    echo
+    echo
+    echo
+    versao=`ls $nome/$nome*.$formato | awk -F '_' {'print \$2'}`
+    sed -i "s/VERSION:-.*/VERSION:-$versao}/g" $nome/$nome.SlackBuild
+    $ulbin/doplexpkg.sh
+    cd $nome
+    ./$nome.SlackBuild
+    echo
+    echo
+    echo
+    echo -e "$GREEN Vamos instalar o programa $BBROWN $nome? Y|N $NC"
+    read install
+    case $install in
+    Y|y)
+    upgradepkg --install-new /tmp/$nome*
+    ;;
+    N|n)
+    exit
+    echo -e "$GREEN Pacote disponível noa pasta /tmp $NC"
+    ;;
+    *)
+    echo
+    echo
+    echo
+    echo -e "$BRED Ok, algo deu errado! $NC"
+    exit
     sleep 5
+    ;;
+    esac
 fi
 
 
 # --------- Início das configurações --------- #	
+  
+    if [ $brother == yes ]; then
+    cd /tmp
+    if [ -e linux-brprinter-installer* ]; then
+    $permix linux-brprinter-installer*
+    ./linux-brprinter-installer*
+    rm /tmp/linux-brprinter-installer*
+    rm /tmp/uninstaller_*
+    rm /tmp/brscan*
+    rm /tmp/cupswr*
+    rm /tmp/dcp7065*
+    else
+    echo -e "O driver da impressora não foi baixado"
+    fi
+    
+clear
+echo
+echo	
+echo -e "$CYAN # --------- # --------- #  $NC"
+echo
+echo
+fi
+
 	if [ $bblazenet4you == yes ]; then
 	echo -e "$bblazenet4youtxt"
 	echo
@@ -1493,13 +1481,13 @@ fi
 	vim $crondaily/backblaze_NET4YOU.sh
 	
 	echo -e "$BLUE backblaze_NET4YOU $BROWN configurado!  $NC"
-
+	
 echo
 echo	
 echo -e "$CYAN # --------- # --------- #  $NC"
 echo
 echo
-	fi
+fi
 	
 	if [ $bblazetonico == yes ]; then
 	echo -e "$bblazetonicotxt"
@@ -1561,29 +1549,7 @@ echo -e "$CYAN # --------- # --------- #  $NC"
 echo
 echo
 	fi
-	
-echo
-echo	
-echo -e "$CYAN # --------- # --------- #  $NC"
-echo
-echo
-
-    if [ $brother == yes ]; then
-    cd /tmp
-    if [ -e linux-brprinter-installer* ]; then
-    $permix linux-brprinter-installer*
-    ./linux-brprinter-installer*
-    rm /tmp/linux-brprinter-installer*
-    rm /tmp/uninstaller_*
-    rm /tmp/brscan*
-    rm /tmp/cupswr*
-    rm /tmp/dcp7065*
-    else
-    echo -e "O driver da impressora não foi baixado"
-    fi
-    
-clear
-    
+clear	
 echo
 echo
 echo -e "$CYAN Pacotes instalados e Configurações realizadas!! $NC"
