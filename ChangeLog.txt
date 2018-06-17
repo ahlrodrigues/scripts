@@ -1,4 +1,11 @@
-*----------------------- Qui jun 14 21:10:14 -03 2018 -----------------------*
+*----------------------- sáb jun 16 12:05:23 -03 2018 -----------------------*
+
+- correções nodoplexpkg;
+- substituição de if por case nas perguntas;
+*----------------------- sex jun 15 15:27:19 -03 2018 -----------------------*
+
+- correção de sintax
+*----------------------- qui jun 14 21:10:14 -03 2018 -----------------------*
 
 Brother - movida a instalação do driver da impressora para a sessão de configurações;
 Konsole - correção do caminho do Shell-profile para plasma5;
