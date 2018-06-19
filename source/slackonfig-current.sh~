@@ -61,7 +61,7 @@ shutdown=no
 teamviewerd=no
 plex=no
 mirrorx86_64=no
-mirrorarm=no  
+mirrorarm=no
 inittab=no
 networkmanager=no
 konsole=no
@@ -87,8 +87,7 @@ sshbackup=no
 ktown=no
 clamav=no
 projetos=no
-doplexpkg=no
-doteamviewerpkg=yes
+doplexpkg=yes
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -107,8 +106,8 @@ cupstxt="$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
 shutdowntxt="$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
 teamviewerdtxt="$GREEN Incluindo inicialização do daemon do teamviewer no rc.local; $NC"
 plextxt="$GREEN Incluindo inicialização do daemon do Plex no rc.local; $NC"
-mirrorx86_64txt="$GREEN Administração do mirror x86_64 locail; $NC"
-mirrorarmtxt="$GREEN Administração do mirror ARM locail; $NC"
+mirrorx86_64txt="$GREEN Administracao dos mirros locais; $NC"
+mirrorarmtxt="$GREEN Administracao dos mirros locais; $NC"
 inittabtxt="$GREEN Habilitando o init 4; $NC"
 networkmanagertxt="$GREEN Inicialzando networkmanager; $NC"
 konsoletxt="$GREEN Configura o profile do Konsole; $NC"
@@ -135,7 +134,7 @@ ktowntxt="$GREEN Cria o script rsync para o ktown do AlienBob; $NC"
 clamavtxt="$GREEN Inicialzando do clamav; $NC"
 projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
 doplexpkgtxt="$GREEN Automatiza o Slackbuild do Plexmediaserver; $NC"
-doteamviewerpkgtxt="$GREEN Automatiza o Slackbuild do Teamviewer; $NC"
+
 
 
 # --------- Lista de dependências  --------- #
@@ -158,7 +157,7 @@ rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
 rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
 imag="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/imgs"
 drop=/home/ahlr/Dropbox
-downloads=/home/ahlr/Downloads
+download=/home/ahlr/Downloads
 permix="chmod +x"
 permi0="chmod 770"
 caminho=/mnt/sda3/Slackware
@@ -411,10 +410,6 @@ echo
 	
     if [ $doplexpkg == yes ]; then
 	  echo -e "$doplexpkgtxt"
-	fi	
-	
-    if [ $doteamviewerpkg == yes ]; then
-	  echo -e "$doteamviewerpkgtxt"
 	fi
 # --------- Listando funções --------- #
 	echo
@@ -513,7 +508,7 @@ if [ $cleanret == yes ]; then
     echo "#!"$SHELL > $crondaily/cleanret.sh
     cat $minilicense >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
-    echo "pasta_origem=$downloads" >> $crondaily/cleanret.sh
+    echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/cleanret.sh
     echo "pasta_retorno=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos/" >> $crondaily/cleanret.sh
     echo "pasta_remessa=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa" >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
@@ -541,7 +536,7 @@ if [ $mvrejsgr == yes ]; then
     cat $minilicense >> $crondaily/mvrejsgr.sh
     echo "#" >> $crondaily/mvrejsgr.sh
     echo "# Cria variáveis" >> $crondaily/mvrejsgr.sh
-    echo "pasta_origem=$downloads" >> $crondaily/mvrejsgr.sh
+    echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/mvrejsgr.sh
     echo "pasta_destino=$drop/NET4YOU/NET4YOU/Bancos/BNB/Arquivos" >> $crondaily/mvrejsgr.sh
     echo "#" >> $crondaily/mvrejsgr.sh
     echo "# Renomeia os arquivos" >> $crondaily/mvrejsgr.sh
@@ -566,7 +561,7 @@ if [ $cleansici == yes ]; then
     echo "#Mover os arquivos declaração do SICI para a pasta $drop/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
     echo "#" >> $crondaily/cleansici.sh
     echo "# Cria variáveis" >> $crondaily/cleansici.sh
-    echo "pasta_origem=$downloads" >> $crondaily/cleansici.sh
+    echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/cleansici.sh
     echo "pasta_destino=$drop/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
     echo "#" >> $crondaily/cleansici.sh
     echo "# Move o recibo de entrehga do SICI para a pasta de backup ../SCM/SICI" >> $crondaily/cleansici.sh
@@ -725,7 +720,7 @@ fi
 
 # Baixa o script do AlienBob e configura para mirrors locais x86_64 
 if [ $mirrorx86_64 == yes ]; then
-    echo -e "$mirrorx86_64txt"
+    echo -e "$mirrorstxt"
     wget -q  -nv -e robots=0 -r -nd -cP $crondaily http://www.slackware.com/~alien/tools/mirror-slackware-current.sh
     sed -i "s|BUILDER:-\"Eric Hameleers <alien@slackware.com>\"|BUILDER:-\"Fela  <ahlr_2000@yahoo.com>\"|g" $crondaily/mirror-slackware-current.sh
     sed -i "s|/home/ftp/pub/Linux/Slackware|$caminho|g" $crondaily/mirror-slackware-current.sh
@@ -1118,8 +1113,8 @@ if [ cobranca == yes ] && [ skyline == yes ]; then
     echo -e "$cobrancatxt"
     echo "#!"$SHELL > $ulbin/cobrancabnb.sh
     cat $minilicense >> $ulbin/cobrancabnb.sh
-    echo "arquivos=`ls $downloads/ | awk '/CB/ { print $0 }'` # REMESSAS" >> $ulbin/cobrancabnb.sh
-    echo "pasta_origem=$downloads" >> $ulbin/cobrancabnb.sh
+    echo "arquivos=`ls /home/ahlr/Downloads/ | awk '/CB/ { print $0 }'` # REMESSAS" >> $ulbin/cobrancabnb.sh
+    echo "pasta_origem=/home/ahlr/Downloads/" >> $ulbin/cobrancabnb.sh
     echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/outbox/" >> $ulbin/cobrancabnb.sh
     echo "if [ "$arquivos" != "" ]; then #Se existe arquivo de remessa" >> $ulbin/cobrancabnb.sh
     echo "mv $pasta_origem/$arquivos $pasta_destino" >> $ulbin/cobrancabnb.sh
@@ -1402,12 +1397,12 @@ fi
 if [ $doplexpkg == yes ]; then
     echo -e "$doplexpkgtxt"
     clear
-    nomep=plexmediaserver
-    formatop=deb
+    nome=plexmediaserver
+    formato=deb
     cd $Downloads
-    if [ -e $nomep*.tar.gz ] && [ -e $nomep*.$formatop ]; then
-    tar zvxf $nomep*.tar.gz
-    mv $nomep*.$formatop $nomep
+    if [ -e $nome*.tar.gz ] && [ -e $nome*.$formato ]; then
+    tar zvxf $nome*.tar.gz
+    mv $nome*.$formato $nome
     else
     echo
     echo
@@ -1420,70 +1415,19 @@ if [ $doplexpkg == yes ]; then
     echo
     echo
     echo
-    versao=`ls $nomep/$nomep*.$formatop | awk -F '_' {'print \$2'}`
-    sed -i "s/VERSION:-.*/VERSION:-$versao}/g" $nomep/$nomep.SlackBuild
-    cd $nomep
-    ./$nomep.SlackBuild
-    echo
-    echo
-    echo
-    echo -e "$GREEN Vamos instalar o programa $BBROWN $nomep? Y|N $NC"
-    read install
-    case $install in
-    Y|y)
-    upgradepkg --install-new /tmp/$nomep*
-    ;;
-    N|n)
-    exit
-    echo -e "$GREEN Pacote disponível noa pasta /tmp $NC"
-    ;;
-    *)
-    echo
-    echo
-    echo
-    echo -e "$BRED Ok, algo deu errado! $NC"
-    exit
-    sleep 5
-    ;;
-    esac
-    rm -fr $download/$nomep
-fi
-
-# Automatiza o SlackBuild Teamviewer
-if [ $doteamviewerpkg == yes ]; then
-    echo -e "$doteamviewerpkgtxt"
-    clear
-    nomet=teamviewer
-    formatot=amd64.deb
-    cd $downloads
-    if [ -e $nomet*.tar.gz ] && [ -e $nomet_*_$formatot ]; then
-    tar zvxf $nomet*.tar.gz
-    mv $nomet_*$formatot $nomet
-    else
-    echo 
-    echo
-    echo -e "$PINK Algo deu errado, o SlackBuild ou o Fonte não foi encontrado! $NC"
-    echo 
-    echo
-    echo
-    echo 
-    exit
-    fi
-    echo
-    echo
-    echo
-    versao=`ls $nomet/$nomet_*$formatot | awk -F '_' {'print \$2'}`
-    sed -i "s/VERSION:-.*/VERSION:-$versao}/g" $nomet/$nomet.SlackBuild
-    cd $nomet
+    versao=`ls $nome/$nome*.$formato | awk -F '_' {'print \$2'}`
+    sed -i "s/VERSION:-.*/VERSION:-$versao}/g" $nome/$nome.SlackBuild
+    $ulbin/doplexpkg.sh
+    cd $nome
     ./$nome.SlackBuild
     echo
     echo
     echo
-    echo -e "$GREEN Vamos instalar o programa $BBROWN $nomet? Y|N $NC"
+    echo -e "$GREEN Vamos instalar o programa $BBROWN $nome? Y|N $NC"
     read install
     case $install in
     Y|y)
-    upgradepkg --install-new /tmp/$nomet*
+    upgradepkg --install-new /tmp/$nome*
     ;;
     N|n)
     exit
@@ -1498,8 +1442,8 @@ if [ $doteamviewerpkg == yes ]; then
     sleep 5
     ;;
     esac
-    rm -fr $download/$nomet
 fi
+
 
 # --------- Início das configurações --------- #	
   

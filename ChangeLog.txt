@@ -1,14 +1,19 @@
+*----------------------- ter jun 19 15:55:35 -03 2018 -----------------------*
+
+doteamviewerpkg - ciação e inclusão;
+- criação da variável $downloads;
+- nomeando as variável $nomet e $nomep;
 *----------------------- sáb jun 16 12:05:23 -03 2018 -----------------------*
 
-- correções nodoplexpkg;
+doplexpkg - correções;
 - substituição de if por case nas perguntas;
 *----------------------- sex jun 15 15:27:19 -03 2018 -----------------------*
 
-- correção de sintax
+- correção de sintax;
 *----------------------- qui jun 14 21:10:14 -03 2018 -----------------------*
 
-Brother - movida a instalação do driver da impressora para a sessão de configurações;
-Konsole - correção do caminho do Shell-profile para plasma5;
-GPG - removido script de configuração do gpg-agent, julgamos obsoleto;
+brother - movida a instalação do driver da impressora para a sessão de configurações;
+konsole - correção do caminho do Shell-profile para plasma5;
+gpg - removido script de configuração do gpg-agent, julgamos obsoleto;
 *----------------------------------------------------------------------------*
 
