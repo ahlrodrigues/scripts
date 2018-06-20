@@ -1,4 +1,5 @@
 #!/bin/bash
+#
 ##
 ###
 ##################################################################################
@@ -37,17 +38,21 @@
 #                                                                                #
 # V0.current                                                                     #
 #                                                                                #
-# Last update: 2018/06/09                                                        #
+# Last update: 2018/06/19                                                        #
 #                                                                                #
 ##################################################################################
 ###
 ##
 #
-# PARA QUE O SCRIPT FUNCIONE TROCUE A VARIÁVEL slackonfig=off PARA slackonfig=on. Utilizado para aplicar funções pré configuradas.
-slackonfig=on 
+#
+# PARA QUE O SCRIPT FUNCIONE TROCUE A VARIÁVEL slackonfig=nof PARA slackonfig=yes. Utilizado para aplicar funções pré configuradas.
+slackonfig=yes
+
+# inittab | ntp | cups | konsole | lang | 
 
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
-# Veja as funcões de cada script na página inicial do projeto slackonfig: https://github.com/ahlrodrigues/slackonfig
+# Veja as funcões de cada script na página inicial do projeto slackonfig: 
+# https://github.com/ahlrodrigues/slackonfig
 mlocal=no
 cleanret=no       
 mvrejsgr=no
@@ -88,7 +93,7 @@ ktown=no
 clamav=no
 projetos=no
 doplexpkg=no
-doteamviewerpkg=yes
+doteamviewerpkg=no
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -231,7 +236,7 @@ echo
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	$rawdocs/minilicense.txt
     else
-	echo -e "$RED Arquivo $GREEN minilicense.txt $RED encontrado. $NC"
+	echo -e "$RED Arquivo $GREEN minilicense.txt $RED foi encontrado. $NC"
 	sleep 5
     fi
     
@@ -242,27 +247,13 @@ echo
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	$rawdocs/colors.txt
     else
-	echo -e "$RED Arquivo $GREEN colors.txt $RED encontrado. $NC"
+	echo -e "$RED Arquivo $GREEN colors.txt $RED foi encontrado. $NC"
 	sleep 5
     fi
 
-    if [ ! -f "$pkgs" ]; then
-    echo -e "$GREEN Baixando...: $NC $apkgstxt"
-    echo
-	echo
-	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
-	$rawdocs/pkgs.txt
-    else
-	echo -e "$RED Arquivo $GREEN pkgs.txt $RED encontrado. $NC"
-	sleep 5
-    fi
-    
 clear
 
 
-# --------- Testando configurações --------- #
-	if [ $slackonfig == on ]; then
-	
 # --------- Checando funções --------- #
 echo
 echo
@@ -292,7 +283,7 @@ echo
 	  echo -e "$cleancachetxt"
 	fi
 	
-	if [ $ntp == yes ]; then
+	if [ $ntp == yes ] || [ $slackonfig == yes ]; then
 	  echo -e "$ntptxt"
 	fi
 	
@@ -300,7 +291,7 @@ echo
 	  echo -e "$sambatxt"
 	fi
     
-    if [ $cups == yes ]; then
+    if [ $cups == yes ] || [ $slackonfig == yes ]; then
 	  echo -e "$cupstxt"
 	fi
 
@@ -324,7 +315,7 @@ echo
 	  echo -e "$mirrorarmtxt"
 	fi
 
-	if [ $inittab == yes ]; then
+	if [ $inittab == yes ] || [ $slackonfig == yes ]; then
 	  echo -e "$inittabtxt"
 	fi
 	
@@ -332,7 +323,7 @@ echo
 	  echo -e "$networkmanagertxt"
 	fi
 	
-	if [ $konsole == yes ]; then
+	if [ $konsole == yes ] || [ $slackonfig == yes ]; then
 	  echo -e "$konsoletxt"
 	fi
 	
@@ -344,7 +335,7 @@ echo
 	  echo -e "$brothertxt"
 	fi
 	
-	if [ $lang == yes ]; then
+	if [ $lang == yes ] || [ $slackonfig == yes ]; then
 	  echo -e "$langtxt"
 	fi
 	
@@ -516,6 +507,7 @@ echo -e "$BLUE Escolha o que deseja fazer: $NC"
 	    echo
 		;;
 	esac
+
 fi
 
 # Criar script que move os arquivos da CEF
@@ -536,12 +528,13 @@ if [ $cleanret == yes ]; then
       fi
       if [ ! -d $pasta_remessa ]; then
 	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa/
-      fi
+      fiyes
     echo "mv \$pasta_origem/*.ret \$pasta_retorno" >> $crondaily/cleanret.sh
     echo "mv \$pasta_origem/*.rem \$pasta_remessa" >> $crondaily/cleanret.sh
     $crondaily/cleanret.sh
     $permi $crondaily/cleanret.sh
     sleep 5
+fi
 fi
 
 # Criar script que move os arquivos de Rejeitado e Francesinha do BNB
@@ -588,7 +581,7 @@ if [ $cleansici == yes ]; then
 fi
 
 # Criar script que move o arquivo de retornodo BNB para a pasta ../skyline/recebidos
- if [ $cleansai == yes ]; then
+if [ $cleansai == yes ]; then
     echo -e "$cleansaitxt"
     echo "#!"$SHELL > $crondaily/cleansai.sh
     cat $minilicense >> $crondaily/cleansai.sh
@@ -704,7 +697,9 @@ if [ $teamviewerd == yes ]; then
     $rcd/rc.teamviewerd start > $null
     sleep 5
     fi
-fi
+
+    fi
+
 fi
 
 #Iniciando do deamon Plex
@@ -778,7 +773,7 @@ if [ $mirrorarm == yes ]; then
 fi
 
 # Configura a inicialização do sistema em init 4
-if [ $inittab == yes ]; then
+if [ $inittab == yes ] || [ $slackonfig == on ]; then
     echo -e "$inittabtxt"
     sed -i "s/id:3/id:4/g" /etc/inittab
     sleep 5
@@ -871,6 +866,7 @@ if [ $thunderbackup == yes ]; then
     echo
     fi
     if [ $copiathunderbird -eq 2 ]; then
+    
     echo "#!"$SHELL > $crondaily/thunderbirdbackup.sh
     cat $minilicense >> $crondaily/thunderbirdbackup.sh
     echo "#Faz cópia incremental do diretório de configurações do Thunderbird." >> $crondaily/thunderbirdbackup.sh
@@ -885,6 +881,7 @@ if [ $thunderbackup == yes ]; then
     $permix $crondaily/thunderbirdbackup.sh
     $permi0 $crondaily/thunderbirdbackup.sh
     fi
+
 fi
 
 #Criação do arquivo backblaze_TONICO.sh
@@ -1125,7 +1122,7 @@ if [ $skyline == yes ]; then
 fi
 
 #Cria script que administra cobrança BNB
-if [ cobranca == yes ] && [ skyline == yes ]; then
+if [ cobranca == yes ] && [ skyline == yes ]; then 
     echo -e "$cobrancatxt"
     echo "#!"$SHELL > $ulbin/cobrancabnb.sh
     cat $minilicense >> $ulbin/cobrancabnb.sh
@@ -1168,7 +1165,7 @@ if [ $pkgs == yes ]; then
 	echo -e "$apkgstxt"
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp $rawdocs/pkgs.txt
     else
-	echo -e "$RED Arquivo $GREEN $apkgstxt $RED encontrado. $NC"
+	echo -e "$RED Arquivo $GREEN $apkgstxt $RED foi encontrado. $NC"
 	sleep 5
     fi
     echo -e "$pkgstxt"
@@ -1554,7 +1551,7 @@ echo
 echo -e "$CYAN # --------- # --------- #  $NC"
 echo
 echo
-fi
+    fi
 	
 	if [ $bblazetonico == yes ]; then
 	echo -e "$bblazetonicotxt"
@@ -1669,40 +1666,41 @@ echo
     
     * ) exit;; ## Add whatever other tests you need
   esac
-	else
-	echo -e "$CYAN Deseja rodar o script novamente? [yes/no] $NC"
-	read RESPOSTA2
-	test "$RESPOSTA2" = "no" && echo && echo && echo "OK Até mais!" && exit
-	 sh teste.sh
-      fi
+  
 
-
-      else
-      echo
-      echo
-      echo -e "$RED Voce nao esta Conectado! $NC"
-      echo
-      echo
-    fi
-
-
-else
-echo
-echo
-echo -e "$RED Logue-se como ROOT! $NC"
-echo
-echo
-
+    else
+    echo
+    echo
+    echo -e "$RED Voce nao esta Conectado! $NC"
+    echo
+    echo
 fi
 
-#REFERÊNCIAS:
+
+    else
+    echo
+    echo
+    echo -e "$RED Logue-se como ROOT! $NC"
+    echo
+    echo
+fi
+
+##################################### REFERÊNCIAS #####################################
 
 #sed -i '/PKGS_PRIORITY=( multilib ktown )/s/^/#/g' /etc/slackpkg/slackpkgplus.conf # --------- comenta determinada linhas --------- #
+
 #sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf # --------- descomenta determinada linhas --------- #
+
 #sed -i "s/^#*/#/" /etc/profile.d/lang.sh # --------- comenta todas as linhas --------- #
+
 #sed -i '/[0-9]+/ a Oi. Sou novo aqui' # --------- acrescente linha após determinado argumento/linhas --------- #
+
 #sed -i "s/LocalZone=.*/LocalZone=America\/Fortaleza/g" /home/ahlr/.config/ktimezonedrc # --------- substitui parte de um linhas --------- #
+
 #$rcd/rc.ntpd restart > /dev/null # --------- Discard the output --------- #
-#
-#
+
+#if [ cobranca == yes ] && [ skyline == yes ]; then # --------- Condicional E --------- #
+
+#if [ cobranca == yes ] || [ skyline == yes ]; then # --------- Condicional OU --------- #
+
 #
