@@ -17,7 +17,8 @@ E-mail: ahlr_2000@yahoo.com
 
 Telegram: @Antonio_Henrique_Fela
 
-Grupo: https://t.me/slackshowbr
+[Grupo Slackshowbrno Telegram](https://t.me/slackshowbr)
+
 
 Bugs, Agradecimentos, Críticas construtivas", mande um e-mail, ficarei Grato!
 ```
