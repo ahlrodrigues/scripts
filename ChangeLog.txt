@@ -1,3 +1,6 @@
+*----------------------- ter jun 19 22:26:49 -03 2018 -----------------------*
+
+- implementando variável $slackonfig para aplicar funções padrão
 *----------------------- ter jun 19 20:28:11 -03 2018 -----------------------*
 
 PKGS.txt - atualizações da lista
