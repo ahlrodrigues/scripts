@@ -15,9 +15,9 @@ Autor: Antonio Henrique (Fela)
 ```
 E-mail: [ahlr_2000@yahoo.com](mailto:ahlr_2000@yahoo.com)
 
->Telegram: @Antonio_Henrique_Fela
+Telegram: @Antonio_Henrique_Fela
 
-<a href="https://t.me/slackshowbr" target="_blank">Grupo Slackware Show BR</a>
+[Grupo Slackshowbr no Telegram](https://t.me/slackshowbr "target="_blank)
 
 
 >Bugs, Agradecimentos, Críticas construtivas", mande um e-mail, ficarei Grato!
