@@ -94,7 +94,7 @@ doteamviewerpkg=yes
 mlocaltxt="$GREEN Configurando mirror local $NC"
 aminilicensetxt="$GREEN Arquivo de licença a ser incluído nos spripts $NC"
 acolorstxt="$GREEN Arquivo de cores a ser incluído nos spripts $NC"
-apkgstxt="$GREEN Arquivo com lista de pacotes a serem instalados automaticamente $NC"
+apkgstxt="$GREEN Arquivo com lista de pacotes a serem instalados pelo slackpkg $NC"
 cleanrettxt="$GREEN Move os arquivos de retorno da caixa; $NC"
 mvrejsgrtxt="$GREEN Move os arquivos de rejeitados e francesinha do BNB; $NC"
 cleansicitxt="$GREEN Move os recibo de declaração do SICI para o Dropbox; $NC"
@@ -245,7 +245,18 @@ echo
 	echo -e "$RED Arquivo $GREEN colors.txt $RED encontrado. $NC"
 	sleep 5
     fi
-       
+
+    if [ ! -f "$pkgs" ]; then
+    echo -e "$GREEN Baixando...: $NC $apkgstxt"
+    echo
+	echo
+	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
+	$rawdocs/pkgs.txt
+    else
+	echo -e "$RED Arquivo $GREEN pkgs.txt $RED encontrado. $NC"
+	sleep 5
+    fi
+    
 clear
 
 
@@ -1155,7 +1166,7 @@ fi
 if [ $pkgs == yes ]; then
     if [ ! -f "$pkgs" ]; then
 	echo -e "$apkgstxt"
-	wget -q  -nv -e robots=0 -r -nd -cP /tmp $rawconfigs/pkgs.txt
+	wget -q  -nv -e robots=0 -r -nd -cP /tmp $rawdocs/pkgs.txt
     else
 	echo -e "$RED Arquivo $GREEN $apkgstxt $RED encontrado. $NC"
 	sleep 5

@@ -1,3 +1,8 @@
+*----------------------- ter jun 19 20:28:11 -03 2018 -----------------------*
+
+PKGS.txt - atualizações da lista
+- correções no pkgs
+- atualização do .gitignore
 *----------------------- ter jun 19 15:55:35 -03 2018 -----------------------*
 
 doteamviewerpkg - ciação e inclusão;

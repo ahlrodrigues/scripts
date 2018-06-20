@@ -11,7 +11,7 @@ libreoffice-sdkdoc
 openjre
 freerdp
 flashplayer-plugin
-chromium-5*
+chromium-6*
 chromium-pepperflash-plugin
 chromium-widevine-plugin
 dropbox
