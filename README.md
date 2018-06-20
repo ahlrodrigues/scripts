@@ -15,6 +15,9 @@ Autor: Antonio Henrique (Fela)
 
 E-mail: ahlr_2000@yahoo.com
 
+Telegram: @Antonio_Henrique_Fela
+
+Grupo: https://t.me/slackshowbr
 
 Bugs, Agradecimentos, Críticas construtivas", mande um e-mail, ficarei Grato!
 ```
@@ -97,7 +100,6 @@ Feature:
 - Configuração do Slackpkg;
 - Aplicação do layer para transformar Slackware => Slackware Multilib;
 - Instalação do Dropbox;
-- Compilando e Instalando pacotes: TeamViewer;
 ```
 
 
