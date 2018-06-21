@@ -83,6 +83,7 @@ clamavtxt= Inicialzando do clamav;
 notdepstxt= Não existem pacotes que exijam instalação de dependências!;
 projetostxt= Atualiza pasta Projetos local;
 doplexpkgtxt="Automatiza o Slackbuild do Plexmediaserver;
+dochangelogtxt="$GREEN Cria o script para escerever no ChangeLog.txt; $NC"
 ```
 
 

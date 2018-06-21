@@ -1,6 +1,9 @@
+*----------------------- qua 20 jun 2018 20:26:40 -03 -----------------------*
+
+dochangelog.txt - escreve no arquivo ChangeLog.txt dos projetos;
 *----------------------- ter jun 19 22:26:49 -03 2018 -----------------------*
 
-- implementando variável $slackonfig para aplicar funções padrão
+- implementando variável $slackonfig para aplicar funções padrão;
 *----------------------- ter jun 19 20:28:11 -03 2018 -----------------------*
 
 PKGS.txt - atualizações da lista
@@ -24,4 +27,3 @@ brother - movida a instalação do driver da impressora para a sessão de config
 konsole - correção do caminho do Shell-profile para plasma5;
 gpg - removido script de configuração do gpg-agent, julgamos obsoleto;
 *----------------------------------------------------------------------------*
-
