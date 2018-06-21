@@ -1579,7 +1579,12 @@ if [ $dochangelog == yes ]; then
     $permix $ulbin/dochangelog.sh
 fi
 
-# --------- Início das configurações --------- #	
+##########################################
+#                                        #      
+# ------ Início das Configurações ------ #            
+#                                        #      
+##########################################
+
   
     if [ $brother == yes ]; then
     cd /tmp
@@ -1718,6 +1723,7 @@ echo -e "$GREEN - pip install -U pip => $BROWN Duplicity e dependências; $NC"
 echo
 echo
 echo
+
 # --------- Apagando arquivos auxiliares no diretório /tmp --------- #
  
     if [ -f "$minilicense" ]; then
@@ -1731,7 +1737,15 @@ echo
     if [ -f "$colors" ]; then
 	rm $colors
     fi
-# --------- Início do fim --------- # 
+
+    
+##########################################
+#                                        #      
+# ----------- Início do fim ------------ #            
+#                                        #      
+##########################################
+
+    
     ;;
     
     * ) exit;; ## Add whatever other tests you need
@@ -1755,7 +1769,12 @@ fi
     echo
 fi
 
-##################################### REFERÊNCIAS #####################################
+
+##########################################
+#                                        #      
+# ------------ REFERÊNCIAS ------------- #            
+#                                        #      
+##########################################
 
 #sed -i '/PKGS_PRIORITY=( multilib ktown )/s/^/#/g' /etc/slackpkg/slackpkgplus.conf # --------- comenta determinada linhas --------- #
 
