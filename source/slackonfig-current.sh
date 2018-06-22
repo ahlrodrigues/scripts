@@ -48,7 +48,7 @@
 # PARA QUE O SCRIPT FUNCIONE TROCUE A VARIÁVEL slackonfig=nof PARA slackonfig=yes. Utilizado para aplicar funções pré configuradas.
 slackonfig=no
 
-# inittab | ntp | cups | konsole | lang | 
+# inittab | ntp | cups | konsole | lang | wallpaper |
 
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
 # Veja as funcões de cada script na página inicial do projeto slackonfig: 
@@ -95,6 +95,8 @@ projetos=no
 doplexpkg=no
 doteamviewerpkg=no
 dochangelog=yes
+wallpaper=no
+localerc=no
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -143,7 +145,8 @@ projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
 doplexpkgtxt="$GREEN Automatiza o Slackbuild do Plexmediaserver; $NC"
 doteamviewerpkgtxt="$GREEN Automatiza o Slackbuild do Teamviewer; $NC"
 dochangelogtxt="$GREEN Cria o script para escerever no ChangeLog.txt; $NC"
-
+wallpapertxt="$GREEN Configura o papel de parede padrão; $NC"
+localerctxt="$GREEN Configura o idioma do plasma; $NC"
 
 # --------- Lista de dependências  --------- #
 sshbackupdep="$PINK sshbackup=> sshpass; $NC"
@@ -168,6 +171,7 @@ dropbox=/home/ahlr/Dropbox
 downloads=/home/ahlr/Downloads
 permix="chmod +x"
 permi0="chmod 770"
+permi7="chmod 777"
 caminho=/mnt/sda3/Slackware
 home=/home/ahlr
 null="/dev/null"
@@ -423,6 +427,14 @@ echo
 	
     if [ $dochangelog == yes ]; then
 	  echo -e "$dochangelogtxt"
+	fi
+	
+    if [ $wallpaper == yes ] || [ $slackonfig == yes ]; then
+	  echo -e "$wallpapertxt"
+	fi
+	
+    if [ $localerc == yes ] || [ $slackonfig == yes ]; then
+	  echo -e "$localerctxt"
 	fi
 # --------- Listando funções --------- #
 	echo
@@ -801,14 +813,10 @@ fi
 # Configura o profile do Konsole
 if [ $konsole == yes ]; then
     echo -e "$konsoletxt"
-    if [ -f "/home/ahlr/.kde/share/apps/konsole/Shell.profile" ]; then
-    sed -i "s/bin\/bash/bin\/bash -l/g" /home/ahlr/.local/share/konsole//Shell.profile
-    else
     echo "[General]" > /home/ahlr/.local/share/konsole//Shell.profile
     echo "Command=/bin/bash -l" >> /home/ahlr/.local/share/konsole/Shell.profile
     echo "Name=Shell" >> /home/ahlr/.local/share/konsole/Shell.profile
     echo "Parent=FALLBACK/" >> /home/ahlr/.local/share/konsole/Shell.profile
-    fi
     sleep 5
 fi
 
@@ -1503,15 +1511,17 @@ fi
 if [ $dochangelog == yes ]; then
     echo -e "$dochangelogtxt"
     echo "#!"$SHELL > $ulbin/dochangelog.sh
-    #cat $minilicense >> $ulbin/dochangelog.sh
-   # cat $colors >> $ulbin/dochangelog.sh
+    cat $minilicense >> $ulbin/dochangelog.sh
+    cat $colors >> $ulbin/dochangelog.sh
+    echo "" >> $ulbin/dochangelog.sh
+    echo "dropbox=/home/ahlr/Dropbox" >> $ulbin/dochangelog.sh
     echo "data=\$(date +\"%c\")" >> $ulbin/dochangelog.sh
     echo "clear" >> $ulbin/dochangelog.sh    
     echo "" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo -e \"\$GREEN Inseria as alterações para o arquivo ChangeLog.txt? Utilize \$BROWN\\n\$NC para pular de linha.\$NC\"" >> $ulbin/dochangelog.sh    
+    echo "echo -e \"\$GREEN Inseria as alterações para o arquivo ChangeLog.txt?"" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
@@ -1537,7 +1547,7 @@ if [ $dochangelog == yes ]; then
     echo "case \$write in" >> $ulbin/dochangelog.sh     
     echo "" >> $ulbin/dochangelog.sh          
     echo "Y|y)" >> $ulbin/dochangelog.sh    
-    echo "sed -i \"1s/^/\$updates\\n/\" $dropboxbox/Dropbox/TONICO/Projetos/slackonfig/ChangeLog.txt" >> $ulbin/dochangelog.sh    
+    echo "sed -i \"1s/^/\$updates\\n/\" $dropboxbox/TONICO/Projetos/slackonfig/ChangeLog.txt" >> $ulbin/dochangelog.sh    
     echo "sed -i \"1s/^/\\n/\" $dropboxbox/TONICO/Projetos/slackonfig/ChangeLog.txt" >> $ulbin/dochangelog.sh       
     echo "sed -i \"1s/^/*----------------------- \$data -----------------------*\\n/\" /home/ahlr/Dropbox/TONICO/Projetos/slackonfig/ChangeLog.txt" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
@@ -1559,10 +1569,28 @@ if [ $dochangelog == yes ]; then
     echo ";;" >> $ulbin/dochangelog.sh    
     echo "" >> $ulbin/dochangelog.sh    
     echo "esac" >> $ulbin/dochangelog.sh 
-    $permi0 $ulbin/dochangelog.sh
+    $permi7 $ulbin/dochangelog.sh
     $permix $ulbin/dochangelog.sh
 fi
 
+# Configura o Wallpapers
+if [ $wallpaper == yes ]; then
+    echo -e "$wallpapertxt"
+    echo "[Wallpapers]" > /home/ahlr/.config/plasmarc
+    echo "usersWallpapers=/home/ahlr/Dropbox/TONICO/speciale2.jpg" >> /home/ahlr/.config/plasmarc
+    sleep 5
+fi
+
+# Configura o idioma
+if [ $localerc == yes ]; then
+    echo -e "$localerctxt"
+    echo "[Formats]" > /home/ahlr/.config/plasma-localerc
+    echo "LANG=pt_BR.UTF-8" >> /home/ahlr/.config/plasma-localerc
+    echo "" >> /home/ahlr/.config/plasma-localerc
+    echo "[Translations]" >> /home/ahlr/.config/plasma-localerc
+    echo "LANGUAGE=pt_BR" >> /home/ahlr/.config/plasma-localerc
+    sleep 5
+fi
 ##########################################
 #                                        #      
 # ------ Início das Configurações ------ #            
