@@ -628,7 +628,7 @@ fi
 # Configura o servidor NTP Brasileiro
 if [ $ntp == yes ]; then	
     echo -e "$ntptxt"
-    sed -i "s/^#*/#/" /etc/ntp.conf # --------- comenta todas as linhas --------- #	
+    sed -i "s/^#*/#/" /etc/ntp.conf
     sed -i "/server 3/a server pool.ntp.br iburst" /etc/ntp.conf
    	if [ -x $rcd/rc.ntpd ]; then
 	  $permix $rcd/rc.ntpd
@@ -819,22 +819,6 @@ if [ $reccx == yes ]; then
     sleep 5
 fi
 
-# # Instalação do driver da impressora
-# if [ $brother == yes ]; then
-#     echo -e "$brothertxt"
-#     wget -cP /tmp http://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.2.0-1.gz
-#     gunzip /tmp/linux-brprinter-installer*
-#     cd /tmp
-#     $permix linux-brprinter-installer*
-#     ./linux-brprinter-installer*
-#     rm /tmp/linux-brprinter-installer*
-#     rm /tmp/uninstaller_*
-#     rm /tmp/brscan*
-#     rm /tmp/cupswr*
-#     rm /tmp/dcp7065*
-#     sleep 5
-# fi
-
 # Instalação do driver da impressora
 if [ $brother == yes ]; then
     echo -e "$brothertxt"
@@ -846,7 +830,7 @@ fi
 # Configura o idioma pt_BR no sistema 
 if [ $lang == yes ]; then
     echo -e "$langtxt"
-    sed -i "s/^#*/#/" /etc/profile.d/lang.sh # --------- comenta todas as linhas --------- #	
+    sed -i "s/^#*/#/" /etc/profile.d/lang.sh
     echo "#Local Português Brasileiro" >> /etc/profile.d/lang.sh
     echo "export LINGUAS=pt_BR.UTF-8" >> /etc/profile.d/lang.sh
     echo "export LANGUAGE=pt_BR.UTF-8" >> /etc/profile.d/lang.sh
@@ -1770,26 +1754,3 @@ fi
 fi
 
 
-##########################################
-#                                        #      
-# ------------ REFERÊNCIAS ------------- #            
-#                                        #      
-##########################################
-
-#sed -i '/PKGS_PRIORITY=( multilib ktown )/s/^/#/g' /etc/slackpkg/slackpkgplus.conf # --------- comenta determinada linhas --------- #
-
-#sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf # --------- descomenta determinada linhas --------- #
-
-#sed -i "s/^#*/#/" /etc/profile.d/lang.sh # --------- comenta todas as linhas --------- #
-
-#sed -i '/[0-9]+/ a Oi. Sou novo aqui' # --------- acrescente linha após determinado argumento/linhas --------- #
-
-#sed -i "s/LocalZone=.*/LocalZone=America\/Fortaleza/g" /home/ahlr/.config/ktimezonedrc # --------- substitui parte de um linhas --------- #
-
-#$rcd/rc.ntpd restart > /dev/null # --------- Discard the output --------- #
-
-#if [ cobranca == yes ] && [ skyline == yes ]; then # --------- Condicional E --------- #
-
-#if [ cobranca == yes ] || [ skyline == yes ]; then # --------- Condicional OU --------- #
-
-#
