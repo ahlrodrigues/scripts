@@ -1,3 +1,8 @@
+*----------------------- qui 21 jun 2018 23:48:07 -03 -----------------------*
+
+wallpaper - configura o papel de parede padrão
+localerc - configura o locale do plasma
+*----------------------- qui 21 jun 2018 23:42:51 -03 -----------------------*
 *----------------------- qua 20 jun 2018 20:26:40 -03 -----------------------*
 
 dochangelog.txt - escreve no arquivo ChangeLog.txt dos projetos;
