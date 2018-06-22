@@ -1074,7 +1074,7 @@ if [ $winbox == yes ]; then
     echo "[Desktop Entry]" > $usa/winbox.desktop
     echo "Exec=wine $dropbox/NET4YOU/NET4YOU/Packages/winbox.exe" >> $usa/winbox.desktop
     echo "GenericName=Winbox" >> $usa/winbox.desktop
-    echo "Icon=$dropbox/NET4YOU/NET4YOU/Imagens/winbox.png" >> $usa/winbox.desktop
+    echo "Icon=$imag/winbox.png" >> $usa/winbox.desktop
     echo "Name=Permite acesso ao Servidor" >> $usa/winbox.desktop
     echo "Categories=Network;" >> $usa/winbox.desktop
     echo "NoDisplay=false" >> $usa/winbox.desktop
@@ -1108,7 +1108,7 @@ if [ $skyline == yes ]; then
     echo "[Desktop Entry]" > $usa/bnb.desktop
     echo "Exec=$ulbin/cobrancabnb.sh" >> $usa/bnb.desktop
     echo "GenericName=BNB" >> $usa/bnb.desktop
-    echo "Icon=$img/winbox.png" >> $usa/bnb.desktop
+    echo "Icon=$img/skyline.png" >> $usa/bnb.desktop
     echo "Name=Comunicação da cobrança BNB" >> $usa/bnb.desktop
     echo "Categories=Network;" >> $usa/bnb.desktop
     echo "NoDisplay=false" >> $usa/bnb.desktop
