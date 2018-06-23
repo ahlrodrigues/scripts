@@ -1732,6 +1732,7 @@ echo -e "$GREEN - Antivírus => $BROWN Clamav; $NC"
 echo -e "$GREEN - Conexão Remota => $BROWN Teamviewer; $NC"
 echo -e "$GREEN - Rodar arquivos EXE => $BROWN Wine, OpenAL, libva; $NC"
 echo -e "$GREEN - pip install -U pip => $BROWN Duplicity e dependências; $NC"
+echo -e "$GREEN - Chaves Key => $BROWN GPG e SSH; $NC"
 echo
 echo
 echo
