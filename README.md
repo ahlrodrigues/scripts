@@ -82,8 +82,8 @@ ktowntxt= Cria o script rsync para o ktown do AlienBob;
 clamavtxt= Inicialzando do clamav;
 notdepstxt= Não existem pacotes que exijam instalação de dependências!;
 projetostxt= Atualiza pasta Projetos local;
-doplexpkgtxt="Automatiza o Slackbuild do Plexmediaserver;
-dochangelogtxt="$GREEN Cria o script para escerever no ChangeLog.txt; $NC"
+doplexpkgtxt= Automatiza o Slackbuild do Plexmediaserver;
+dochangelogtxt= Cria o script para escerever no ChangeLog.txt;
 ```
 
 
