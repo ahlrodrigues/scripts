@@ -34,3 +34,12 @@ for sh in /home/ahlr/Downloads/*.sh ; do
 source "$sh"
 echo "Este é o $sh"
 done
+
+# --------- Accrescenta linha ao final do arquivo --------- #
+echo -e "$GREEN Inseria as alterações para o arquivo ChangeLog.txt?"
+
+# --------- Accrescenta linha no início do arquivo --------- #
+sed -i "1s/^/TEXTO\n/" $dropbox/TONICO/Projetos/slackonfig/ChangeLog.txt
+
+#Cria variáveis globais
+export src="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/source/"

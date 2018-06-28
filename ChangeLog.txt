@@ -1,10 +1,14 @@
+*----------------------- qua 27 jun 2018 21:06:10 -03 -----------------------*
+
+variables - cria variáveis globais;
+- correção de IF "";
 *----------------------- sex 22 jun 2018 21:30:05 -03 -----------------------*
 
-skackonfig.2.6.sh relesed!
+skackonfig.2.6.sh relesed!;
 *----------------------- qui 21 jun 2018 23:48:07 -03 -----------------------*
 
-wallpaper - configura o papel de parede padrão
-localerc - configura o locale do plasma
+wallpaper - configura o papel de parede padrão;
+localerc - configura o locale do plasma;
 *----------------------- qua 20 jun 2018 20:26:40 -03 -----------------------*
 
 dochangelog.txt - escreve no arquivo ChangeLog.txt dos projetos;

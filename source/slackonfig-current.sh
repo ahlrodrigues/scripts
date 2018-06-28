@@ -3,20 +3,38 @@
 ##
 ###
 ##################################################################################
-# Autor: Antonio Henrique (Fela)                                                 #
-# e-mail: ahlr_2000@yahoo.com                                                    #
 #                                                                                #
-# repositórios:                                                                  #
+# Copyright 2018; Antonio Henrique (Fela); <ahlr_2000@yahoo.com>                                  #
+# Todos os direitos reservados.                                                  #
+#                                                                                #
+#                                                                                #
+# Redistribution and use of this script, with or without modification, is        #
+# permitted provided that the following conditions are met:                      #
+#                                                                                #
+# 1. Redistributions of this script must retain the above copyright              #
+#    notice, this list of conditions and the following disclaimer.               #
+#                                                                                #
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED    #
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF          #
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO   #
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,        #
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,  #
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;   #
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,      #
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR       #
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF        #
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                    #
+#                                                                                #
+##################################################################################
+#                                                                                #
+# repositry:                                                                     #
 # github.com/ahlrodrigues/slackonfig                                             #
 # bitbucket.org/ahlrodrigues/slackonfig                                          #
 #                                                                                #
-# Bugs, Agradecimentos, Críticas "construtivas"!                                 #
-# Mande me um e-mail, que ficarei muito grato!                                   #
+# Bugs, Thanks, "Constructive" reviews!                                          #
+# Send me an email, I'll be very grateful!                                       #
 #                                                                                #
-# Este scripts é disponibilizado na esperança que possa ser útil,                #
-# mas SEM NENHUMA GARANTIA DE FUNCIONAMENTO, SEM NENHUMA GARANTIA DE ADEQUAÇÃO A #
-# QUALQUER SISTEMA, SEM NENHUMA GARANTIA DE APLICAÇÃO EM PARTICULAR e NENHUM     #
-# SUPORTE TÉCNICO.                                                               #
+##################################################################################
 #                                                                                #
 # Estes scripts/programas são softwares livres, você pode redistribuí-los e/ou   #
 # modifica-los dentro dos termos da Licença Pública Geral GNU.                   #
@@ -25,6 +43,7 @@
 # [GPL](https://pt.wikipedia.org/wiki/GNU_General_Public_License)                #
 # Fundação do Software Livre (FSF) Inc. 51 Franklin St, Fifth Floor,             #
 # Boston, MA 02110-1301 USA                                                      #
+#                                                                                #
 ##################################################################################
 ###
 ##
@@ -48,7 +67,7 @@
 # PARA QUE O SCRIPT FUNCIONE TROCUE A VARIÁVEL slackonfig=nof PARA slackonfig=yes. Utilizado para aplicar funções pré configuradas.
 slackonfig=no
 
-# inittab | ntp | cups | konsole | lang | wallpaper |
+# inittab | ntp | cups | konsole | lang | localerc | wallpaper | variables
 
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
 # Veja as funcões de cada script na página inicial do projeto slackonfig: 
@@ -94,9 +113,10 @@ clamav=no
 projetos=no
 doplexpkg=no
 doteamviewerpkg=no
-dochangelog=yes
+dochangelog=no
 wallpaper=no
 localerc=no
+variables=no
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -147,6 +167,7 @@ doteamviewerpkgtxt="$GREEN Automatiza o Slackbuild do Teamviewer; $NC"
 dochangelogtxt="$GREEN Cria o script para escerever no ChangeLog.txt; $NC"
 wallpapertxt="$GREEN Configura o papel de parede padrão; $NC"
 localerctxt="$GREEN Configura o idioma do plasma; $NC"
+variablestxt="$GREEN Configura as variáveis globais; $NC"
 
 # --------- Lista de dependências  --------- #
 sshbackupdep="$PINK sshbackup=> sshpass; $NC"
@@ -436,6 +457,10 @@ echo
     if [ $localerc == yes ] || [ $slackonfig == yes ]; then
 	  echo -e "$localerctxt"
 	fi
+	
+    if [ $variables == yes ] || [ $slackonfig == yes ]; then
+	  echo -e "$variablestxt"
+	fi
 # --------- Listando funções --------- #
 	echo
 	echo
@@ -638,7 +663,7 @@ if [ $cleancache == yes ]; then
 fi
 
 # Configura o servidor NTP Brasileiro
-if [ $ntp == yes ]; then	
+if [ $ntp == yes ] || [ $slackonfig == yes ]; then	
     echo -e "$ntptxt"
     sed -i "s/^#*/#/" /etc/ntp.conf
     sed -i "/server 3/a server pool.ntp.br iburst" /etc/ntp.conf
@@ -665,7 +690,7 @@ if [ $samba == yes ]; then
 fi
 
 # Inicia o servidor de impressão CUPS
-if [ $cups == yes ]; then
+if [ $cups == yes ] || [ $slackonfig == yes ]; then
     echo -e "$cupstxt"
     if [ -x $rcd/rc.cups ]; then
     $permix $rcd/rc.cups
@@ -811,7 +836,7 @@ if [ $networkmanager == yes ]; then
 fi
 
 # Configura o profile do Konsole
-if [ $konsole == yes ]; then
+if [ $konsole == yes ] || [ $slackonfig == on ]; then
     echo -e "$konsoletxt"
     echo "[General]" > /home/ahlr/.local/share/konsole//Shell.profile
     echo "Command=/bin/bash -l" >> /home/ahlr/.local/share/konsole/Shell.profile
@@ -836,7 +861,7 @@ if [ $brother == yes ]; then
 fi
 
 # Configura o idioma pt_BR no sistema 
-if [ $lang == yes ]; then
+if [ $lang == yes ] || [ $slackonfig == on ]; then
     echo -e "$langtxt"
     sed -i "s/^#*/#/" /etc/profile.d/lang.sh
     echo "#Local Português Brasileiro" >> /etc/profile.d/lang.sh
@@ -1521,7 +1546,7 @@ if [ $dochangelog == yes ]; then
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo -e \"\$GREEN Inseria as alterações para o arquivo ChangeLog.txt?"" >> $ulbin/dochangelog.sh    
+    echo "echo -e \"\$GREEN Inseria as alterações para o arquivo ChangeLog.txt?\"" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
@@ -1574,7 +1599,7 @@ if [ $dochangelog == yes ]; then
 fi
 
 # Configura o Wallpapers
-if [ $wallpaper == yes ]; then
+if [ $wallpaper == yes ] || [ $slackonfig == on ]; then
     echo -e "$wallpapertxt"
     echo "[Wallpapers]" > /home/ahlr/.config/plasmarc
     echo "usersWallpapers=/home/ahlr/Dropbox/TONICO/speciale2.jpg" >> /home/ahlr/.config/plasmarc
@@ -1582,7 +1607,7 @@ if [ $wallpaper == yes ]; then
 fi
 
 # Configura o idioma
-if [ $localerc == yes ]; then
+if [ $localerc == yes ] || [ $slackonfig == on ]; then
     echo -e "$localerctxt"
     echo "[Formats]" > /home/ahlr/.config/plasma-localerc
     echo "LANG=pt_BR.UTF-8" >> /home/ahlr/.config/plasma-localerc
@@ -1591,6 +1616,16 @@ if [ $localerc == yes ]; then
     echo "LANGUAGE=pt_BR" >> /home/ahlr/.config/plasma-localerc
     sleep 5
 fi
+
+# Cria variáveis globais
+if [ $variables == yes ]; then
+    echo -e "$variablestxt"
+    echo "" >> /etc/profile
+    echo "#Cria variáveis globais" >> /etc/profile
+    echo "export src=\"/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/source/\"" >> /etc/profile
+    sleep 5
+fi
+
 ##########################################
 #                                        #      
 # ------ Início das Configurações ------ #            
