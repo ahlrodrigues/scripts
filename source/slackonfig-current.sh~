@@ -111,7 +111,7 @@ sshbackup=no
 ktown=no
 clamav=no
 projetos=no
-doplexpkg=yes
+doplexpkg=no
 doteamviewerpkg=no
 dochangelog=no
 wallpaper=no
@@ -464,7 +464,7 @@ echo
 	  echo -e "$variablestxt"
 	fi
 	
-    if [[ $updatemirrors == yes && $mirrorarm == yes && $mirrorx86_64 == yes && $ktown == yes && $mmultilib == yes ]]; then
+    if [ $updatemirrors == yes ] && [ $mirrorarm == yes ] && [ $mirrorx86_64 == yes ] && [ $ktown == yes ] && [ $mmultilib == yes ]; then
 	  echo -e "$mirrorstxt"
 	fi
 # --------- Listando funções --------- #
@@ -1431,7 +1431,7 @@ if [ $projetos == yes ]; then
     echo "pasta_origem=/home/ahlr/Dropbox/TONICO/Projetos/" >> $crondaily/projetos.sh
     echo "pasta_destino=/mnt/sda3/Projetos/" >> $crondaily/projetos.sh
     echo "#" >> $crondaily/projetos.sh
-    echo "rsync -HavP --delete \$pasta_origem \$pasta_destino" >> $crondaily/projetos.sh
+    echo "rsync -HavP \$pasta_origem \$pasta_destino" >> $crondaily/projetos.sh
     $permix $crondaily/projetos.sh
     sleep 5
 fi
@@ -1442,9 +1442,9 @@ if [ $doplexpkg == yes ]; then
     clear
     nomep=plexmediaserver
     formatop=deb
-    cd $downloads
-    if [ -e $nomep.tar.gz ] && [ -e $nomep*.$formatop ]; then
-    tar zvxf $nomep.tar.gz
+    cd $Downloads
+    if [ -e $nomep*.tar.gz ] && [ -e $nomep*.$formatop ]; then
+    tar zvxf $nomep*.tar.gz
     mv $nomep*.$formatop $nomep
     else
     echo
@@ -1453,7 +1453,7 @@ if [ $doplexpkg == yes ]; then
     echo 
     echo
     echo
-    exit
+    echo exit
     fi
     echo
     echo
@@ -1469,7 +1469,7 @@ if [ $doplexpkg == yes ]; then
     read install
     case $install in
     Y|y)
-    upgradepkg --reinstall --install-new /tmp/$nomep*
+    upgradepkg --install-new /tmp/$nomep*
     ;;
     N|n)
     exit
@@ -1521,7 +1521,7 @@ if [ $doteamviewerpkg == yes ]; then
     read install
     case $install in
     Y|y)
-    upgradepkg --reinstall --install-new /tmp/$nomet*
+    upgradepkg --install-new /tmp/$nomet*
     ;;
     N|n)
     exit
