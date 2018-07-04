@@ -84,6 +84,11 @@ notdepstxt= Não existem pacotes que exijam instalação de dependências!;
 projetostxt= Atualiza pasta Projetos local;
 doplexpkgtxt= Automatiza o Slackbuild do Plexmediaserver;
 dochangelogtxt= Cria o script para escerever no ChangeLog.txt;
+wallpapertxt= Configura o papel de parede padrão;
+localerctxt= Configura o idioma do plasma;
+variablestxt= Configura as variáveis globais;
+updatemirrorstxt= Cria um atalho para atualização dos mirrors;
+mmultilibtxt= Cria o script rsync para o multilib;
 ```
 
 

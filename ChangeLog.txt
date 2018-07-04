@@ -1,3 +1,9 @@
+*----------------------- ter 03 jul 2018 22:00:55 -03 -----------------------*
+
+wallpaper - Configura o papel de parede padrão;
+localerc - Configura o idioma do plasma;
+updatemirrors - Cria um atalho para atualização dos mirrors;
+mmultilib - Cria o script rsync para o multilib;
 *----------------------- qua 27 jun 2018 21:06:10 -03 -----------------------*
 
 variables - cria variáveis globais;
@@ -11,7 +17,7 @@ wallpaper - configura o papel de parede padrão;
 localerc - configura o locale do plasma;
 *----------------------- qua 20 jun 2018 20:26:40 -03 -----------------------*
 
-dochangelog.txt - escreve no arquivo ChangeLog.txt dos projetos;
+dochangelog - escreve no arquivo ChangeLog.txt dos projetos;
 *----------------------- ter jun 19 22:26:49 -03 2018 -----------------------*
 
 - implementando variável $slackonfig para aplicar funções padrão;

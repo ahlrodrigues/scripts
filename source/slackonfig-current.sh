@@ -118,6 +118,7 @@ wallpaper=no
 localerc=no
 variables=no
 updatemirrors=no
+mmultilib=no
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -169,7 +170,8 @@ dochangelogtxt="$GREEN Cria o script para escerever no ChangeLog.txt; $NC"
 wallpapertxt="$GREEN Configura o papel de parede padrão; $NC"
 localerctxt="$GREEN Configura o idioma do plasma; $NC"
 variablestxt="$GREEN Configura as variáveis globais; $NC"
-updatemirrors="$GREEN Cria um atalho para atualização dos mirrors; $NC"
+updatemirrorstxt="$GREEN Cria um atalho para atualização dos mirrors; $NC"
+mmultilibtxt="$GREEN Cria o script rsync para o multilib; $NC"
 
 # --------- Lista de dependências  --------- #
 sshbackupdep="$PINK sshbackup=> sshpass; $NC"
@@ -189,6 +191,7 @@ usa=/usr/share/applications
 blacklist=">> /etc/slackpkg/blacklist"
 rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
 rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
+rawimgs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/imags
 imag="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/imgs"
 dropbox=/home/ahlr/Dropbox
 downloads=/home/ahlr/Downloads
@@ -464,8 +467,12 @@ echo
 	  echo -e "$variablestxt"
 	fi
 	
-    if [[ $updatemirrors == yes && $mirrorarm == yes && $mirrorx86_64 == yes && $ktown == yes && $mmultilib == yes ]]; then
+    if [ $updatemirrors == yes ]; then # && $mirrorarm == yes && $mirrorx86_64 == yes && $ktown == yes && $mmultilib == yes ]]; then
 	  echo -e "$mirrorstxt"
+	fi
+	
+	if [ mmultilib == yes ]; then
+	echo -e "$mmultilibtxt"
 	fi
 # --------- Listando funções --------- #
 	echo
@@ -1608,8 +1615,10 @@ fi
 # Configura o Wallpapers
 if [ $wallpaper == yes ] || [ $slackonfig == on ]; then
     echo -e "$wallpapertxt"
+    wget -q  -nv -e robots=0 -r -nd -cP /usr/share/wallpapers/ \
+	$rawimgs/speciale2.jpg
     echo "[Wallpapers]" > /home/ahlr/.config/plasmarc
-    echo "usersWallpapers=/home/ahlr/Dropbox/TONICO/speciale2.jpg" >> /home/ahlr/.config/plasmarc
+    echo "usersWallpapers=/usr/share/wallpapers/speciale2.jpg" >> /home/ahlr/.config/plasmarc
     sleep 5
 fi
 
@@ -1630,6 +1639,22 @@ if [ $variables == yes ]; then
     echo "" >> /etc/profile
     echo "#Cria variáveis globais" >> /etc/profile
     echo "export src=\"/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/source/\"" >> /etc/profile
+    sleep 5
+fi
+
+# Cria rsync multilib
+if [ $mmultilib == yes ]; then
+    echo -e "$mmultilibtxt"
+    echo "#!"$SHELL > $ulbin/multilib.sh
+    echo ""
+    echo "cat $minilicense" >> $ulbin/multilib.sh
+    echo "if [ ! -d /mnt/sda3/Slackware/multilib ]; then" >> $ulbin/multilib.sh
+	echo "mkdir /mnt/sda3/Slackware/multilib" >> $ulbin/multilib.sh
+    echo "fi" >> $ulbin/multilib.sh
+    echo ""
+    echo "cd /mnt/sda3/Slackware/multilib" >> $ulbin/multilib.sh
+    echo ""
+    echo "lftp -c \"open http://bear.alienbase.nl/mirrors/people/alien/multilib/ ; mirror  -e -v -n --exclude 1.*/ --exclude source/\"" >> $ulbin/multilib.sh
     sleep 5
 fi
 
