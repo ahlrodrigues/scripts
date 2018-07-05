@@ -14,6 +14,5 @@ flashplayer-plugin
 chromium-6*
 chromium-pepperflash-plugin
 chromium-widevine-plugin
-dropbox
 
 

@@ -4,7 +4,7 @@
 ###
 ##################################################################################
 #                                                                                #
-# Copyright 2018; Antonio Henrique (Fela); <ahlr_2000@yahoo.com>                 #
+# Copyright 2018; Antonio Henrique (Fela); <ahlr_2000@yahoo.com>                                  #
 # Todos os direitos reservados.                                                  #
 #                                                                                #
 #                                                                                #
@@ -18,7 +18,7 @@
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF          #
 #  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO   #
 #  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,        #
-#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOTnLIMITED TO,  #
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,  #
 #  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;   #
 #  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,      #
 #  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR       #
@@ -97,10 +97,10 @@ thunderbird=no
 bblazetonico=no
 bblazenet4you=no
 data=no
-winbox=no
-cashflow=no
-cobrancabnb=yes
-cobranca=yes
+winbox=yes
+cashflow=yes
+skyline=yes
+cobranca=no
 slackpkg=no
 slackpkgplus=no
 pkgs=no
@@ -114,7 +114,7 @@ projetos=no
 doplexpkg=no
 doteamviewerpkg=no
 dochangelog=no
-wallpaper=no
+wallpaper=yes
 localerc=no
 variables=no
 updatemirrors=no
@@ -152,8 +152,8 @@ bblazenet4youtxt="$GREEN Faz backup no Backblaze; $NC"
 datatxt="$GREEN Script de calculo data; $NC"
 winboxtxt="$GREEN Cria a entrada do Winbox no menu do KDE; $NC"
 cashflowtxt="$GREEN Cria a entrada do CashFlow no menu do KDE; $NC"
-cobrancatxt="$GREEN Cria a entrada do Skyline no menu do KDE; $NC"
-cobrancabnbtxt="$GREEN Cria script de administração da cobramça do BN; $NC"
+skylinetxt="$GREEN Cria a entrada do Skyline no menu do KDE; $NC"
+cobrancatxt="$GREEN Cria script de administração da cobramça do BN; $NC"
 slackpkgtxt="$GREEN Instala e configura o slackpkg; $NC"
 slackpkgplustxt="$GREEN Instala e configura slackpkgplus; $NC"
 pkgstxt="$GREEN Instalacao da lista de pacotes; $NC"
@@ -399,8 +399,8 @@ echo
 	  echo -e "$cashflowtxt"
 	fi
 	
-	if [ $cobrancabnb == yes ]; then
-	  echo -e "$cobrancabnbtxt"
+	if [ $skyline == yes ]; then
+	  echo -e "$skylinetxt"
 	fi
 	
 	if [ $cobranca == yes ]; then
@@ -1141,8 +1141,8 @@ if [ $cashflow == yes ]; then
 fi
 
 #Criação do arquivo bnb.desktop
-if [ $cobranca == yes ]; then
-    echo -e "$cobrancatxt"
+if [ $skyline == yes ]; then
+    echo -e "$skylinetxt"
     echo "[Desktop Entry]" > $usa/bnb.desktop
     echo "Exec=$ulbin/cobrancabnb.sh" >> $usa/bnb.desktop
     echo "GenericName=BNB" >> $usa/bnb.desktop
@@ -1158,8 +1158,8 @@ if [ $cobranca == yes ]; then
 fi
 
 #Cria script que administra cobrança BNB
-if [ $cobrancabnb == yes ] && [ cobranca == yes ]; then 
-    echo -e "$cobrancabnbtxt"
+if [ cobranca == yes ] && [ skyline == yes ]; then 
+    echo -e "$cobrancatxt"
     echo "#!"$SHELL > $ulbin/cobrancabnb.sh
     cat $minilicense >> $ulbin/cobrancabnb.sh
     echo "arquivos=`ls $downloads/ | awk '/CB/ { print $0 }'` # REMESSAS" >> $ulbin/cobrancabnb.sh
@@ -1172,7 +1172,6 @@ if [ $cobrancabnb == yes ] && [ cobranca == yes ]; then
     echo "wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null" >> $ulbin/cobrancabnb.sh
     echo "exit 1" >> $ulbin/cobrancabnb.sh
     echo "fi" >> $ulbin/cobrancabnb.sh
-    $permix $ulbin/cobrancabnb.sh
 fi
 
 #Instalação do slackpkgplus
@@ -1850,7 +1849,7 @@ echo -e "$CYAN # --------- # --------- #  $NC"
 echo
 echo
 	fi
-	
+clear	
 echo
 echo
 echo -e "$CYAN Pacotes instalados e Configurações realizadas!! $NC"

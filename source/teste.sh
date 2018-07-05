@@ -84,7 +84,7 @@ skyline=no
 cobranca=no
 slackpkg=no
 slackpkgplus=no
-pkgs=no
+pkgs=yes
 hubiCNET4YOU=no
 credhubiCNET4YOU=no
 multilib=no
@@ -203,64 +203,34 @@ WHITE='\e[1;37m'
 BWHITE='\e[5;37m'
 NC='\033[0m' # reset/no color
 
-# Automatiza o SlackBuild Teamviewer
-if [ $dochangelog == yes ]; then
-    echo -e "$dochangelogtxt"
-    echo "#!"$SHELL > $ulbin/dochangelog.sh
-    #cat $minilicense >> $ulbin/dochangelog.sh
-   # cat $colors >> $ulbin/dochangelog.sh
-    echo "data=\$(date +\"%c\")" >> $ulbin/dochangelog.sh
-    echo "clear" >> $ulbin/dochangelog.sh    
-    echo "" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo -e \"\$GREEN Inseria as alterações para o arquivo ChangeLog.txt? Utilize \$BROWN\\n\$NC para pular de linha.\$NC\"" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "read -r updates" >> $ulbin/dochangelog.sh    
-    echo "" >> $ulbin/dochangelog.sh       
-    echo "echo" >> $ulbin/dochangelog.sh     
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh       
-    echo "echo \"*----------------------- \$data -----------------------*\"" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo -e \$updates" >> $ulbin/dochangelog.sh       
-    echo "" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo -e \"\$GREEN Deseja Gravar Y|y;N|n?\$NC\"" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "" >> $ulbin/dochangelog.sh    
-    echo "read write" >> $ulbin/dochangelog.sh    
-    echo "" >> $ulbin/dochangelog.sh    
-    echo "case \$write in" >> $ulbin/dochangelog.sh     
-    echo "" >> $ulbin/dochangelog.sh          
-    echo "Y|y)" >> $ulbin/dochangelog.sh    
-    echo "sed -i \"1s/^/\$updates\\n/\" /home/ahlr/Dropbox/TONICO/Projetos/slackonfig/ChangeLog.txt" >> $ulbin/dochangelog.sh    
-    echo "sed -i \"1s/^/\\n/\" /home/ahlr/Dropbox/TONICO/Projetos/slackonfig/ChangeLog.txt" >> $ulbin/dochangelog.sh       
-    echo "sed -i \"1s/^/*----------------------- \$data -----------------------*\\n/\" /home/ahlr/Dropbox/TONICO/Projetos/slackonfig/ChangeLog.txt" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo -e \"\$GREEN Gravado!\$NC\"" >> $ulbin/dochangelog.sh   
-    echo "echo" >> $ulbin/dochangelog.sh
-    echo "echo" >> $ulbin/dochangelog.sh
-    echo "echo" >> $ulbin/dochangelog.sh
-    echo ";;" >> $ulbin/dochangelog.sh    
-    echo "" >> $ulbin/dochangelog.sh            
-    echo "N|n)" >> $ulbin/dochangelog.sh    
-    echo "echo -e \"\$GREEN Saindo....\$NC\"" >> $ulbin/dochangelog.sh    
-    echo "exit" >> $ulbin/dochangelog.sh    
-    echo ";;" >> $ulbin/dochangelog.sh    
-    echo "" >> $ulbin/dochangelog.sh        
-    echo "*)" >> $ulbin/dochangelog.sh  
-    echo "echo -e \"\$BRED Opção errada!\$NC\"" >> $ulbin/dochangelog.sh    
-    echo ";;" >> $ulbin/dochangelog.sh    
-    echo "" >> $ulbin/dochangelog.sh    
-    echo "esac" >> $ulbin/dochangelog.sh    
+#Instalação dos programas listados no arquivo pkg.txt
+if [ $pkgs == yes ]; then
+    grep -q '^file' '/etc/slackpkg/mirrors'
+    if [ $? = 0 ]; then
+    grep -q '^MIRRORPLUS['multilib']' '/etc/slackpkg/slackpkgplus.conf' echo $?
+    if [ $? = 0 ]; then
+    grep -q '^MIRRORPLUS['alienbob']' '/etc/slackpkg/slackpkgplus.conf'
+    if [ $? = 0 ]; then
+    if [ ! -f "$pkgs" ]; then
+	echo -e "$apkgstxt"
+	wget -q  -nv -e robots=0 -r -nd -cP /tmp $rawdocs/pkgs.txt
+    else
+	echo -e "$RED Arquivo $GREEN $apkgstxt $RED foi encontrado. $NC"
+	sleep 5
+    fi
+    echo -e "$pkgstxt"
+    echo "pacotes instalados"
+    else
+    echo -e "$RED Configure o MIRRORPLUS['alienbob'] $NC"
+    exit
+    fi
+    else
+    echo -e "$RED Configure o MIRRORPLUS['multilib'] $NC"
+    exit
+    fi
+    else
+    echo -e "$RED Configure o /etc/slackpkg/mirrors $NC"
+    exit
+    fi
+    sleep 5
 fi
