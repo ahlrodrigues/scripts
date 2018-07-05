@@ -1,6 +1,10 @@
+*----------------------- qua 04 jul 2018 21:33:30 -03 -----------------------*
+
+- correção no multilib
+- correção no mlocal
+- correção no pkg
 *----------------------- ter 03 jul 2018 22:00:55 -03 -----------------------*
 
-wallpaper - Configura o papel de parede padrão;
 localerc - Configura o idioma do plasma;
 updatemirrors - Cria um atalho para atualização dos mirrors;
 mmultilib - Cria o script rsync para o multilib;

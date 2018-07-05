@@ -72,7 +72,7 @@ slackonfig=no
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
 # Veja as funcões de cada script na página inicial do projeto slackonfig: 
 # https://github.com/ahlrodrigues/slackonfig
-mlocal=no
+mlocal=yes
 cleanret=no       
 mvrejsgr=no
 cleansici=no
@@ -111,7 +111,7 @@ sshbackup=no
 ktown=no
 clamav=no
 projetos=no
-doplexpkg=yes
+doplexpkg=no
 doteamviewerpkg=no
 dochangelog=no
 wallpaper=no
@@ -198,7 +198,7 @@ downloads=/home/ahlr/Downloads
 permix="chmod +x"
 permi0="chmod 770"
 permi7="chmod 777"
-caminho=/mnt/sda3/Slackware
+caminho="/mnt/sda3/Slackware"
 home=/home/ahlr
 null="/dev/null"
 
@@ -467,7 +467,7 @@ echo
 	  echo -e "$variablestxt"
 	fi
 	
-    if [ $updatemirrors == yes ]; then # && $mirrorarm == yes && $mirrorx86_64 == yes && $ktown == yes && $mmultilib == yes ]]; then
+    if [ $updatemirrors == yes ]; then
 	  echo -e "$mirrorstxt"
 	fi
 	
@@ -514,7 +514,8 @@ echo
         echo -e "$mlocaltxt"
         echo
         echo 
-        sed "/file:/{p;s/.*/file:/$caminho;}" /etc/slackpkg/mirrors
+        sed -i '/file://.*/s/^#//g' /etc/slackpkg/mirrors
+        sed -i 's/file:\/.*/file:/nnnnnnnnnnnnnnnn/g' /etc/slackpkg/mirrors
         fi 
 	
 if [ $thunderbackup == yes ]; then
@@ -1192,7 +1193,13 @@ if [ $multilib == yes ] && [ $slackpkgplus == yes ] && [ $slackpkg == yes ]; the
     echo
     sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf
     sed -i 's/TAG_PRIORITY=off/TAG_PRIORITY=on/g' /etc/slackpkg/slackpkgplus.conf
-    /usr/doc/slackpkg+-1.7.0/setupmultilib.sh
+    sed -i 's/PKGS_PRIORITY=(.*/PKGS_PRIORITY=( multilib ktown )/g' /etc/slackpkg/slackpkgplus.conf
+    sed -i 's/REPOPLUS=(.*/REPOPLUS=( slackpkgplus multilib alienbob restricted ktown TONICO)/g' /etc/slackpkg/slackpkgplus.conf
+    sed -i 's/file:.*/file:\/\/mnt\/sda3\/Slackware\//g' /etc/slackpkg/mirrors
+    sed -i '/# Slackware current - x86_64/ a MIRRORPLUS['ktown']=http://bear.alienbase.nl/mirrors/alien-kde/current/5/x86_64/' /etc/slackpkg/slackpkgplus.conf
+    sed -i '/# Slackware current - x86_64/ a MIRRORPLUS['multilib']=http://bear.alienbase.nl/mirrors/people/alien/multilib/current/' /etc/slackpkg/slackpkgplus.conf
+    sed -i '/# Slackware current - x86_64/ a MIRRORPLUS['alienbob']=http://bear.alienbase.nl/mirrors/people/alien/sbrepos/current/x86_64/' /etc/slackpkg/slackpkgplus.conf
+    sed -i '/# Slackware current - x86_64/ a MIRRORPLUS['restricted']=http://bear.alienbase.nl/mirrors/people/alien/restricted_sbrepos/current/x86_64/' /etc/slackpkg/slackpkgplus.conf
     sleep 5
 fi
 
