@@ -582,14 +582,14 @@ if [ $cleanret == yes ]; then
 	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa/
       fi
     echo "arquivos=ls $downloads | awk '/R*.ret/ { print \$0 }'" >> $crondaily/cleanret.sh
-    echo "if [ \"\$arquivos\" != \"\" ]; then" >> $ulbin/cobrancabnb.sh
+    echo "if [ \"\$arquivos\" != \"\" ]; then" >> $crondaily/cleanret.sh
     echo "mv \$pasta_origem/R*.ret \$pasta_retorno" >> $crondaily/cleanret.sh
-    echo "fi" >> $ulbin/cobrancabnb.sh >> $crondaily/cleanret.sh
+    echo "fi" >> $crondaily/cleanret.sh
     echo "arquivos2=ls $downloads | awk '/E*.rem/ { print \$0 }'" >> $crondaily/cleanret.sh
     echo "" >> $crondaily/cleanret.sh
     echo "if [ \"\$arquivos\" != \"\" ]; then" >> $crondaily/cleanret.sh
-    echo "mv \$pasta_origem/E*.rem \$pasta_remessa" >> $crondaily/cleanret.sh
-    echo "fi" >> $ulbin/cobrancabnb.sh
+    echo "mv \$pasta_origem2/E*.rem \$pasta_remessa" >> $crondaily/cleanret.sh
+    echo "fi" >> $crondaily/cleanret.sh
     $permix $crondaily/cleanret.sh
     $permi0 $crondaily/cleanret.sh    
     sleep 5
@@ -1156,7 +1156,7 @@ if [ $cobranca == yes ] || [ $slackonfig == yes ]; then
     echo "Categories=Network;" >> $usa/bnb.desktop
     echo "NoDisplay=false" >> $usa/bnb.desktop
     echo "StartupNotify=true" >> $usa/bnb.desktop
-    echo "Terminal=1" >> $usa/bnb.desktop
+    echo "Terminal=0" >> $usa/bnb.desktop
     echo "X-KDE-SubstituteUID=false" >> $usa/bnb.desktop
     update-desktop-database -q
     sleep 5
@@ -1164,11 +1164,11 @@ if [ $cobranca == yes ] || [ $slackonfig == yes ]; then
     echo -e "$cobrancabnbtxt"
     echo "#!"$SHELL > $ulbin/cobrancabnb.sh
     cat $minilicense >> $ulbin/cobrancabnb.sh
-    echo "arquivos=ls $downloads | awk '/CB*.rem/ { print \$0 }'" >> $ulbin/cobrancabnb.sh
+    echo "arquivos=`ls $downloads | awk '/CB/ { print \$0 }'`" >> $ulbin/cobrancabnb.sh
     echo "pasta_origem=$downloads" >> $ulbin/cobrancabnb.sh
-    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/outbox/" >> $ulbin/cobrancabnb.sh
+    echo "pasta_outbox=/home/ahlr/.wine/drive_c/skyline/outbox/" >> $ulbin/cobrancabnb.sh
     echo "if [ \"\$arquivos\" != \"\" ]; then" >> $ulbin/cobrancabnb.sh
-    echo "mv \$pasta_origem/CB*.rem \$pasta_destino" >> $ulbin/cobrancabnb.sh
+    echo "mv \$pasta_origem/CB* \$pasta_outbox" >> $ulbin/cobrancabnb.sh
     echo "wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null"  >> $ulbin/cobrancabnb.sh
     echo "else" >> $ulbin/cobrancabnb.sh
     echo "wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null" >> $ulbin/cobrancabnb.sh
