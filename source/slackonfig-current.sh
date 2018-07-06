@@ -75,10 +75,10 @@ slackonfig=no
 # Veja as funcões de cada script na página inicial do projeto slackonfig: 
 # https://github.com/ahlrodrigues/slackonfig
 mlocal=no
-cleanret=yes       
-mvrejsgr=yes
+cleanret=no       
+mvrejsgr=no
 cleansici=no
-cleansai=yes
+cleansai=no
 cleancache=no
 ntp=no
 samba=no
@@ -1164,7 +1164,7 @@ if [ $cobranca == yes ] || [ $slackonfig == yes ]; then
     echo -e "$cobrancabnbtxt"
     echo "#!"$SHELL > $ulbin/cobrancabnb.sh
     cat $minilicense >> $ulbin/cobrancabnb.sh
-    echo "arquivos=`ls $downloads | awk '/CB/ { print \$0 }'`" >> $ulbin/cobrancabnb.sh
+    echo "arquivos=\`ls $downloads | awk '/CB/ { print \$0 }'\`" >> $ulbin/cobrancabnb.sh
     echo "pasta_origem=$downloads" >> $ulbin/cobrancabnb.sh
     echo "pasta_outbox=/home/ahlr/.wine/drive_c/skyline/outbox/" >> $ulbin/cobrancabnb.sh
     echo "if [ \"\$arquivos\" != \"\" ]; then" >> $ulbin/cobrancabnb.sh
