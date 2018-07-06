@@ -67,7 +67,9 @@
 # PARA QUE O SCRIPT FUNCIONE TROCUE A VARIÁVEL slackonfig=nof PARA slackonfig=yes. Utilizado para aplicar funções pré configuradas.
 slackonfig=no
 
-# inittab | ntp | cups | konsole | lang | localerc | wallpaper | variables | mlocal | slackpkgplus | multilib | winbox | cashflow |
+# | inittab | ntp | cups | konsole | lang | localerc | wallpaper | variables | mlocal | slackpkgplus | multilib | winbox | cashflow | #
+
+# | cobranca |
 
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
 # Veja as funcões de cada script na página inicial do projeto slackonfig: 
@@ -99,8 +101,7 @@ bblazenet4you=no
 data=no
 winbox=no
 cashflow=no
-cobrancabnb=yes
-cobranca=yes
+cobranca=no
 slackpkg=no
 slackpkgplus=no
 pkgs=no
@@ -191,7 +192,7 @@ usa=/usr/share/applications
 blacklist=">> /etc/slackpkg/blacklist"
 rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
 rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
-rawimgs=https://github.com/ahlrodrigues/slackonfig/raw/master/imgs
+rawimgs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/imgs
 imag="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/imgs"
 dropbox=/home/ahlr/Dropbox
 downloads=/home/ahlr/Downloads
@@ -201,7 +202,7 @@ permi7="chmod 777"
 caminho="/mnt/sda3/Slackware"
 home=/home/ahlr
 null="/dev/null"
-icon=/usr/share/icons/
+icons=/usr/share/icons/
  
 
 # --------- Limpa tudo --------- #
@@ -399,12 +400,9 @@ echo
 	  echo -e "$cashflowtxt"
 	fi
 	
-	if [ $cobrancabnb == yes ]; then
-	  echo -e "$cobrancabnbtxt"
-	fi
-	
-	if [ $cobranca == yes ]; then
+	if [ $cobranca == yes ] || [ $slackonfig == yes ]; then
 	  echo -e "$cobrancatxt"
+      echo -e "$cobrancabnbtxt"
 	fi
 	
 	if [ $slackpkg == yes ]; then
@@ -1111,7 +1109,7 @@ if [ $winbox == yes ]; then
     echo "[Desktop Entry]" > $usa/winbox.desktop
     echo "Exec=wine $dropbox/NET4YOU/NET4YOU/Packages/winbox.exe" >> $usa/winbox.desktop
     echo "GenericName=Winbox" >> $usa/winbox.desktop
-    echo "Icon=$icon/winbox.png" >> $usa/winbox.desktop
+    echo "Icon=$icons/winbox.png" >> $usa/winbox.desktop
     echo "Name=Permite acesso ao Servidor" >> $usa/winbox.desktop
     echo "Categories=Network;" >> $usa/winbox.desktop
     echo "NoDisplay=false" >> $usa/winbox.desktop
@@ -1129,7 +1127,7 @@ if [ $cashflow == yes ]; then
     echo "[Desktop Entry]" > $usa/cashflow.desktop
     echo "Exec=libreoffice $dropbox/NET4YOU/NET4YOU/Finanças/CASHFLOW.ods" >> $usa/cashflow.desktop
     echo "GenericName=CashFlow" >> $usa/cashflow.desktop
-    echo "Icon=$icon/cashflow.jpg" >> $usa/cashflow.desktop
+    echo "Icon=$icons/cashflow.jpg" >> $usa/cashflow.desktop
     echo "Name=Planilha CashFlow" >> $usa/cashflow.desktop
     echo "Categories=Office;" >> $usa/cashflow.desktop
     echo "NoDisplay=false" >> $usa/cashflow.desktop
@@ -1140,13 +1138,14 @@ if [ $cashflow == yes ]; then
     sleep 5
 fi
 
-#Criação do arquivo bnb.desktop
-if [ $cobranca == yes ]; then
+#Criação do arquivo bnb.desktop e script que administra cobrança BNB
+if [ $cobranca == yes ] || [ $slackonfig == yes ]; then
     echo -e "$cobrancatxt"
+    wget -q  -nv -e robots=0 -r -nd -cP /usr/share/icons/ $rawimgs/skyline.png
     echo "[Desktop Entry]" > $usa/bnb.desktop
     echo "Exec=$ulbin/cobrancabnb.sh" >> $usa/bnb.desktop
     echo "GenericName=BNB" >> $usa/bnb.desktop
-    echo "Icon=$img/skyline.png" >> $usa/bnb.desktop
+    echo "Icon=$icons/skyline.png" >> $usa/bnb.desktop
     echo "Name=Comunicação da cobrança BNB" >> $usa/bnb.desktop
     echo "Categories=Network;" >> $usa/bnb.desktop
     echo "NoDisplay=false" >> $usa/bnb.desktop
@@ -1155,10 +1154,7 @@ if [ $cobranca == yes ]; then
     echo "X-KDE-SubstituteUID=false" >> $usa/bnb.desktop
     update-desktop-database -q
     sleep 5
-fi
 
-#Cria script que administra cobrança BNB
-if [ $cobrancabnb == yes ] && [ cobranca == yes ]; then 
     echo -e "$cobrancabnbtxt"
     echo "#!"$SHELL > $ulbin/cobrancabnb.sh
     cat $minilicense >> $ulbin/cobrancabnb.sh
@@ -1173,6 +1169,7 @@ if [ $cobrancabnb == yes ] && [ cobranca == yes ]; then
     echo "exit 1" >> $ulbin/cobrancabnb.sh
     echo "fi" >> $ulbin/cobrancabnb.sh
     $permix $ulbin/cobrancabnb.sh
+    sleep 5
 fi
 
 #Instalação do slackpkgplus
@@ -1856,6 +1853,8 @@ echo
 echo -e "$CYAN Pacotes instalados e Configurações realizadas!! $NC"
 echo
 echo
+
+sleep 5	
 # --------- Lista de dependências --------- #
     if [ $bblazenet4you == yes \
    -o $bblazetonico == yes \
