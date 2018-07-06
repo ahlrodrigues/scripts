@@ -3,7 +3,7 @@
 ###
 ##################################################################################
 #                                                                                #
-# Copyright 2018; Antonio Henrique (Fela); <ahlr_2000@yahoo.com>                                  #
+# Copyright 2018; Antonio Henrique (Fela); <ahlr_2000@yahoo.com>                 #
 # Todos os direitos reservados.                                                  #
 #                                                                                #
 #                                                                                #
@@ -26,7 +26,7 @@
 #                                                                                #
 ##################################################################################
 #                                                                                #
-# repositry:                                                                     #
+# Repositry:                                                                     #
 # github.com/ahlrodrigues/slackonfig                                             #
 # bitbucket.org/ahlrodrigues/slackonfig                                          #
 #                                                                                #
@@ -35,8 +35,8 @@
 #                                                                                #
 ##################################################################################
 #                                                                                #
-# Estes scripts/programas são softwares livres, você pode redistribuí-los e/ou   #
-# modifica-los dentro dos termos da Licença Pública Geral GNU.                   #
+# This scripts is a free softwares, you can redistribute it and/or modifies it   #
+# within the terms of the GNU General Public License.                            #
 #                                                                                #
 # GNU General Public License:                                                    #
 # [GPL](https://pt.wikipedia.org/wiki/GNU_General_Public_License)                #
