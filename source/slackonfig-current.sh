@@ -40,7 +40,7 @@
 # modifica-los dentro dos termos da Licença Pública Geral GNU.                   #
 #                                                                                #
 # GNU General Public License:                                                    #
-# [GPL](https://pt.wikipedia.org/wiki/GNU_General_Public_License)                #
+# [GPL](https://www.gnu.org/licenses/gpl.txt)                                    #
 # Fundação do Software Livre (FSF) Inc. 51 Franklin St, Fifth Floor,             #
 # Boston, MA 02110-1301 USA                                                      #
 #                                                                                #
@@ -75,15 +75,15 @@ slackonfig=no
 # Veja as funcões de cada script na página inicial do projeto slackonfig: 
 # https://github.com/ahlrodrigues/slackonfig
 mlocal=no
-cleanret=no       
-mvrejsgr=no
+cleanret=yes       
+mvrejsgr=yes
 cleansici=no
-cleansai=no
+cleansai=yes
 cleancache=no
 ntp=no
 samba=no
 cups=no
-shutdown=yes
+shutdown=no
 teamviewerd=no
 plex=no
 mirrorx86_64=no
@@ -101,7 +101,7 @@ bblazenet4you=no
 data=no
 winbox=no
 cashflow=no
-cobranca=no
+cobranca=yes
 slackpkg=no
 slackpkgplus=no
 pkgs=no
@@ -195,7 +195,7 @@ rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/conf
 rawimgs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/imgs
 imag="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/imgs"
 dropbox=/home/ahlr/Dropbox
-downloads=/home/ahlr/Downloads
+downloads="/home/ahlr/Downloads"
 permix="chmod +x"
 permi0="chmod 770"
 permi7="chmod 777"
@@ -575,20 +575,24 @@ if [ $cleanret == yes ]; then
     echo "pasta_remessa=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa" >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
-    pasta_retorno=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos
-    pasta_remessa=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa
       if [ ! -d $pasta_retorno ]; then
 	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos/
       fi
       if [ ! -d $pasta_remessa ]; then
 	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa/
-      fiyes
-    echo "mv \$pasta_origem/*.ret \$pasta_retorno" >> $crondaily/cleanret.sh
-    echo "mv \$pasta_origem/*.rem \$pasta_remessa" >> $crondaily/cleanret.sh
-    $crondaily/cleanret.sh
-    $permi $crondaily/cleanret.sh
+      fi
+    echo "arquivos=ls $downloads | awk '/R*.ret/ { print \$0 }'" >> $crondaily/cleanret.sh
+    echo "if [ \"\$arquivos\" != \"\" ]; then" >> $ulbin/cobrancabnb.sh
+    echo "mv \$pasta_origem/R*.ret \$pasta_retorno" >> $crondaily/cleanret.sh
+    echo "fi" >> $ulbin/cobrancabnb.sh >> $crondaily/cleanret.sh
+    echo "arquivos2=ls $downloads | awk '/E*.rem/ { print \$0 }'" >> $crondaily/cleanret.sh
+    echo "" >> $crondaily/cleanret.sh
+    echo "if [ \"\$arquivos\" != \"\" ]; then" >> $crondaily/cleanret.sh
+    echo "mv \$pasta_origem/E*.rem \$pasta_remessa" >> $crondaily/cleanret.sh
+    echo "fi" >> $ulbin/cobrancabnb.sh
+    $permix $crondaily/cleanret.sh
+    $permi0 $crondaily/cleanret.sh    
     sleep 5
-fi
 fi
 
 # Criar script que move os arquivos de Rejeitado e Francesinha do BNB
@@ -611,7 +615,6 @@ if [ $mvrejsgr == yes ]; then
     echo "mv \$pasta_origem/Rejeitados*.pdf \$pasta_destino 2> /dev/null" >> $crondaily/mvrejsgr.sh
     $permix $crondaily/mvrejsgr.sh
     $permi0 $crondaily/mvrejsgr.sh
-    ln $crondaily/mvrejsgr.sh $ulbin/mvrejsgr.sh
     sleep 5
 fi
 
@@ -1161,11 +1164,11 @@ if [ $cobranca == yes ] || [ $slackonfig == yes ]; then
     echo -e "$cobrancabnbtxt"
     echo "#!"$SHELL > $ulbin/cobrancabnb.sh
     cat $minilicense >> $ulbin/cobrancabnb.sh
-    echo "arquivos=`ls $downloads/ | awk '/CB/ { print $0 }'` # REMESSAS" >> $ulbin/cobrancabnb.sh
+    echo "arquivos=ls $downloads | awk '/CB*.rem/ { print \$0 }'" >> $ulbin/cobrancabnb.sh
     echo "pasta_origem=$downloads" >> $ulbin/cobrancabnb.sh
     echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/outbox/" >> $ulbin/cobrancabnb.sh
-    echo "if [ "$arquivos" != "" ]; then #Se existe arquivo de remessa" >> $ulbin/cobrancabnb.sh
-    echo "mv $pasta_origem/$arquivos $pasta_destino" >> $ulbin/cobrancabnb.sh
+    echo "if [ \"\$arquivos\" != \"\" ]; then" >> $ulbin/cobrancabnb.sh
+    echo "mv \$pasta_origem/CB*.rem \$pasta_destino" >> $ulbin/cobrancabnb.sh
     echo "wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null"  >> $ulbin/cobrancabnb.sh
     echo "else" >> $ulbin/cobrancabnb.sh
     echo "wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null" >> $ulbin/cobrancabnb.sh
@@ -1933,5 +1936,3 @@ fi
     echo
     echo
 fi
-
-

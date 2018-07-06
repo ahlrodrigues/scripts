@@ -203,34 +203,50 @@ WHITE='\e[1;37m'
 BWHITE='\e[5;37m'
 NC='\033[0m' # reset/no color
 
-#Instalação dos programas listados no arquivo pkg.txt
-if [ $pkgs == yes ]; then
-    grep -q '^file' '/etc/slackpkg/mirrors'
-    if [ $? = 0 ]; then
-    grep -q '^MIRRORPLUS['multilib']' '/etc/slackpkg/slackpkgplus.conf' echo $?
-    if [ $? = 0 ]; then
-    grep -q '^MIRRORPLUS['alienbob']' '/etc/slackpkg/slackpkgplus.conf'
-    if [ $? = 0 ]; then
-    if [ ! -f "$pkgs" ]; then
-	echo -e "$apkgstxt"
-	wget -q  -nv -e robots=0 -r -nd -cP /tmp $rawdocs/pkgs.txt
-    else
-	echo -e "$RED Arquivo $GREEN $apkgstxt $RED foi encontrado. $NC"
-	sleep 5
-    fi
-    echo -e "$pkgstxt"
-    echo "pacotes instalados"
-    else
-    echo -e "$RED Configure o MIRRORPLUS['alienbob'] $NC"
-    exit
-    fi
-    else
-    echo -e "$RED Configure o MIRRORPLUS['multilib'] $NC"
-    exit
-    fi
-    else
-    echo -e "$RED Configure o /etc/slackpkg/mirrors $NC"
-    exit
-    fi
-    sleep 5
+# #Instalação dos programas listados no arquivo pkg.txt
+# if [ $pkgs == yes ]; then
+#     grep -q '^file' '/etc/slackpkg/mirrors'
+#     if [ $? = 0 ]; then
+#     grep -q '^MIRRORPLUS['multilib']' '/etc/slackpkg/slackpkgplus.conf' echo $?
+#     if [ $? = 0 ]; then
+#     grep -q '^MIRRORPLUS['alienbob']' '/etc/slackpkg/slackpkgplus.conf'
+#     if [ $? = 0 ]; then
+#     if [ ! -f "$pkgs" ]; then
+# 	echo -e "$apkgstxt"
+# 	wget -q  -nv -e robots=0 -r -nd -cP /tmp $rawdocs/pkgs.txt
+#     else
+# 	echo -e "$RED Arquivo $GREEN $apkgstxt $RED foi encontrado. $NC"
+# 	sleep 5
+#     fi
+#     echo -e "$pkgstxt"
+#     echo "pacotes instalados"
+#     else
+#     echo -e "$RED Configure o MIRRORPLUS['alienbob'] $NC"
+#     exit
+#     fi
+#     else
+#     echo -e "$RED Configure o MIRRORPLUS['multilib'] $NC"
+#     exit
+#     fi
+#     else
+#     echo -e "$RED Configure o /etc/slackpkg/mirrors $NC"
+#     exit
+#     fi
+#     sleep 5
+# fi
+
+
+arquivos="ls /home/ahlr/Downloads | awk '/CB*.rem/ { print $0 }'"
+pasta_origem=/home/ahlr/Downloads
+pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/outbox/
+if [ "$arquivos" != "" ]; then
+cd $pasta_origem
+mv CB*.rem $pasta_destino
+wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null
+else
+wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null
+exit 1
 fi
+
+
+
