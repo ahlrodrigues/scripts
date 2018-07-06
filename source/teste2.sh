@@ -1,36 +1,73 @@
-##########################################
-#                                        #      
-# ------------ REFERÊNCIAS ------------- #            
-#                                        #      
-##########################################
+#!/bin/bash
 
+funcoes=$( dialog --stdout \
+    --separate-output \
+	--checklist 'Você gosta de:' 0 0 0 \
+    mlocal '' off \
+    cleanret '' off \
+    mvrejsgr '' off \
+    cleansici '' off \
+    cleansai '' off \
+    cleancache '' off \
+    ntp '' off \
+    samba '' off \
+    cups '' off \
+    shutdown '' off \
+    teamviewerd '' off \
+    plex '' off \
+    mirrorx86_64 '' off \
+    mirrorarm '' off \
+    inittab '' off \
+    networkmanager '' off \
+    konsole '' off \
+    reccx '' off \
+    brother '' off \
+    lang '' off \
+    thunderbackup '' off \
+    thunderbird '' off \
+    bblazetonico '' off \
+    bblazenet4you '' off \
+    data '' off \
+    winbox '' off \
+    cashflow '' off \
+    cobranca '' off \
+    slackpkg '' off \
+    slackpkgplus '' off \
+    pkgs '' off \
+    hubiCNET4YOU '' off \
+    credhubiCNET4YOU '' off \
+    multilib '' off \
+    sshbackup '' off \
+    ktown '' off \
+    clamav '' off \
+    projetos '' off \
+    doplexpkg '' off \
+    doteamviewerpkg '' off \
+    dochangelog '' off \
+    wallpaper '' off \
+    localerc '' off \
+    variables '' off \
+    updatemirrors '' off \
+    mmultilib '' off )
 
-# --------- comenta determinada linhas --------- #
-sed -i '/PKGS_PRIORITY=( multilib ktown )/s/^/#/g' /etc/slackpkg/slackpkgplus.conf
+return_value=$?
 
-# --------- descomenta determinada linhas --------- #
-sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf 
-
-# --------- comenta todas as linhas --------- #
-sed -i "s/^#*/#/" /etc/profile.d/lang.sh 
-
-# --------- acrescente linha após determinado argumento/linhas --------- #
-sed -i '/[0-9]+/ a Oi. Sou novo aqui' 
-
-# --------- substitui parte de um linhas --------- #
-sed -i "s/LocalZone=.*/LocalZone=America\/Fortaleza/g" /home/ahlr/.config/ktimezonedrc 
-
-# --------- Discard the output --------- #
-$rcd/rc.ntpd restart > /dev/null 
-
-# --------- Condicional E --------- #
-if [ cobranca == yes ] && [ skyline == yes ]; then 
-
-# --------- Condicional OU --------- #
-if [ cobranca == yes ] || [ skyline == yes ]; then 
-
-# --------- Rodando todos os script de uma pasta --------- #
-for sh in /home/ahlr/Downloads/*.sh ; do
-source "$sh"
-#echo "Este é o $sh"
-done
+case $return_value in
+  $mlocal)
+    echo "Result";;
+  $DIALOG_CANCEL)
+    echo "Cancel pressed.";;
+  $DIALOG_HELP)
+    echo "Help pressed.";;
+  $DIALOG_EXTRA)
+    echo "Extra button pressed.";;
+  $DIALOG_ITEM_HELP)
+    echo "Item-help button pressed.";;
+  $DIALOG_ESC)
+    if test -s $tmp_file ; then
+      cat $tmp_file
+    else
+      echo "ESC pressed."
+    fi
+    ;;
+esac

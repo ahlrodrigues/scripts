@@ -83,7 +83,7 @@ cleancache=no
 ntp=no
 samba=no
 cups=no
-shutdown=no
+shutdown=yes
 teamviewerd=no
 plex=no
 mirrorx86_64=no
@@ -288,7 +288,6 @@ clear
 
 
 # --------- Checando funções --------- #
-echo
 echo
 echo -e "$WHITE Vamos executar as seguintes funções do script: $NC"  
 echo
@@ -669,6 +668,8 @@ if [ $cleancache == yes ]; then
     echo "#" >> $crondaily/cleancache.sh
     echo "#Move tudo para o lixo" >> $crondaily/cleancache.sh
     echo "echo 3 > /proc/sys/vm/drop_caches" >> $crondaily/cleancache.sh
+    echo ""
+    echo ""
     $permix $crondaily/cleancache.sh
     $permi0 $crondaily/cleancache.sh
     sleep 5
@@ -716,7 +717,7 @@ if [ $shutdown == yes ]; then
     echo -e "$shutdowntxt"
     echo "#!"$SHELL > $rcd/rc.local_shutdown
     cat $minilicense >> $rcd/rc.local_shutdown
-    echo "Limpeza geram nos diretórios temporários" >> $rcd/rc.local_shutdown
+    echo "#Limpeza geram nos diretórios temporários" >> $rcd/rc.local_shutdown
     echo "cd /tmp && rm -rf -- *[!"ahlr"]* 2>/dev/null" >> $rcd/rc.local_shutdown
     echo "cd /var/tmp && rm -rf * 2>/dev/null" >> $rcd/rc.local_shutdown
     echo "/usr/bin/find /tmp -mindepth 1 -maxdepth 1 -exec /bin/rm -rf {} +;" >> $rcd/rc.local_shutdown
@@ -724,6 +725,8 @@ if [ $shutdown == yes ]; then
     echo "find /tmp -type s -exec  /bin/touch {} \;" >> $rcd/rc.local_shutdown
     echo "find /tmp -type d -empty -mtime +37 -exec /bin/rmdir {} \;" >> $rcd/rc.local_shutdown
     echo "find /tmp -type f -mtime +37 -exec rm -rf {} \; " >> $rcd/rc.local_shutdown
+    echo ""
+    echo ""
     $permix $rcd/rc.local_shutdown
     $permi0 $rcd/rc.local_shutdown
     sleep 5
