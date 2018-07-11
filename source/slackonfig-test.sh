@@ -74,51 +74,9 @@ slackonfig=no
 # Para ativar as funções deste script, troque as variábeis abaixo para "yes".
 # Veja as funcões de cada script na página inicial do projeto slackonfig: 
 # https://github.com/ahlrodrigues/slackonfig
-mlocal=no
-cleanret=no       
-mvrejsgr=no
-cleansici=no
-cleansai=no
-cleancache=no
-ntp=no
-samba=no
-cups=no
-shutdown=no
-teamviewerd=no
-mirrorx86_64=no
-mirrorarm=no  
-inittab=no
-networkmanager=no
-konsole=no
-reccx=no
-brother=no
-lang=no
-thunderbackup=no
-thunderbird=no
-bblazetonico=yes
-bblazenet4you=no
-data=no
-winbox=no
-cashflow=no
-cobranca=no
-slackpkg=no
-slackpkgplus=no
-pkgs=no
-hubiCNET4YOU=no
-credhubiCNET4YOU=no
-multilib=no
-sshbackup=no
-ktown=no
-clamav=no
-projetos=no
-doplexpkg=no
-doteamviewerpkg=no
-dochangelog=no
-wallpaper=no
-localerc=no
-variables=no
-updatemirrors=no
-mmultilib=no
+
+bblazetonico=no
+
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"

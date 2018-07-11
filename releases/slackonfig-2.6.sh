@@ -94,7 +94,7 @@ clamav=no
 projetos=no
 doplexpkg=no
 doteamviewerpkg=no
-dochangelog=yes
+dochangelog=no
 wallpaper=no
 localerc=no
 

@@ -236,16 +236,35 @@ NC='\033[0m' # reset/no color
 # fi
 
 
-arquivos="ls /home/ahlr/Downloads | awk '/CB*.rem/ { print $0 }'"
-pasta_origem=/home/ahlr/Downloads
-pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/outbox/
-if [ "$arquivos" != "" ]; then
-cd $pasta_origem
-mv CB*.rem $pasta_destino
-wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null
-else
-wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null
-exit 1
+# Criar script que move os arquivos da CEF
+if [ $cleanret == yes ]; then
+    echo -e "$cleanrettxt"
+    echo "#!"$SHELL > $crondaily/cleanret.sh
+    cat $minilicense >> $crondaily/cleanret.sh
+    echo "#" >> $crondaily/cleanret.sh
+    echo "pasta_origem=$downloads" >> $crondaily/cleanret.sh
+    echo "pasta_retorno=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos" >> $crondaily/cleanret.sh
+    echo "pasta_remessa=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa" >> $crondaily/cleanret.sh
+    echo "#" >> $crondaily/cleanret.sh
+    echo "#" >> $crondaily/cleanret.sh
+      if [ ! -d $pasta_retorno ]; then
+	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos/
+      fi
+      if [ ! -d $pasta_remessa ]; then
+	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa/
+      fi
+    echo "arquivos=`ls $downloads | awk '/R*.ret/ { print \$0 }'`" >> $crondaily/cleanret.sh
+    echo "if [ \"\$arquivos\" != \"\" ]; then" >> $crondaily/cleanret.sh
+    echo "mv \$pasta_origem/R*.ret \$pasta_retorno" >> $crondaily/cleanret.sh
+    echo "fi" >> $crondaily/cleanret.sh
+    echo "arquivos2=ls $downloads | awk '/E*.rem/ { print \$0 }'" >> $crondaily/cleanret.sh
+    echo "" >> $crondaily/cleanret.sh
+    echo "if [ \"\$arquivos\" != \"\" ]; then" >> $crondaily/cleanret.sh
+    echo "mv \$pasta_origem2/E*.rem \$pasta_remessa" >> $crondaily/cleanret.sh
+    echo "fi" >> $crondaily/cleanret.sh
+    $permix $crondaily/cleanret.sh
+    #$permi0 $crondaily/cleanret.sh    
+    sleep 5
 fi
 
 

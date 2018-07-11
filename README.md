@@ -53,7 +53,6 @@ samba2txt= Incluindo inicialização do deamon do Samba no rc.local;
 cupstxt= Inicializa o deamon do servidor de impressão CUPS;
 shutdowntxt= Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown;
 teamviewerdtxt= Incluindo inicialização do daemon do teamviewer no rc.local;
-plextxt= Incluindo inicialização do daemon do Plex no rc.local;
 mirrorstxt= Administracao dos mirros locais;
 inittabtxt= Habilitando o init 4;
 networkmanagertxt= Inicialzando networkmanager;
