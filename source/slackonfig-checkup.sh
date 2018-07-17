@@ -3,56 +3,61 @@
 ##
 ###
 ##################################################################################
-# Autor: Antonio Henrique (Fela)                                                 #
-# e-mail: ahlr_2000@yahoo.com                                                    #
 #                                                                                #
-# repositórios:                                                                  #
+# Copyright 2018; Antonio Henrique (Fela); <ahlr_2000@yahoo.com>                 #
+# Todos os direitos reservados.                                                  #
+#                                                                                #
+#                                                                                #
+# Redistribution and use of this script, with or without modification, is        #
+# permitted provided that the following conditions are met:                      #
+#                                                                                #
+# 1. Redistributions of this script must retain the above copyright              #
+#    notice, this list of conditions and the following disclaimer.               #
+#                                                                                #
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED    #
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF          #
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO   #
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,        #
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,  #
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;   #
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,      #
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR       #
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF        #
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                    #
+#                                                                                #
+##################################################################################
+#                                                                                #
+# Repositry:                                                                     #
 # github.com/ahlrodrigues/slackonfig                                             #
 # bitbucket.org/ahlrodrigues/slackonfig                                          #
 #                                                                                #
-# Bugs, Agradecimentos, Críticas "construtivas"!                                 #
-# Mande me um e-mail, que ficarei muito grato!                                   #
+# Bugs, Thanks, "Constructive" reviews!                                          #
+# Send me an email, I'll be very grateful!                                       #
 #                                                                                #
-# Este scripts é disponibilizado na esperança que possa ser útil,                #
-# mas SEM NENHUMA GARANTIA DE FUNCIONAMENTO, SEM NENHUMA GARANTIA DE ADEQUAÇÃO A #
-# QUALQUER SISTEMA, SEM NENHUMA GARANTIA DE APLICAÇÃO EM PARTICULAR e NENHUM     #
-# SUPORTE TÉCNICO.                                                               #
+##################################################################################
 #                                                                                #
-# Estes scripts/programas são softwares livres, você pode redistribuí-los e/ou   #
-# modifica-los dentro dos termos da Licença Pública Geral GNU.                   #
+# This scripts is a free softwares, you can redistribute it and/or modifies it   #
+# within the terms of the GNU General Public License.                            #
 #                                                                                #
 # GNU General Public License:                                                    #
 # [GPL](https://pt.wikipedia.org/wiki/GNU_General_Public_License)                #
 # Fundação do Software Livre (FSF) Inc. 51 Franklin St, Fifth Floor,             #
 # Boston, MA 02110-1301 USA                                                      #
-##################################################################################
-###
-##
-#
-#
-##
-###
-##################################################################################
-#                                                                                #
-# Script: Criação e edição de arquivos de configuração do Slackware GNU/Linux    #
-#                                                                                #
-# V0.current                                                                     #
-#                                                                                #
-# Last update: 2018/06/19                                                        #
 #                                                                                #
 ##################################################################################
 ###
 ##
 #
-#
-# PARA QUE O SCRIPT FUNCIONE TROCUE A VARIÁVEL slackonfig=nof PARA slackonfig=yes. Utilizado para aplicar funções pré configuradas.
-slackonfig=no
+# Change the variable slackonfig = no / slackonfig = yes to apply preconfigured functions: 
 
 # inittab | ntp | cups | konsole | lang | 
 
-# Para ativar as funções deste script, troque as variábeis abaixo para "yes".
-# Veja as funcões de cada script na página inicial do projeto slackonfig: 
+slackonfig=no
+
+# To enable the functions in this script, change the variables below to "yes".
+# See the functions of each script on the homepage of the slackonfig project:
 # https://github.com/ahlrodrigues/slackonfig
+
 mlocal=no
 cleanret=no       
 mvrejsgr=no
@@ -96,62 +101,13 @@ doplexpkg=no
 doteamviewerpkg=no
 dochangelog=yes
 
-# --------- Mensagens --------- #
-mlocaltxt="$GREEN Configurando mirror local $NC"
-aminilicensetxt="$GREEN Arquivo de licença a ser incluído nos spripts $NC"
-acolorstxt="$GREEN Arquivo de cores a ser incluído nos spripts $NC"
-apkgstxt="$GREEN Arquivo com lista de pacotes a serem instalados pelo slackpkg $NC"
-cleanrettxt="$GREEN Move os arquivos de retorno da caixa; $NC"
-mvrejsgrtxt="$GREEN Move os arquivos de rejeitados e francesinha do BNB; $NC"
-cleansicitxt="$GREEN Move os recibo de declaração do SICI para o Dropbox; $NC"
-cleansaitxt="$GREEN Move os arquivos de retorno do bnb; $NC"
-cleancachetxt="$GREEN Limpa o cache; $NC"
-ntptxt="$GREEN Habilita o NTP pool server brasileiro; $NC"
-sambatxt="$GREEN Configura o grupo de trabalho do Samba; $NC"
-samba2txt="$GREEN Incluindo inicialização do deamon do Samba no rc.local; $NC"
-cupstxt="$GREEN Inicializa o deamon do servidor de impressão CUPS; $NC"
-shutdowntxt="$GREEN Cria o rc.local_shutdown para limpeza dos /tmp's no shutdown; $NC"
-teamviewerdtxt="$GREEN Incluindo inicialização do daemon do teamviewer no rc.local; $NC"
-plextxt="$GREEN Incluindo inicialização do daemon do Plex no rc.local; $NC"
-mirrorx86_64txt="$GREEN Administração do mirror x86_64 locail; $NC"
-mirrorarmtxt="$GREEN Administração do mirror ARM locail; $NC"
-inittabtxt="$GREEN Habilitando o init 4; $NC"
-networkmanagertxt="$GREEN Inicialzando networkmanager; $NC"
-konsoletxt="$GREEN Configura o profile do Konsole; $NC"
-reccxtxt="$GREEN Cria pasta para os arquivos da CEF e dá permissão de usuário; $NC"
-brothertxt="$GREEN instalacao do driver da impressora; $NC"
-langtxt="$GREEN Configurando local pt-BR; $NC"
-thunderbackuptxt="$GREEN Cria/Recupera backup do Thunderbird; $NC"
-thunderbirdtxt="$GREEN Cria configurações do Thunderbird; $NC"
-bblazetonicotxt="$GREEN Faz backup no Backblaze; $NC"
-bblazenet4youtxt="$GREEN Faz backup no Backblaze; $NC"
-datatxt="$GREEN Script de calculo data; $NC"
-winboxtxt="$GREEN Cria a entrada do Winbox no menu do KDE; $NC"
-cashflowtxt="$GREEN Cria a entrada do CashFlow no menu do KDE; $NC"
-skylinetxt="$GREEN Cria a entrada do Skyline no menu do KDE; $NC"
-cobrancatxt="$GREEN Cria script de administração da cobramça do BN; $NC"
-slackpkgtxt="$GREEN Instala e configura o slackpkg; $NC"
-slackpkgplustxt="$GREEN Instala e configura slackpkgplus; $NC"
-pkgstxt="$GREEN Instalacao da lista de pacotes; $NC"
-hubiCNET4YOUtxt="$GREEN Faz backup no hubic; $NC"
-credhubiCNET4YOUtxt="$GREEN Cria as credenciais da conta hubiC_NET4YOU; $NC"
-multilibtxt="$GREEN Aplica layer multilib; $NC"
-sshbackuptxt="$GREEN Cria script de backup dos equipamentos mikrotik; $NC"
-ktowntxt="$GREEN Cria o script rsync para o ktown do AlienBob; $NC"
-clamavtxt="$GREEN Inicialzando do clamav; $NC"
-projetostxt="$GREEN Atualiza pasta Projetos local; $NC"
-doplexpkgtxt="$GREEN Automatiza o Slackbuild do Plexmediaserver; $NC"
-doteamviewerpkgtxt="$GREEN Automatiza o Slackbuild do Teamviewer; $NC"
-dochangelogtxt="$GREEN Cria o script para escerever no ChangeLog.txt; $NC"
-
-
-# --------- Lista de dependências  --------- #
-sshbackupdep="$PINK sshbackup=> sshpass; $NC"
-blazehubicdep="$PINK duplicity=> librsync, lockfile, pip; $NC"
+# --------- posts --------- #
+bblazetonicotxt="$GREEN Faz backup no backblaze_TONICO; $NC"
 
 
 
-# --------- Caminhos mais usados  --------- #
+
+# --------- Most wanted paths  --------- #
 crondaily=/etc/cron.daily
 cronhourly=/etc/cron.hourly
 minilicense=/tmp/minilicense.txt
@@ -174,10 +130,10 @@ null="/dev/null"
 
  
 
-# --------- Limpa tudo --------- #
+# --------- Cleaning all --------- #
 clear
 
-# --------- Efeito nas Cores  --------- #
+# --------- Colors  --------- #
 #0 Normal Characters
 #1 Bold Characters
 #4 Underlined Characters

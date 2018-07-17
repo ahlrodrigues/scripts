@@ -56,11 +56,11 @@
 # Most wanted paths
 
 crondaily=/home/ahlr/Downloads
-log=/var/log/duplicity
+log=/var/log/tonico
 minilicense=/tmp/minilicense.txt
 colors=/tmp/colors.txt
 rawdocs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs
-rawconfigs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/configs
+rawimgs=https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/imgs
 
 #
 ##
@@ -116,11 +116,11 @@ if [[ $(whoami) == "root" ]]; then
 ##################################################################################
 # Test if you are online
 
-dialog                                         \
+    dialog                                         \
    --title 'Wait'                           \
    --infobox '\nTesting connection, please wait ...'  \
    05 40
-    ping -q -c2 8.8.8.8 > /dev/null
+   ping -q -c2 8.8.8.8 > /dev/null
     sleep 5
     
     if [ $? -eq 0 ]; then
@@ -189,80 +189,82 @@ do
  case $selection in
  1) # Creating the file backblaze_TONICO.sh
 
-            if [ $bblazetonico == yes ]; then
-                echo -e "$bblazetonicotxt"
-                    
-                if [ ! -d $log ]; then
-                    mkdir $log 
-                fi
+    dialog                                         \
+    --title 'Aguarde'                           \
+    --infobox '\n$bblazetonicotxt'  \
+    05 40
+            
+    if [ ! -d $log ]; then
+        mkdir $log 
+    fi
                                             
-                echo "#!"$SHELL > $crondaily/backblaze_TONICO.sh
-                cat $minilicense >> $crondaily/backblaze_TONICO.sh
-                cat $colors >> $crondaily/backblaze_TONICO.sh
-                echo "clear" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "if [[ \$(whoami) == "ahlr" ]]; then" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "   echo" >> $crondaily/backblaze_TONICO.sh
-                echo "   echo" >> $crondaily/backblaze_TONICO.sh
-                echo "   echo -e "'"$RED Troque de usuário, o ROOT não pode executar backups $NC"'"" >> $crondaily/backblaze_TONICO.sh
-                echo "   echo" >> $crondaily/backblaze_TONICO.sh
-                echo "   echo" >> $crondaily/backblaze_TONICO.sh
-                echo "   exit 0" >> $crondaily/backblaze_TONICO.sh
-                echo "   else" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "   #B2 configuration variables" >> $crondaily/backblaze_TONICO.sh
-                echo "   B2_ACCOUNT="cd0c87d370b7"" >> $crondaily/backblaze_TONICO.sh
-                echo "   B2_KEY="0010db1dde3b5edd54f9890392d42d089c782a4457"" >> $crondaily/backblaze_TONICO.sh
-                echo "   B2_BUCKET="TONICO"" >> $crondaily/backblaze_TONICO.sh
-                echo "   B2_DIR=""" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "   # Local directory to backup" >> $crondaily/backblaze_TONICO.sh
-                echo "   LOCAL_DIR="$dropbox/TONICO/"" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_TONICO.sh
-                echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
-                echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
-                echo "   export PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
-                echo "   export SIGN_PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "   # Remove files older than 90 days" >> $crondaily/backblaze_TONICO.sh
-                echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   remove-older-than 90D --force \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET} > \$log/ backblaze_TONICO.log" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/backblaze_TONICO.sh
-                echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   --full-if-older-than 30D \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   \${LOCAL_DIR} b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET} >> \$log/ backblaze_TONICO.log" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "   # Cleanup failures" >> $crondaily/backblaze_TONICO.sh
-                echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   cleanup --force \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   b2://\${B2_ACCOUNT}:${B2_KEY}@\${B2_BUCKET} >> \$log/ backblaze_TONICO.log" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "   # Show collection-status" >> $crondaily/backblaze_TONICO.sh
-                echo "   duplicity collection-status \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
-                echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET} >> \$log/ backblaze_TONICO.log" >> $crondaily/backblaze_TONICO.sh
-                echo "" >> $crondaily/backblaze_TONICO.sh
-                echo "   # Unset variables" >> $crondaily/backblaze_TONICO.sh
-                echo "   unset B2_ACCOUNT" >> $crondaily/backblaze_TONICO.sh
-                echo "   unset B2_KEY" >> $crondaily/backblaze_TONICO.sh
-                echo "   unset B2_BUCKET" >> $crondaily/backblaze_TONICO.sh
-                echo "   unset B2_DIR" >> $crondaily/backblaze_TONICO.sh
-                echo "   unset LOCAL_DIR" >> $crondaily/backblaze_TONICO.sh
-                echo "   unset ENC_KEY" >> $crondaily/backblaze_TONICO.sh
-                echo "   unset SGN_KEY" >> $crondaily/backblaze_TONICO.sh
-                echo "   unset PASSPHRASE" >> $crondaily/backblaze_TONICO.sh
-                echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_TONICO.sh 
-                echo "fi" >> $crondaily/backblaze_TONICO.sh
-                $permix $crondaily/backblaze_TONICO.sh
-                $permi0 $crondaily/backblaze_TONICO.sh
-            fi
+    echo "#!"$SHELL > $crondaily/backblaze_TONICO.sh
+    cat $minilicense >> $crondaily/backblaze_TONICO.sh
+    cat $colors >> $crondaily/backblaze_TONICO.sh
+    echo "clear" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "if [[ \$(whoami) == "ahlr" ]]; then" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo -e "'"$RED Troque de usuário, o ROOT não pode executar backups $NC"'"" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   echo" >> $crondaily/backblaze_TONICO.sh
+    echo "   exit 0" >> $crondaily/backblaze_TONICO.sh
+    echo "   else" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   #B2 configuration variables" >> $crondaily/backblaze_TONICO.sh
+    echo "   B2_ACCOUNT="cd0c87d370b7"" >> $crondaily/backblaze_TONICO.sh
+    echo "   B2_KEY="0010db1dde3b5edd54f9890392d42d089c782a4457"" >> $crondaily/backblaze_TONICO.sh
+    echo "   B2_BUCKET="TONICO"" >> $crondaily/backblaze_TONICO.sh
+    echo "   B2_DIR=""" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Local directory to backup" >> $crondaily/backblaze_TONICO.sh
+    echo "   LOCAL_DIR="$dropbox/TONICO/"" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # GPG key (last 8 characters)" >> $crondaily/backblaze_TONICO.sh
+    echo "   ENC_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
+    echo "   SGN_KEY="A2133DA2"" >> $crondaily/backblaze_TONICO.sh
+    echo "   export PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
+    echo "   export SIGN_PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Remove files older than 90 days" >> $crondaily/backblaze_TONICO.sh
+    echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   remove-older-than 90D --force \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET} > \$log/ backblaze_TONICO.log" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/backblaze_TONICO.sh
+    echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --full-if-older-than 30D \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   \${LOCAL_DIR} b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET} >> \$log/ backblaze_TONICO.log" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Cleanup failures" >> $crondaily/backblaze_TONICO.sh
+    echo "   duplicity \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   cleanup --force \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --sign-key $SGN_KEY --encrypt-key $ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   b2://\${B2_ACCOUNT}:${B2_KEY}@\${B2_BUCKET} >> \$log/ backblaze_TONICO.log" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Show collection-status" >> $crondaily/backblaze_TONICO.sh
+    echo "   duplicity collection-status \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backblaze_TONICO.sh
+    echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET} >> \$log/ backblaze_TONICO.log" >> $crondaily/backblaze_TONICO.sh
+    echo "" >> $crondaily/backblaze_TONICO.sh
+    echo "   # Unset variables" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset B2_ACCOUNT" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset B2_KEY" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset B2_BUCKET" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset B2_DIR" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset LOCAL_DIR" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset ENC_KEY" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset SGN_KEY" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset PASSPHRASE" >> $crondaily/backblaze_TONICO.sh
+    echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_TONICO.sh 
+    echo "fi" >> $crondaily/backblaze_TONICO.sh
+    $permix $crondaily/backblaze_TONICO.sh
+    $permi0 $crondaily/backblaze_TONICO.sh
+            
  ;;
  2)
  echo "You chose the option 2"
@@ -289,7 +291,8 @@ done
 # --------- Cleaning all --------- #
 clear
 
-                                   
+
+                                    
                                     
 
 #
@@ -297,14 +300,10 @@ clear
 ###
 ################################################################################## 
 # It's the end
-
-        else
-            echo
-            echo
-            echo -e "$RED Voce nao esta Conectado! $NC"
-            echo
-            echo
-        fi
+dialog                                         \
+   --title 'Aguarde'                           \
+   --infobox '\nFinalizando em 5 segundos...'  \
+   0 0
 
 
     else
