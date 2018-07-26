@@ -48,7 +48,13 @@
 ###
 ##
 # 
-
+#
+##
+###
+##################################################################################
+# Texts
+bblazetonicotxt="Faz backup no backblaze_TONICO;"
+cleanrettxt="Move os arquivos de retorno da caixa;"
 #
 ##
 ###
@@ -174,7 +180,7 @@ funcheck=(dialog --separate-output --checklist "Select to apply preconfigured fu
 options=(
  1 "bblazetonico  - Faz backup no backblaze_TONICO" off 
  2 "option 2" off
- 3 "option 3" off
+ 3 "cleanret - Move os arquivos de retorno da caixa" off
  4 "option 4" off
  5 "option 5" off
  6 "option 6" off
@@ -270,7 +276,31 @@ do
  echo "You chose the option 2"
  ;;
  3)
- echo "You chose the option 3"
+ echo "cleanret - Move os arquivos de retorno da caixa"
+    dialog                                         \
+    --title 'Aguarde'                           \
+    --infobox '\n$bblazetonicotxt'  \
+    05 40
+    
+    echo "#!"$SHELL > $crondaily/cleanret.sh
+    cat $minilicense >> $crondaily/cleanret.sh
+    cat $colors >> $crondaily/cleanret.sh    
+    echo "pasta_origem=/home/ahlr/Downloads" >> $crondaily/cleanret.sh
+    echo "pasta_retorno=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos/" >> $crondaily/cleanret.sh
+    echo "pasta_remessa=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa/" >> $crondaily/cleanret.sh
+    echo "#" >> $crondaily/cleanret.sh
+    echo "#" >> $crondaily/cleanret.sh
+    echo "arquivos_ret=`ls \$pasta_origem | awk '/R*.ret/ { print $0 }'`" >> $crondaily/cleanret.sh
+    echo "if [ "\$arquivos_ret" != "" ]; then" >> $crondaily/cleanret.sh
+    echo "    mv \$arquivos_ret \$pasta_retorno" >> $crondaily/cleanret.sh
+    echo "fi" >> $crondaily/cleanret.sh
+    echo "" >> $crondaily/cleanret.sh
+    echo "arquivos_rem=`ls \$pasta_origem | awk '/E*.rem/ { print $0 }'`" >> $crondaily/cleanret.sh
+    echo "if [ "\$arquivos_rem" != "" ]; then" >> $crondaily/cleanret.sh
+    echo "    mv \$arquivos_rem \$pasta_remessa" >> $crondaily/cleanret.sh
+    echo "fi" >> $crondaily/cleanret.sh
+    $permix $crondaily/cleanret.sh
+    $permi0 $crondaily/cleanret.sh
  ;;
  4)
  echo "You chose the option 4"

@@ -89,6 +89,7 @@ mirrorx86_64=no
 mirrorarm=no  
 inittab=no
 networkmanager=no
+#konsole=no ------ mesclado com a opção variables
 reccx=no
 brother=no
 lang=no
@@ -111,7 +112,7 @@ ktown=no
 clamav=no
 projetos=no
 doplexpkg=no
-doteamviewerpkg=no
+doteamviewerpkg=yes
 dochangelog=no
 wallpaper=no
 localerc=no
@@ -139,6 +140,7 @@ mirrorx86_64txt="$GREEN Administração do mirror x86_64 locail; $NC"
 mirrorarmtxt="$GREEN Administração do mirror ARM locail; $NC"
 inittabtxt="$GREEN Habilitando o init 4; $NC"
 networkmanagertxt="$GREEN Inicialzando networkmanager; $NC"
+konsoletxt="$GREEN Configura o profile do Konsole; $NC"
 reccxtxt="$GREEN Cria pasta para os arquivos da CEF e dá permissão de usuário; $NC"
 brothertxt="$GREEN instalacao do driver da impressora; $NC"
 langtxt="$GREEN Configurando local pt-BR; $NC"
@@ -347,6 +349,10 @@ echo
 	  echo -e "$networkmanagertxt"
 	fi
 	
+	if [ $konsole == yes ] || [ $slackonfig == yes ]; then
+	  echo -e "$konsoletxt"
+	fi
+	
 	if [ $reccx == yes ]; then
 	  echo -e "$reccxtxt"
 	fi
@@ -456,7 +462,7 @@ echo
 	  echo -e "$mirrorstxt"
 	fi
 	
-	if [ $mmultilib == yes ]; then
+	if [ mmultilib == yes ]; then
 	echo -e "$mmultilibtxt"
 	fi
 # --------- Listando funções --------- #
@@ -618,7 +624,7 @@ fi
 #  para a pasta de backup ../SCM/SICI.
 if [ $cleansici == yes ]; then
     echo -e "$cleansicitxt"
-    echo "#!"$SHELL > $crondaily/cleansici.sh
+    echo "#!"$SHELL > $crondaily//cleansici.sh
     cat $minilicense >> $crondaily/cleansici.sh
     echo "#Mover os arquivos declaração do SICI para a pasta $dropbox/NET4YOU/NET4YOU/SCM/SICI" >> $crondaily/cleansici.sh
     echo "#" >> $crondaily/cleansici.sh
@@ -819,10 +825,20 @@ if [ $networkmanager == yes ]; then
     sleep 5
 fi
 
+# # Configura o profile do Konsole
+# if [ $konsole == yes ] || [ $slackonfig == on ]; then
+#     echo -e "$konsoletxt"
+#     echo "[General]" > /home/ahlr/.local/share/konsole/Shell.profile
+#     echo "Command=/bin/bash -l" >> /home/ahlr/.local/share/konsole/Shell.profile
+#     echo "Name=Shell" >> /home/ahlr/.local/share/konsole/Shell.profile
+#     echo "Parent=FALLBACK/" >> /home/ahlr/.local/share/konsole/Shell.profile
+#     sleep 5
+# fi
+
 if [ $reccx == yes ]; then
     echo -e "$reccxtxt"
     mkdir -p /opt/caixa/Recebidos
-    $permi7 /opt/caixa
+    chmod -R 777 /opt/caixa
     sleep 5
 fi
 
@@ -1394,11 +1410,6 @@ if [ $clamav == yes ]; then
     groupadd -g 210 clamav
     useradd -u 210 -d /dev/null -s /bin/false -g clamav clamav
     freshclam
-    echo "#!"$SHELL > $cronhourly/clamav.sh
-    cat $minilicense >> $cronhourly/clamav.sh
-    echo "" >> $cronhourly/clamav.sh
-    echo "/usr/bin/freshclam --quiet" >> $cronhourly/clamav.sh
-    $permix $cronhourly/clamav.sh
     $rcd/rc.clamav start > $null
     sleep 5
 fi
@@ -1423,10 +1434,8 @@ if [ $doplexpkg == yes ]; then
     clear
     nomep=plexmediaserver
     formatop=deb
-    wget -q  -nv -e robots=0 -r -nd -cP /home/ahlr/Downloads/ \
-    https://slackbuilds.org/slackbuilds/14.2/multimedia/plexmediaserver.tar.gz
     cd $downloads
-    if [ -e $nomep.tar.gz ] && [ -e $nomep_*.$formatop ]; then
+    if [ -e $nomep.tar.gz ] && [ -e $nomep*.$formatop ]; then
     tar zvxf $nomep.tar.gz
     mv $nomep*.$formatop $nomep
     else
