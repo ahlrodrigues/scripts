@@ -1,0 +1,45 @@
+##########################################
+#                                        #      
+# ------------ REFERÊNCIAS ------------- #            
+#                                        #      
+##########################################
+
+
+# --------- comenta determinada linhas --------- #
+sed -i '/PKGS_PRIORITY=( multilib ktown )/s/^/#/g' /etc/slackpkg/slackpkgplus.conf
+
+# --------- descomenta determinada linhas --------- #
+sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf 
+
+# --------- comenta todas as linhas --------- #
+sed -i "s/^#*/#/" /etc/profile.d/lang.sh 
+
+# --------- acrescente linha após determinado argumento/linhas --------- #
+sed -i '/[0-9]+/ a Oi. Sou novo aqui' 
+
+# --------- substitui parte de uma linhas --------- #
+sed -i "s/LocalZone=.*/LocalZone=America\/Fortaleza/g" /home/ahlr/.config/ktimezonedrc 
+
+# --------- Discard the output --------- #
+$rcd/rc.ntpd restart > /dev/null 
+
+# --------- Condicional E --------- #
+if [ cobranca == yes ] && [ skyline == yes ]; then 
+
+# --------- Condicional OU --------- #
+if [ cobranca == yes ] || [ skyline == yes ]; then 
+
+# --------- Rodando todos os script de uma pasta --------- #
+for sh in /home/ahlr/Downloads/*.sh ; do
+source "$sh"
+echo "Este é o $sh"
+done
+
+# --------- Accrescenta linha ao final do arquivo --------- #
+echo -e "$GREEN Inseria as alterações para o arquivo ChangeLog.txt?"
+
+# --------- Accrescenta linha no início do arquivo --------- #
+sed -i "1s/^/TEXTO\n/" $dropbox/TONICO/Projetos/slackonfig/ChangeLog.txt
+
+#Cria variáveis globais
+export src="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/source/"

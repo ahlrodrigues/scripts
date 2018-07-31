@@ -117,7 +117,7 @@ wallpaper=no
 localerc=no
 variables=no
 updatemirrors=no
-mmultilib=no
+mmultilib=yes
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -199,7 +199,10 @@ caminho="/mnt/sda3/Slackware"
 home=/home/ahlr
 null="/dev/null"
 icons=/usr/share/icons/
- 
+rcl=/etc/rc.d/rc.local
+rcteamviwer=`ls $rcl | awk '/teamviwer/ { print $0 }'`
+rcplex=`ls $rcl | awk '/teamviwer/ { print $0 }'`
+drec=/opt/caixa/Recebidos
 
 # --------- Limpa tudo --------- #
 clear
@@ -564,10 +567,10 @@ if [ $cleanret == yes ]; then
     echo "#" >> $crondaily/cleanret.sh
     echo "#" >> $crondaily/cleanret.sh
       if [ ! -d $pasta_retorno ]; then
-	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos/
+            mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Retornos/
       fi
       if [ ! -d $pasta_remessa ]; then
-	mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa/
+            mkdir /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/CX/Remessa/
       fi
     echo "arquivosR=\`ls $downloads | awk '/R*.ret/ { print \$0 }'\`" >> $crondaily/cleanret.sh
     echo "if [ \"\$arquivosR\" != \"\" ]; then" >> $crondaily/cleanret.sh
@@ -583,7 +586,7 @@ if [ $cleanret == yes ]; then
     echo "# $cleanrettxt" >> $rcd/rc.local
     echo "/etc/cron.daily/cleansai.sh" >> $rcd/rc.local
     if [ ! -f /usr/local/bin/cleanret.sh ]; then
-    ln /etc/cron.daily/cleanret.sh /usr/local/bin/cleanret.sh
+        ln /etc/cron.daily/cleanret.sh /usr/local/bin/cleanret.sh
     fi
  ##   if [ grep cleanret /etc/rc.d/rc.local > $null ]; then
     $permix $crondaily/cleanret.sh
@@ -740,7 +743,7 @@ if [ $teamviewerd == yes ]; then
     echo
     echo "O Teamviewer nao esta instalado!"
     echo
-    if [ grep teamviewerd /etc/rc.d/rc.local > $null ]; then
+    if [ "$rcteamviwer" != "" ]; then
     $permix $rcd/rc.teamviewerd
     $permi0 $rcd/rc.teamviewerd
     $rcd/rc.teamviewerd start > $null
@@ -821,8 +824,10 @@ fi
 
 if [ $reccx == yes ]; then
     echo -e "$reccxtxt"
-    mkdir -p /opt/caixa/Recebidos
-    $permi7 /opt/caixa
+    if [ ! -d $drec ]; then
+    mkdir -p $drec
+    $permi7 -R /opt/caixa
+    fi
     sleep 5
 fi
 
@@ -1377,7 +1382,7 @@ if [ $ktown == yes ]; then
     echo -e "$mirrorstxt"
     echo "#!"$SHELL > $crondaily/mirror-ktown.sh
     cat $minilicense >> $crondaily/mirror-ktown.sh
-    echo "rsync -HavP --exclude=x86 rsync://slackware.nl/mirrors/alien-kde/current/5/ /mnt/sda3/Slackware/Ktown/" > $crondaily/mirror-ktown.sh
+    echo "rsync -HavP --exclude=x86 rsync://slackware.nl/mirrors/alien-kde/current/latest/ /mnt/sda3/Slackware/Ktown/" > $crondaily/mirror-ktown.sh
     $permix $crondaily/mirror-ktown.sh
     ln $crondaily/mirror-ktown.sh $ulbin/mirror-ktown.sh
     sleep 5
@@ -1455,7 +1460,7 @@ if [ $doplexpkg == yes ]; then
     case $install in
     Y|y)
     upgradepkg --reinstall --install-new /tmp/$nomep*
-    if [ grep plexmediaserver /etc/rc.d/rc.local > $null ]; then
+    if [ "$rcplex" != "" ]; then
     $permix $rcd/rc.plexmediaserver
     $permi0 $rcd/rc.plexmediaserver
     $rcd/rc.plexmediaserver start > $null
@@ -1628,9 +1633,11 @@ if [ $variables == yes ]; then
     echo -e "$variablestxt"
     echo "" >> /home/ahlr/.bashrc
     echo "#Cria variáveis globais" >> /home/ahlr/.bashrc
-    echo "alias src=\"/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/source/\"" >> /home/ahlr/.bashrc
+    echo "alias src=\"cd /home/ahlr/Dropbox/TONICO/Projetos/slackonfig/source/\"" >> /home/ahlr/.bashrc
     echo "alias tempo=\"curl wttr.in\/\~Natal\"" >> /home/ahlr/.bashrc
     echo "export PS1='\u@\h:\w\$ '" >> /home/ahlr/.bashrc
+    $permix /home/ahlr/.bashrc
+    $permi7 /home/ahlr/.bashrc
     source /home/ahlr/.bashrc
     sleep 5
 fi
@@ -1638,16 +1645,16 @@ fi
 # Cria rsync multilib
 if [ $mmultilib == yes ]; then
     echo -e "$mmultilibtxt"
-    echo "#!"$SHELL > $ulbin/multilib.sh
+    echo "#!"$SHELL > $ulbin/mirror-multilib.sh
     echo ""
-    echo "cat $minilicense" >> $ulbin/multilib.sh
-    echo "if [ ! -d /mnt/sda3/Slackware/multilib ]; then" >> $ulbin/multilib.sh
-	echo "mkdir /mnt/sda3/Slackware/multilib" >> $ulbin/multilib.sh
-    echo "fi" >> $ulbin/multilib.sh
+    echo "cat $minilicense" >> $ulbin/mirror-multilib.sh
+    echo "if [ ! -d /mnt/sda3/Slackware/multilib ]; then" >> $ulbin/mirror-multilib.sh
+	echo "mkdir /mnt/sda3/Slackware/multilib" >> $ulbin/mirror-multilib.sh
+    echo "fi" >> $ulbin/mirror-multilib.sh
     echo ""
-    echo "cd /mnt/sda3/Slackware/multilib" >> $ulbin/multilib.sh
+    echo "cd /mnt/sda3/Slackware/multilib" >> $ulbin/mirror-multilib.sh
     echo ""
-    echo "lftp -c \"open http://bear.alienbase.nl/mirrors/people/alien/multilib/ ; mirror  -e -v -n --exclude 1.*/ --exclude source/\"" >> $ulbin/multilib.sh
+    echo "lftp -c \"open http://bear.alienbase.nl/mirrors/people/alien/multilib/ ; mirror  -e -v -n --exclude 1.*/ --exclude source/\"" >> $ulbin/mirror-multilib.sh
     sleep 5
 fi
 
