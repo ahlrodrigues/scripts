@@ -92,7 +92,7 @@ sshbackup=no
 ktown=no
 clamav=no
 projetos=no
-doplexpkg=yes
+doplexpkg=no
 doteamviewerpkg=no
 dochangelog=no
 wallpaper=no
@@ -1172,7 +1172,7 @@ if [ $pkgs == yes ]; then
 fi
 
 #Criação do arquivo de credenciais do hubiC
-if [ $hubiCNET4YOU == yes ]; then
+if [ $credhubiCNET4YOU == yes ]; then
     echo -e "$credhubiCNET4YOUtxt"
     echo "" >> /home/ahlr/.hubic_credentials
     echo "" >> /home/ahlr/.hubic_credentials
@@ -1521,7 +1521,7 @@ if [ $dochangelog == yes ]; then
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
-    echo "echo -e \"\$GREEN Inseria as alterações para o arquivo ChangeLog.txt?"" >> $ulbin/dochangelog.sh    
+    echo "echo -e "\$GREEN Inseria as alterações para o arquivo ChangeLog.txt?"" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    
     echo "echo" >> $ulbin/dochangelog.sh    

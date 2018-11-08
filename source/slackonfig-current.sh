@@ -95,7 +95,7 @@ lang=no
 thunderbackup=no
 thunderbird=no
 bblazetonico=no
-bblazenet4you=no
+bblazenet4you=no 
 data=no
 winbox=no
 cashflow=no
@@ -117,7 +117,7 @@ wallpaper=no
 localerc=no
 variables=no
 updatemirrors=no
-mmultilib=yes
+mmultilib=no
 
 # --------- Mensagens --------- #
 mlocaltxt="$GREEN Configurando mirror local $NC"
@@ -946,13 +946,6 @@ if [ $bblazetonico == yes ]; then
     echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET} >> \$log/ backblaze_TONICO.log" >> $crondaily/backblaze_TONICO.sh
     echo "" >> $crondaily/backblaze_TONICO.sh
     echo "   # Unset variables" >> $crondaily/backblaze_TONICO.sh
-    echo "   unset B2_ACCOUNT" >> $crondaily/backblaze_TONICO.sh
-    echo "   unset B2_KEY" >> $crondaily/backblaze_TONICO.sh
-    echo "   unset B2_BUCKET" >> $crondaily/backblaze_TONICO.sh
-    echo "   unset B2_DIR" >> $crondaily/backblaze_TONICO.sh
-    echo "   unset LOCAL_DIR" >> $crondaily/backblaze_TONICO.sh
-    echo "   unset ENC_KEY" >> $crondaily/backblaze_TONICO.sh
-    echo "   unset SGN_KEY" >> $crondaily/backblaze_TONICO.sh
     echo "   unset PASSPHRASE" >> $crondaily/backblaze_TONICO.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_TONICO.sh 
     echo "fi" >> $crondaily/backblaze_TONICO.sh
@@ -1018,18 +1011,76 @@ if [ $bblazenet4you == yes ]; then
     echo "   b2://\${B2_ACCOUNT}:\${B2_KEY}@\${B2_BUCKET}" >> $crondaily/backblaze_NET4YOU.sh
     echo "" >> $crondaily/backblaze_NET4YOU.sh
     echo "   # Unset variables" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   unset B2_ACCOUNT" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   unset B2_KEY" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   unset B2_BUCKET" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   unset B2_DIR" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   unset LOCAL_DIR" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   unset ENC_KEY" >> $crondaily/backblaze_NET4YOU.sh
-    echo "   unset SGN_KEY" >> $crondaily/backblaze_NET4YOU.sh
     echo "   unset PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh
     echo "   unset SIGN_PASSPHRASE" >> $crondaily/backblaze_NET4YOU.sh 
     echo "fi" >> $crondaily/backblaze_NET4YOU.sh
     $permix $crondaily/backblaze_NET4YOU.sh
     $permi0 $crondaily/backblaze_NET4YOU.sh
+fi
+
+#Criação do arquivo backhubic_NET4YOU.sh
+if [ $hubiCNET4YOU == yes ]; then
+    echo -e "$hubiCNET4YOUtxt"
+        if [ ! -d $log ]; then
+            mkdir $log 
+        fi
+    echo "#!"$SHELL > $crondaily/backhubic_NET4YOU.sh
+    cat $minilicense >> $crondaily/backhubic_NET4YOU.sh
+    cat $colors >> $crondaily/backhubic_NET4YOU.sh
+    echo "clear" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "if [[ \$(whoami) == "ahlr" ]]; then" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   echo" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   echo" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   echo -e "'"$RED Troque de usuário, o ROOT não pode executar backups $NC"'"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   echo" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   echo" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   exit 0" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   else" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   #hubic configuration variables" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   hubic_ACCOUNT="api_hubic_AX1GBGXFqcoFRaB6TcmORhneQ33DYgdp"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   hubic_KEY="mraqgIdiNnxdp6oPX2SrH0w0CDFsmviE822hKvba9OA5KFw9SFatkB6Gl0mQEou5"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   hubic_BUCKET="dropboxNET4YOU"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   hubic_DIR="http://localhost/"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   # Local directory to backup" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   LOCAL_DIR="$dropbox/TONICO/"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   # GPG key (last 8 characters)" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   ENC_KEY="A2133DA2"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   SGN_KEY="A2133DA2"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   export PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   export SIGN_PASSPHRASE="xxxxxxxxxxxxxx"" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   # Remove files older than 90 days" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   duplicity \\" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   remove-older-than 90D --force \\" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   cf+hubic://\$hubic_BUCKET > \$log/ backhubic_NET4YOU.log" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   # Perform the backup, make a full backup if it's been over 30 days" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   duplicity \\" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   --sign-key \$SGN_KEY --encrypt-key \$ENC_KEY \\" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   --full-if-older-than 30D \\" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   \${LOCAL_DIR} cf+hubic://$hubic_BUCKET >> \$log/ backhubic_NET4YOU.log" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   # Cleanup failures" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   duplicity \\" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   cleanup --force \\" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   cf+hubic://\$hubic_BUCKET >> \$log/ backhubic_NET4YOU.log" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   # Show collection-status" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   duplicity collection-status \\" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   cf+hubic://\$hubic_BUCKET >> \$log/ backhubic_NET4YOU.log" >> $crondaily/backhubic_NET4YOU.sh
+    echo "" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   # Unset variables" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   unset PASSPHRASE" >> $crondaily/backhubic_NET4YOU.sh
+    echo "   unset SIGN_PASSPHRASE" >> $crondaily/backhubic_NET4YOU.sh 
+    echo "fi" >> $crondaily/backhubic_NET4YOU.sh
+    $permix $crondaily/backhubic_NET4YOU.sh
+    $permi0 $crondaily/backhubic_NET4YOU.sh
 fi
 
 # Cria script que calcula valor do boleto entre duas datas
@@ -1144,14 +1195,14 @@ fi
 if [ $multilib == yes ] || [ $slackonfig == yes ]; then
     echo -e "$multilibtxt"
     echo
-    sed -i '/PKGS_PRIORITY=( multilib )/s/^#//g' /etc/slackpkg/slackpkgplus.conf
-    sed -i 's/TAG_PRIORITY=off/TAG_PRIORITY=on/g' /etc/slackpkg/slackpkgplus.conf
-    sed -i 's/PKGS_PRIORITY=(.*/PKGS_PRIORITY=( multilib ktown )/g' /etc/slackpkg/slackpkgplus.conf
-    sed -i 's/REPOPLUS=(.*/REPOPLUS=( slackpkgplus multilib alienbob restricted ktown )/g' /etc/slackpkg/slackpkgplus.conf
-    sed -i '/# Slackware current - x86_64/ a MIRRORPLUS['ktown']=http://bear.alienbase.nl/mirrors/alien-kde/current/5/x86_64/' /etc/slackpkg/slackpkgplus.conf
-    sed -i '/# Slackware current - x86_64/ a MIRRORPLUS['multilib']=http://bear.alienbase.nl/mirrors/people/alien/multilib/current/' /etc/slackpkg/slackpkgplus.conf
-    sed -i '/# Slackware current - x86_64/ a MIRRORPLUS['alienbob']=http://bear.alienbase.nl/mirrors/people/alien/sbrepos/current/x86_64/' /etc/slackpkg/slackpkgplus.conf
-    sed -i '/# Slackware current - x86_64/ a MIRRORPLUS['restricted']=http://bear.alienbase.nl/mirrors/people/alien/restricted_sbrepos/current/x86_64/' /etc/slackpkg/slackpkgplus.conf
+    sed -i "/PKGS_PRIORITY=( multilib )/s/^#//g" /etc/slackpkg/slackpkgplus.conf
+    sed -i "s/TAG_PRIORITY=off/TAG_PRIORITY=on/g" /etc/slackpkg/slackpkgplus.conf
+    sed -i "s/PKGS_PRIORITY=(.*/PKGS_PRIORITY=( mymultilib myktown )/g" /etc/slackpkg/slackpkgplus.conf
+    sed -i "s/REPOPLUS=(.*/REPOPLUS=( slackpkgplus mymultilib alienbob restricted myktown )/g" /etc/slackpkg/slackpkgplus.conf
+    sed -i "/# Slackware current - x86_64/ a MIRRORPLUS[\'myktown\']=dir://mnt/sda3/Slackware/ktown/x86_64/" /etc/slackpkg/slackpkgplus.conf
+    sed -i "/# Slackware current - x86_64/ a MIRRORPLUS[\'mymultilib\']=dir://mnt/sda3/Slackware/multilib/current/" /etc/slackpkg/slackpkgplus.conf
+    sed -i "/# Slackware current - x86_64/ a MIRRORPLUS[\'alienbob\']=http://bear.alienbase.nl/mirrors/people/alien/sbrepos/current/x86_64/" /etc/slackpkg/slackpkgplus.conf
+    sed -i "/# Slackware current - x86_64/ a MIRRORPLUS[\'restricted\']=http://bear.alienbase.nl/mirrors/people/alien/restricted_sbrepos/current/x86_64/" /etc/slackpkg/slackpkgplus.conf
     sleep 5
 fi
 
@@ -1185,7 +1236,7 @@ fi
 # fi
 
 #Criação do arquivo de credenciais do hubiC
-if [ $hubiCNET4YOU == yes ]; then
+if [ $credhubiCNET4YOU == yes ]; then
     echo -e "$credhubiCNET4YOUtxt"
     echo "" >> /home/ahlr/.hubic_credentials
     echo "" >> /home/ahlr/.hubic_credentials
@@ -1635,7 +1686,7 @@ if [ $variables == yes ]; then
     echo "#Cria variáveis globais" >> /home/ahlr/.bashrc
     echo "alias src=\"cd /home/ahlr/Dropbox/TONICO/Projetos/slackonfig/source/\"" >> /home/ahlr/.bashrc
     echo "alias tempo=\"curl wttr.in\/\~Natal\"" >> /home/ahlr/.bashrc
-    echo "export PS1='\u@\h:\w\$ '" >> /home/ahlr/.bashrc
+    echo "export PS1='\u\@\h:\w\$ '" >> /home/ahlr/.bashrc
     $permix /home/ahlr/.bashrc
     $permi7 /home/ahlr/.bashrc
     source /home/ahlr/.bashrc
