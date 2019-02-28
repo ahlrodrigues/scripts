@@ -43,3 +43,8 @@ sed -i "1s/^/TEXTO\n/" $dropbox/TONICO/Projetos/slackonfig/ChangeLog.txt
 
 #Cria variáveis globais
 export src="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/source/"
+
+# --------- Apagar arquivos por data --------- #
+find -mtime +60 -type f -exec rm {} \;
+
+
