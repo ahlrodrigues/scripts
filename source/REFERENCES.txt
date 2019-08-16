@@ -47,4 +47,6 @@ export src="/home/ahlr/Dropbox/TONICO/Projetos/slackonfig/source/"
 # --------- Apagar arquivos por data --------- #
 find -mtime +60 -type f -exec rm {} \;
 
-
+# --------- Montando ma rede --------- #
+echo "mount -t cifs //192.168.1.210/dropbox/NET4YOU/ /home/ahlr/NASBOX/ -o username=antonio,password=tossbagscotland,iocharset=utf8,sec=ntlm,nofail,vers=1.0" >> /etc/rc.d/rc.local
+echo "//192.168.1.51/Volume_1/Transmission/ /mnt/box1/ cifs vers=1.0,credentials=/etc/samba/.smbpasswd02,users,uid=ahlr,gid=users,iocharset=utf8,sec=ntlm,nofail 0 0" >> /etc/fstab

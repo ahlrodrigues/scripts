@@ -1238,10 +1238,11 @@ fi
 #Criação do arquivo de credenciais do hubiC
 if [ $credhubiCNET4YOU == yes ]; then
     echo -e "$credhubiCNET4YOUtxt"
+    echo "[hubic]" >> /home/ahlr/.hubic_credentials
     echo "" >> /home/ahlr/.hubic_credentials
     echo "" >> /home/ahlr/.hubic_credentials
     echo "#Backup da pasta /home/ahlr/Dropbox/NET4YOU/" >> /home/ahlr/.hubic_credentials
-    echo "email = financeio@net4you.com.br" >> /home/ahlr/.hubic_credentials
+    echo "email = financeiro@net4you.com.br" >> /home/ahlr/.hubic_credentials
     echo "password = xxxxxxxxx" >> /home/ahlr/.hubic_credentials
     echo "client_id = api_hubic_AX1GBGXFqcoFRaB6TcmORhneQ33DYgdp" >> /home/ahlr/.hubic_credentials
     echo "client_secret = mraqgIdiNnxdp6oPX2SrH0w0CDFsmviE822hKvba9OA5KFw9SFatkB6Gl0mQEou5" >> /home/ahlr/.hubic_credentials

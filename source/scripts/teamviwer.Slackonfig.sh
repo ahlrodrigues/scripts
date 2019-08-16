@@ -80,6 +80,11 @@ NC='\033[0m' # reset/no color
 
 if [[ $(whoami) == "root" ]]; then
 
+#The following example shows that ‘SOME_PATTERN’ presents in ‘SOME_FILE’.
+#grep -q 'SOME_PATTERN' 'SOME_FILE' && echo $?
+#0
+
+
     #Desinstalando
     if [ -f /usr/share/applications/teamviewer.desktop ]; then
     rm /usr/share/applications/teamviewer.desktop
@@ -169,7 +174,7 @@ if [[ $(whoami) == "root" ]]; then
     
     echo ""
     echo ""
-    echo "$BGREEN Teamviewer Instalando e rodando! $NC"
+    echo -e "$BGREEN Teamviewer Instalando e rodando! $NC"
 
     sleep 5
 

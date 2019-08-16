@@ -55,19 +55,19 @@
 	wget -q  -nv -e robots=0 -r -nd -cP /tmp \
 	https://raw.githubusercontent.com/ahlrodrigues/slackonfig/master/docs/minilicense.txt
     fi
-# --------- Criando script cobrancabnb.sh --------- #
-
-    echo "#!"$SHELL > /usr/local/bin/cobrancabnb.sh
-    cat /tmp/minilicense.txt >> /usr/local/bin/cobrancabnb.sh 
     
-    echo "arquivos_CB=`ls \$pasta_origem | awk '/C*.rem/ { print \$0 }'`" >> /usr/local/bin/cobrancabnb.sh 
-    echo "pasta_origem=/home/ahlr/Downloads/" >> /usr/local/bin/cobrancabnb.sh 
-    echo "pasta_destino=/home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/outbox/" >> /usr/local/bin/cobrancabnb.sh 
-    echo "" >> /usr/local/bin/cobrancabnb.sh
-    echo "if [ ! -e "\$arquivos_CB" ]; then" >> /usr/local/bin/cobrancabnb.sh 
-    echo "	mv \$pasta_origem/C*.rem \$pasta_destino" >> /usr/local/bin/cobrancabnb.sh
-    echo "fi" >> /usr/local/bin/cobrancabnb.sh
-    echo "" >> /usr/local/bin/cobrancabnb.sh
-    echo "wine /home/ahlr/.wine/drive_c/SKYLINE/skyline.exe /se=bnb123 2> /dev/null" >> /usr/local/bin/cobrancabnb.sh
-    echo "" >> /usr/local/bin/cobrancabnb.sh
-    echo "cp /home/ahlr/.wine/drive_c/skyline/*.LOG /home/ahlr/Dropbox/NET4YOU/NET4YOU/Bancos/BNB/skyline/" >> /usr/local/bin/cobrancabnb.sh
+ #Criação do arquivo cashflow.desktop
+    echo "#!"$SHELL > /usr/local/bin/cobrancabnb.sh
+    cat /tmp/minilicense.txt >> /usr/local/bin/cashflow.desktop 
+    wget -q  -nv -e robots=0 -r -nd -cP /usr/share/icons/ $rawimgs/cashflow.jpg
+    echo "[Desktop Entry]" > $usa/cashflow.desktop
+    echo "Exec=libreoffice $dropbox/NET4YOU/NET4YOU/Finanças/CASHFLOW.ods" >> $usa/cashflow.desktop
+    echo "GenericName=CashFlow" >> $usa/cashflow.desktop
+    echo "Icon=$icons/cashflow.jpg" >> $usa/cashflow.desktop
+    echo "Name=Planilha CashFlow" >> $usa/cashflow.desktop
+    echo "Categories=Office;" >> $usa/cashflow.desktop
+    echo "NoDisplay=false" >> $usa/cashflow.desktop
+    echo "StartupNotify=true" >> $usa/cashflow.desktop
+    echo "Terminal=0" >> $usa/cashflow.desktop
+    echo "X-KDE-SubstituteUID=false" >> $usa/cashflow.desktop
+    update-desktop-database -q
