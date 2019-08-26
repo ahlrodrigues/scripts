@@ -83,7 +83,7 @@ newversao=$(ls /home/ahlr/Downloads/plexmediaserver* | cut -d '-' -f2 | cut -d '
 newpkg=$(ls /home/ahlr/Downloads/plexmediaserver* | cut -d '_' -f2)
 oldpkg=$(ls /var/log/packages/plexmediaserver* | cut -d '-' -f2)
 
-
+   
     wget -q  -nv -e robots=0 -r -nd -cP /home/ahlr/Downloads/ https://slackbuilds.org/slackbuilds/14.2/multimedia/plexmediaserver.tar.gz
 
 cd $downloads
@@ -120,7 +120,7 @@ echo
     read install
     case $install in
     Y|y)
-    upgradepkg --reinstall --install-new /tmp/$nomep*
+    upgradepkg /tmp/$nomep*
     $rcd/rc.plexmediaserver restart > $null
     ;;
     N|n)
@@ -138,16 +138,9 @@ echo
     esac
 
 
-# Move plugins to new  version plugins folder #
-if [[ $oldversao != $newversao ]]; then
-rsync -a /opt/plexmediaserver/lib/Resources/Plug-ins-$oldversao/* /opt/plexmediaserver/lib/Resources/Plug-ins-$newversao/  --ignore-existing --whole-file
-rm  -fr /opt/plexmediaserver/lib/Resources/Plug-ins-$oldversao/
-fi
-
-# Remove old pkg from /var/log/packages/ #
-if [[ $oldversao != $newversao ]]; then
-removepkg /var/log/packages/plexmediaserver-$oldpkg*
-fi
+# Clona Sub-Zero e apaga direito Wiki #
+git clone --branch master https://github.com/pannal/Sub-Zero.bundle.git /opt/plexmediaserver/lib/Resources/Plug-ins-$newversao/ 
+rm  -fr /plexmediaserver/lib/Resources/Plug-ins-$newversao/Sub-Zero.bundle/Wiki
 
 # Remove source packages/ #
 rm -fr $downloads/$nomep*
